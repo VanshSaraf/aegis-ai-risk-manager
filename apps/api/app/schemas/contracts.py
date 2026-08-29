@@ -4,11 +4,9 @@ from typing import Annotated, Any, Self
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from apps.api.app.core.enums import (
-    GroundTruthLabel,
     NetworkType,
     PolicyAction,
     RiskSeverity,
-    ScenarioType,
     TransactionStatus,
 )
 
@@ -49,10 +47,6 @@ class RawPaymentEvent(StrictModel):
     payment_method: str = Field(min_length=1, max_length=50)
     status: TransactionStatus
     failure_code: str | None = Field(default=None, max_length=100)
-    scenario_run_id: str | None = Field(default=None, max_length=255)
-    ground_truth_label: GroundTruthLabel | None = None
-    ground_truth_scenario: ScenarioType | None = None
-    ground_truth_ring_id: str | None = Field(default=None, max_length=255)
 
     @field_validator("event_time", "received_at", "account_created_at")
     @classmethod
@@ -72,16 +66,6 @@ class RawPaymentEvent(StrictModel):
     def failure_status_has_code(self) -> Self:
         if self.status == TransactionStatus.FAILED and not self.failure_code:
             raise ValueError("failure_code is required for failed transactions")
-        has_ground_truth = any(
-            value is not None
-            for value in (
-                self.ground_truth_label,
-                self.ground_truth_scenario,
-                self.ground_truth_ring_id,
-            )
-        )
-        if has_ground_truth and not self.scenario_run_id:
-            raise ValueError("ground-truth metadata requires a synthetic scenario_run_id")
         return self
 
 

@@ -25,6 +25,7 @@ from apps.api.app.models import (
     Transaction,
 )
 from apps.api.app.schemas.contracts import NormalizedTransaction, RawPaymentEvent
+from apps.api.app.schemas.internal import TrustedSyntheticContext
 
 
 class DuplicateEventError(Exception):
@@ -78,7 +79,10 @@ async def _upsert_entity[ModelT: DeclarativeBase](
 
 
 async def _resolve_entities(
-    session: AsyncSession, event: RawPaymentEvent
+    session: AsyncSession,
+    event: RawPaymentEvent,
+    *,
+    is_synthetic: bool,
 ) -> tuple[Customer, Merchant, PaymentInstrument, Device, IPAddress, Address]:
     now = event.event_time
     customer = await _upsert_entity(
@@ -90,7 +94,7 @@ async def _resolve_entities(
             "account_created_at": event.account_created_at,
             "customer_segment": event.customer_segment,
             "home_region": event.home_region,
-            "is_synthetic": bool(event.scenario_run_id),
+            "is_synthetic": is_synthetic,
         },
         "source_ref",
         {
@@ -231,7 +235,10 @@ async def _mark_raw_failed(session: AsyncSession, raw_id: Any, detail: str) -> N
 
 
 async def ingest_transaction(
-    session: AsyncSession, event: RawPaymentEvent
+    session: AsyncSession,
+    event: RawPaymentEvent,
+    *,
+    synthetic_context: TrustedSyntheticContext | None = None,
 ) -> NormalizedTransaction:
     raw = await preserve_raw_event(session, event)
     raw_id = raw.id
@@ -242,15 +249,19 @@ async def ingest_transaction(
         raw.processing_status = ProcessingStatus.PROCESSING
 
         scenario_run = None
-        if event.scenario_run_id:
+        if synthetic_context is not None:
             scenario_run = await session.scalar(
-                select(ScenarioRun).where(ScenarioRun.public_id == event.scenario_run_id)
+                select(ScenarioRun).where(
+                    ScenarioRun.public_id == synthetic_context.scenario_run_public_id
+                )
             )
             if scenario_run is None:
-                raise ValueError(f"Unknown scenario_run_id: {event.scenario_run_id}")
+                raise ValueError(
+                    f"Unknown scenario_run_id: {synthetic_context.scenario_run_public_id}"
+                )
 
         customer, merchant, instrument, device, ip_address, address = await _resolve_entities(
-            session, event
+            session, event, is_synthetic=synthetic_context is not None
         )
         processed_at = utc_now()
         transaction = Transaction(
@@ -270,9 +281,9 @@ async def ingest_transaction(
             received_at=raw.received_at,
             processed_at=processed_at,
             scenario_run_id=scenario_run.id if scenario_run else None,
-            ground_truth_label=event.ground_truth_label,
-            ground_truth_scenario=event.ground_truth_scenario,
-            ground_truth_ring_id=event.ground_truth_ring_id,
+            ground_truth_label=synthetic_context.label if synthetic_context else None,
+            ground_truth_scenario=(synthetic_context.scenario_type if synthetic_context else None),
+            ground_truth_ring_id=synthetic_context.ring_id if synthetic_context else None,
         )
         session.add(transaction)
 

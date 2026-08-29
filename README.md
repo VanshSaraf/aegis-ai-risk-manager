@@ -2,15 +2,16 @@
 
 Aegis is a graph-assisted system intended to detect coordinated payment abuse such as card-testing rings, account farms, identity rotation, and collusive payment clusters.
 
-This repository currently implements only the Phase 1 backend and data foundation: typed contracts, PostgreSQL persistence, raw-event preservation, transaction normalization, entity/edge maintenance, audit records, retrieval APIs, migrations, and tests.
+This repository implements the Phase 1 backend/data foundation and the Phase 2 deterministic synthetic payment world. Synthetic legitimate personas and coordinated-abuse rings flow through the real ingestion pipeline and produce versioned manifests, scenario runs, ground truth, entities, edges, and audit records.
 
-**Risk scoring, graph abuse detection, policy decision logic, synthetic data generation, and LLM investigation are not implemented yet.** No endpoint returns placeholder scores or fake AI output.
+**Risk scoring, feature computation, graph abuse detection, policy decision logic, model training, and LLM investigation are not implemented.** No endpoint returns placeholder scores or fake AI output.
 
 ## Architecture boundaries
 
 - `apps/api` owns HTTP transport, orchestration, and persistence models.
 - `packages/risk_engine/features` reserves the shared training/inference feature boundary.
-- `packages/graph_engine`, `packages/policy_engine`, `packages/investigator`, and `packages/synthetic` reserve cohesive future component boundaries without pretending those components exist.
+- `packages/synthetic` owns reproducible population, behavior, scenarios, manifests, and sanity validation.
+- `packages/graph_engine`, `packages/policy_engine`, and `packages/investigator` remain unimplemented boundaries.
 - `ml` and `configs` hold future offline artifacts and versioned configuration.
 - PostgreSQL is the system of record. Each valid incoming event is committed to `raw_events` before normalization starts.
 
@@ -45,6 +46,17 @@ make lint
 ```
 
 Integration tests require `AEGIS_TEST_DATABASE_URL` pointing to a disposable PostgreSQL database. They skip explicitly when it is absent.
+
+## Synthetic generation
+
+After applying migrations, generate a mixed dataset or an isolated scenario:
+
+```bash
+python scripts/generate_synthetic.py --seed 42017 --transactions 10000
+python scripts/generate_synthetic.py --scenario CARD_TESTING --seed 1234 --transactions 200
+```
+
+The CLI validates before ingestion and optionally writes `manifest.json` and `events.jsonl` beneath `ml/datasets/generated/`, which is ignored by Git. See [docs/DATA_GENERATION.md](docs/DATA_GENERATION.md).
 
 ## Implemented API
 

@@ -1,4 +1,4 @@
-.PHONY: up down migrate test lint format
+.PHONY: up down migrate test lint format synthetic synthetic-smoke
 
 up:
 	docker compose up --build
@@ -19,3 +19,9 @@ lint:
 format:
 	ruff check --fix .
 	ruff format .
+
+synthetic:
+	python scripts/generate_synthetic.py --seed 42017 --transactions 10000
+
+synthetic-smoke:
+	python scripts/generate_synthetic.py --seed 42017 --transactions 250 --no-export

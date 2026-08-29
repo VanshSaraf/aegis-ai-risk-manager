@@ -3,9 +3,12 @@ from datetime import UTC, datetime
 import pytest
 from sqlalchemy import func, select
 
-from apps.api.app.core.enums import ProcessingStatus
+from apps.api.app.core.enums import GroundTruthLabel, ProcessingStatus, ScenarioType
 from apps.api.app.db.session import SessionFactory
 from apps.api.app.models import Customer, EntityEdge, RawEvent, Transaction
+from apps.api.app.schemas.contracts import RawPaymentEvent
+from apps.api.app.schemas.internal import TrustedSyntheticContext
+from apps.api.app.services.transactions import NormalizationError, ingest_transaction
 from apps.api.tests.factories import raw_event_payload
 
 pytestmark = pytest.mark.integration
@@ -65,12 +68,19 @@ async def test_transaction_list_and_detail(client) -> None:
     assert [item["transaction_public_id"] for item in listing.json()["items"]] == [public_id]
 
 
-async def test_normalization_failure_keeps_raw_and_rolls_back_everything_else(client) -> None:
-    payload = raw_event_payload(scenario_run_id="run_missing")
-    response = await client.post("/api/v1/transactions", json=payload)
-
-    assert response.status_code == 422
+async def test_normalization_failure_keeps_raw_and_rolls_back_everything_else(
+    clean_database,
+) -> None:
+    event = RawPaymentEvent.model_validate(raw_event_payload())
+    context = TrustedSyntheticContext(
+        scenario_run_public_id="run_missing",
+        label=GroundTruthLabel.LEGITIMATE,
+        scenario_type=ScenarioType.NORMAL_TRAFFIC,
+        persona="STANDARD_RETAIL",
+    )
     async with SessionFactory() as session:
+        with pytest.raises(NormalizationError, match="Unknown scenario_run_id"):
+            await ingest_transaction(session, event, synthetic_context=context)
         raw = await session.scalar(select(RawEvent).where(RawEvent.event_id == "evt_001"))
         assert raw is not None
         assert raw.processing_status == ProcessingStatus.FAILED
@@ -88,3 +98,14 @@ async def test_duplicate_event_is_rejected_without_second_raw_record(client) -> 
     assert second.status_code == 409
     async with SessionFactory() as session:
         assert await session.scalar(select(func.count()).select_from(RawEvent)) == 1
+
+
+async def test_public_ingestion_rejects_ground_truth_fields(client) -> None:
+    response = await client.post(
+        "/api/v1/transactions",
+        json=raw_event_payload(ground_truth_label="COORDINATED_ABUSE"),
+    )
+
+    assert response.status_code == 422
+    async with SessionFactory() as session:
+        assert await session.scalar(select(func.count()).select_from(RawEvent)) == 0

@@ -3,7 +3,7 @@ from datetime import datetime
 import pytest
 from pydantic import ValidationError
 
-from apps.api.app.schemas.contracts import RawPaymentEvent, ScoringTransaction
+from apps.api.app.schemas.contracts import FeatureVector, RawPaymentEvent, ScoringTransaction
 from apps.api.tests.factories import raw_event_payload
 
 
@@ -44,6 +44,20 @@ def test_scoring_contract_rejects_ground_truth() -> None:
         )
 
 
-def test_ground_truth_requires_synthetic_scenario_run() -> None:
-    with pytest.raises(ValidationError, match="scenario_run_id"):
+def test_raw_payment_event_rejects_external_ground_truth() -> None:
+    with pytest.raises(ValidationError, match="ground_truth_label"):
         RawPaymentEvent.model_validate(raw_event_payload(ground_truth_label="COORDINATED_ABUSE"))
+
+
+def test_feature_vector_rejects_ground_truth() -> None:
+    with pytest.raises(ValidationError, match="ground_truth_label"):
+        FeatureVector.model_validate(
+            {
+                "transaction_public_id": "txn_1",
+                "feature_version": "features-v1",
+                "values": {"velocity_1h": 4},
+                "computed_at": "2026-01-01T01:00:00Z",
+                "max_source_event_time": "2026-01-01T00:59:00Z",
+                "ground_truth_label": "COORDINATED_ABUSE",
+            }
+        )

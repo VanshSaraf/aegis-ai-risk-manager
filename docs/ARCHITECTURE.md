@@ -2,11 +2,27 @@
 
 ## Problem and current scope
 
-Aegis targets coordinated payment abuse: behavior that becomes meaningful across transactions and linked entities rather than from one payment in isolation. Phase 1 establishes durable ingestion, normalized entities, relationship observations, contracts, and version registries. It gives later intelligence work a stable base without implementing that intelligence early.
+Aegis targets coordinated payment abuse: behavior that becomes meaningful across transactions and linked entities rather than from one payment in isolation. Phase 1 established durable ingestion, normalized entities, relationship observations, contracts, and version registries. Phase 2 adds a deterministic synthetic payment world and defensive abuse scenarios for exercising that same foundation.
 
 ## Non-goals
 
-This phase does not implement transaction risk scoring, temporal feature computation, graph algorithms, policy decisions, synthetic scenario generation, investigator prompts or LLM calls, a dashboard, or production deployment claims. Kafka, Redis, Celery, Neo4j, and microservice boundaries are deliberately absent.
+This phase does not implement transaction risk scoring, temporal feature computation, graph algorithms, policy decisions, investigator prompts or LLM calls, a dashboard, or production deployment claims. Kafka, Redis, Celery, Neo4j, and microservice boundaries are deliberately absent.
+
+## Synthetic-world data flow
+
+```text
+Versioned configuration + seed
+             ↓
+Synthetic World + hidden SyntheticGroundTruth
+             ↓
+RawPaymentEvent facts + trusted internal context
+             ↓
+Existing ingestion service
+             ↓
+RawEvent → normalized entities/Transaction → EntityEdge → AuditEvent
+```
+
+Synthetic generation deliberately uses the real ingestion service. It therefore exercises raw-event durability, entity resolution, relationship upserts, audit creation, and transaction boundaries instead of creating ORM transactions through a special shortcut. `DatasetVersion` records the reproducible configuration and manifest; `ScenarioRun` records each included scenario and links its transactions.
 
 ## Current data flow
 
@@ -41,7 +57,7 @@ This prevents storage details and point-in-time query behavior from leaking into
 
 ## Ground-truth separation
 
-Ground-truth label, scenario, and ring identifiers exist on synthetic transaction records for training and evaluation only. The runtime-safe `ScoringTransaction`, `FeatureVector`, and prediction contracts contain no ground-truth fields. Future feature assembly must preserve that separation and enforce point-in-time correctness.
+Ground-truth label, scenario, and ring identifiers exist on synthetic transaction records for training and evaluation only. Public `RawPaymentEvent` facts cannot carry them. An internal trusted context attaches them during synthetic ingestion. The runtime-safe `NormalizedTransaction`, `ScoringTransaction`, `FeatureVector`, and prediction contracts contain no ground-truth fields. Future feature assembly must preserve that separation and enforce point-in-time correctness.
 
 ## Planned intelligence pipeline
 
