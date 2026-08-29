@@ -1,0 +1,61 @@
+from enum import StrEnum
+
+
+class TransactionStatus(StrEnum):
+    CREATED = "CREATED"
+    AUTHORIZED = "AUTHORIZED"
+    CAPTURED = "CAPTURED"
+    FAILED = "FAILED"
+    REFUNDED = "REFUNDED"
+
+
+class GroundTruthLabel(StrEnum):
+    LEGITIMATE = "LEGITIMATE"
+    COORDINATED_ABUSE = "COORDINATED_ABUSE"
+
+
+class ScenarioType(StrEnum):
+    NORMAL_TRAFFIC = "NORMAL_TRAFFIC"
+    CARD_TESTING = "CARD_TESTING"
+    ACCOUNT_FARM = "ACCOUNT_FARM"
+    IDENTITY_ROTATION = "IDENTITY_ROTATION"
+    COLLUSIVE_RING = "COLLUSIVE_RING"
+
+
+class NetworkType(StrEnum):
+    RESIDENTIAL = "RESIDENTIAL"
+    CORPORATE = "CORPORATE"
+    HOSTEL = "HOSTEL"
+    PUBLIC_WIFI = "PUBLIC_WIFI"
+    DATACENTER = "DATACENTER"
+    MOBILE = "MOBILE"
+
+
+class RiskSeverity(StrEnum):
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
+
+
+class PolicyAction(StrEnum):
+    ALLOW = "ALLOW"
+    VERIFY = "VERIFY"
+    HOLD = "HOLD"
+    ESCALATE = "ESCALATE"
+    RECOMMEND_BLOCK = "RECOMMEND_BLOCK"
+
+
+class ClusterStatus(StrEnum):
+    OPEN = "OPEN"
+    UNDER_REVIEW = "UNDER_REVIEW"
+    CONFIRMED = "CONFIRMED"
+    DISMISSED = "DISMISSED"
+    CLOSED = "CLOSED"
+
+
+class ProcessingStatus(StrEnum):
+    RECEIVED = "RECEIVED"
+    PROCESSING = "PROCESSING"
+    PROCESSED = "PROCESSED"
+    FAILED = "FAILED"
