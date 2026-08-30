@@ -23,5 +23,9 @@ ml/artifacts/graph-v1/*
 !ml/artifacts/model-v2/
 !ml/artifacts/model-v2/*.json
 !ml/artifacts/model-v2/model.txt
+!ml/artifacts/policy-v1/
+!ml/artifacts/policy-v1/*.json
+!ml/artifacts/policy-v2/
+!ml/artifacts/policy-v2/*.json
 ml/datasets/generated/*
 !ml/datasets/generated/.gitkeep

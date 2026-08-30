@@ -1,0 +1,138 @@
+{
+  "action_counts": {
+    "ALLOW": 5998,
+    "ESCALATE": 115,
+    "HOLD": 1117,
+    "RECOMMEND_BLOCK": 208,
+    "VERIFY": 62
+  },
+  "amounts_paise": {
+    "abuse_amount_allowed": 0,
+    "abuse_amount_touched": 189189195,
+    "amount_weighted_abuse_intervention_rate": 1.0,
+    "legitimate_amount_touched": 441056075,
+    "total_abuse_amount": 189189195,
+    "total_legitimate_amount": 2858224358,
+    "total_transaction_amount": 3047413553
+  },
+  "assumptions_label": "ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS",
+  "cost_profile_hash": "5cc3cde3757c9c22582b32ab6c0dc47bc77bd6d8a4364ddaf6bc225986d53111",
+  "cost_profile_version": "balanced-v1",
+  "costs_paise": {
+    "allow_all_baseline_expected_loss": 189189195,
+    "estimated_net_protected_value": 155849570,
+    "legitimate_intervention_friction_cost": 2176948,
+    "operational_action_cost": 807300,
+    "remaining_abuse_loss": 30355377,
+    "total_policy_expected_cost": 33339625
+  },
+  "intervention": {
+    "f1": 0.48817312531454454,
+    "false_negative": 0,
+    "false_positive": 1017,
+    "precision": 0.3229027962716378,
+    "recall": 1.0,
+    "true_negative": 5998,
+    "true_positive": 485
+  },
+  "persona_actions": {
+    "CORPORATE_OR_CAMPUS_NETWORK": {
+      "ALLOW": 1005,
+      "ESCALATE": 0,
+      "HOLD": 11,
+      "RECOMMEND_BLOCK": 0,
+      "VERIFY": 0,
+      "severe_intervention_rate": 0.010826771653543307,
+      "transactions": 1016
+    },
+    "FAMILY_HOUSEHOLD": {
+      "ALLOW": 1247,
+      "ESCALATE": 11,
+      "HOLD": 39,
+      "RECOMMEND_BLOCK": 51,
+      "VERIFY": 48,
+      "severe_intervention_rate": 0.07234957020057306,
+      "transactions": 1396
+    },
+    "POWER_SHOPPER": {
+      "ALLOW": 834,
+      "ESCALATE": 3,
+      "HOLD": 409,
+      "RECOMMEND_BLOCK": 0,
+      "VERIFY": 7,
+      "severe_intervention_rate": 0.32881085395051873,
+      "transactions": 1253
+    },
+    "STANDARD_RETAIL": {
+      "ALLOW": 2884,
+      "ESCALATE": 0,
+      "HOLD": 48,
+      "RECOMMEND_BLOCK": 0,
+      "VERIFY": 0,
+      "severe_intervention_rate": 0.01637107776261937,
+      "transactions": 2932
+    },
+    "TRAVELLER": {
+      "ALLOW": 28,
+      "ESCALATE": 0,
+      "HOLD": 383,
+      "RECOMMEND_BLOCK": 0,
+      "VERIFY": 7,
+      "severe_intervention_rate": 0.916267942583732,
+      "transactions": 418
+    }
+  },
+  "policy_config_hash": "ba3d4dc40f0fe2509404880c594254ec3afdb8f4726244ae687e2f7ed9561c87",
+  "policy_version": "risk-policy-v1",
+  "scenario_actions": {
+    "ACCOUNT_FARM": {
+      "ALLOW": 0,
+      "ESCALATE": 35,
+      "HOLD": 30,
+      "RECOMMEND_BLOCK": 55,
+      "VERIFY": 0,
+      "severe_intervention_rate": 1.0,
+      "transactions": 120
+    },
+    "CARD_TESTING": {
+      "ALLOW": 0,
+      "ESCALATE": 10,
+      "HOLD": 67,
+      "RECOMMEND_BLOCK": 53,
+      "VERIFY": 0,
+      "severe_intervention_rate": 1.0,
+      "transactions": 130
+    },
+    "COLLUSIVE_RING": {
+      "ALLOW": 0,
+      "ESCALATE": 38,
+      "HOLD": 58,
+      "RECOMMEND_BLOCK": 24,
+      "VERIFY": 0,
+      "severe_intervention_rate": 1.0,
+      "transactions": 120
+    },
+    "IDENTITY_ROTATION": {
+      "ALLOW": 0,
+      "ESCALATE": 18,
+      "HOLD": 72,
+      "RECOMMEND_BLOCK": 25,
+      "VERIFY": 0,
+      "severe_intervention_rate": 1.0,
+      "transactions": 115
+    }
+  },
+  "severe_intervention": {
+    "f1": 0.503896103896104,
+    "false_negative": 0,
+    "false_positive": 955,
+    "precision": 0.3368055555555556,
+    "recall": 1.0,
+    "true_negative": 6060,
+    "true_positive": 485
+  },
+  "thresholds": {
+    "hold_threshold": 0.0033995407602229865,
+    "verify_threshold": 0.003321526422929731
+  }
+}

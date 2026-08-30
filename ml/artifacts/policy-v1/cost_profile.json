@@ -1,0 +1,38 @@
+{
+  "abuse_loss_fraction": 1.0,
+  "actions": {
+    "ALLOW": {
+      "abuse_intervention_effectiveness": 0.0,
+      "legitimate_fixed_cost_paise": 0,
+      "legitimate_friction_fraction": 0.0,
+      "operational_cost_paise": 0
+    },
+    "ESCALATE": {
+      "abuse_intervention_effectiveness": 0.85,
+      "legitimate_fixed_cost_paise": 300,
+      "legitimate_friction_fraction": 0.006,
+      "operational_cost_paise": 1500
+    },
+    "HOLD": {
+      "abuse_intervention_effectiveness": 0.75,
+      "legitimate_fixed_cost_paise": 300,
+      "legitimate_friction_fraction": 0.004,
+      "operational_cost_paise": 100
+    },
+    "RECOMMEND_BLOCK": {
+      "abuse_intervention_effectiveness": 0.95,
+      "legitimate_fixed_cost_paise": 300,
+      "legitimate_friction_fraction": 0.01,
+      "operational_cost_paise": 2500
+    },
+    "VERIFY": {
+      "abuse_intervention_effectiveness": 0.35,
+      "legitimate_fixed_cost_paise": 100,
+      "legitimate_friction_fraction": 0.001,
+      "operational_cost_paise": 50
+    }
+  },
+  "assumptions_label": "ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS",
+  "cost_profile_version": "balanced-v1",
+  "currency": "INR"
+}

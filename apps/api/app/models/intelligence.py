@@ -72,7 +72,12 @@ class GraphAssessmentSnapshot(UUIDPrimaryKeyMixin, Base):
 
 class RiskPrediction(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
     __tablename__ = "risk_predictions"
-    __table_args__ = (Index("ix_risk_predictions_transaction_id", "transaction_id"),)
+    __table_args__ = (
+        UniqueConstraint(
+            "transaction_id", "model_version", name="uq_risk_predictions_transaction_model"
+        ),
+        Index("ix_risk_predictions_transaction_id", "transaction_id"),
+    )
 
     transaction_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("transactions.id"), nullable=False
@@ -83,16 +88,25 @@ class RiskPrediction(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
     feature_version: Mapped[str] = mapped_column(
         String(100), ForeignKey("feature_versions.version"), nullable=False
     )
+    graph_version: Mapped[str] = mapped_column(String(100), nullable=False)
     ml_score: Mapped[float] = mapped_column(Float, nullable=False)
     graph_score: Mapped[float] = mapped_column(Float, nullable=False)
-    fused_score: Mapped[float] = mapped_column(Float, nullable=False)
-    severity: Mapped[RiskSeverity] = mapped_column(String(32), nullable=False)
+    fused_score: Mapped[float | None] = mapped_column(Float, nullable=True)
+    severity: Mapped[RiskSeverity | None] = mapped_column(String(32), nullable=True)
     top_features: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, nullable=False)
     inference_latency_ms: Mapped[int] = mapped_column(Integer, nullable=False)
 
 
 class RiskSignal(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
     __tablename__ = "risk_signals"
+    __table_args__ = (
+        UniqueConstraint(
+            "transaction_id",
+            "signal_code",
+            "rule_version",
+            name="uq_risk_signals_transaction_code_rule",
+        ),
+    )
 
     transaction_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("transactions.id"), nullable=False
@@ -144,6 +158,11 @@ class ClusterMember(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
 
 class PolicyDecision(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
     __tablename__ = "policy_decisions"
+    __table_args__ = (
+        UniqueConstraint(
+            "transaction_id", "policy_version", name="uq_policy_decisions_transaction_policy"
+        ),
+    )
 
     public_id: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
     transaction_id: Mapped[uuid.UUID] = mapped_column(

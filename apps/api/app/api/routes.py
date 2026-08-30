@@ -7,7 +7,17 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from apps.api.app.db.session import database_is_ready, get_session
 from apps.api.app.models import EntityEdge
-from apps.api.app.schemas.api import Neighbor, NeighborList, ReadinessResponse, TransactionList
+from apps.api.app.schemas.api import (
+    GraphEvidenceResponse,
+    ModelScoreResponse,
+    Neighbor,
+    NeighborList,
+    OperationalAssessmentResponse,
+    PolicyResponse,
+    ReadinessResponse,
+    RiskResponse,
+    TransactionList,
+)
 from apps.api.app.schemas.contracts import NormalizedTransaction, RawPaymentEvent
 from apps.api.app.services.transactions import (
     DuplicateEventError,
@@ -16,6 +26,7 @@ from apps.api.app.services.transactions import (
     ingest_transaction,
     list_transactions,
 )
+from packages.policy_engine.service import AssessmentConflictError, assess_transaction
 
 router = APIRouter()
 Session = Annotated[AsyncSession, Depends(get_session)]
@@ -75,6 +86,49 @@ async def transaction(public_id: str, session: Session) -> NormalizedTransaction
     if result is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="transaction not found")
     return result
+
+
+@router.post(
+    "/api/v1/transactions/{public_id}/assess",
+    response_model=OperationalAssessmentResponse,
+)
+async def assess(public_id: str, session: Session) -> OperationalAssessmentResponse:
+    try:
+        result = await assess_transaction(session, public_id)
+    except LookupError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="transaction not found"
+        ) from exc
+    except AssessmentConflictError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT, detail="immutable assessment conflict"
+        ) from exc
+    assessment = result.assessment
+    decision = result.decision
+    return OperationalAssessmentResponse(
+        transaction_id=public_id,
+        risk_prediction_id=result.risk_prediction_id,
+        policy_decision_id=result.policy_decision_id,
+        model=ModelScoreResponse(
+            version=assessment.model_version,
+            score=assessment.model_score,
+            semantics="uncalibrated model score; not a fraud probability",
+        ),
+        graph=GraphEvidenceResponse(
+            version=assessment.graph_version,
+            structural_score=assessment.graph_structure_score,
+            signals=[signal.code for signal in assessment.graph_signals],
+            detected_cluster_id=assessment.detected_cluster_id,
+        ),
+        risk=RiskResponse(severity=assessment.severity),
+        policy=PolicyResponse(
+            version=decision.policy_version,
+            action=decision.action,
+            requires_human_review=decision.requires_human_review,
+            reason_codes=list(decision.reason_codes),
+        ),
+        latency_ms=result.latency_ms,
+    )
 
 
 @router.get("/api/v1/entities/{entity_type}/{public_id}/neighbors", response_model=NeighborList)

@@ -1,0 +1,8 @@
+{
+  "assumptions_label": "ILLUSTRATIVE SYNTHETIC OPERATING ASSUMPTIONS",
+  "maximum_any_legitimate_persona_severe_intervention_rate": 0.1,
+  "maximum_legitimate_intervention_rate": 0.05,
+  "maximum_legitimate_severe_intervention_rate": 0.015,
+  "maximum_total_human_review_rate": 0.02,
+  "minimum_abuse_intervention_recall": 0.95
+}

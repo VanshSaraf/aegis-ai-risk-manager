@@ -1,5 +1,54 @@
 # Failure Log
 
+## Phase 6B: unconstrained economic optimization produced an operationally aggressive policy
+
+- **Observed:** risk-policy-v1 minimized its configured validation cost but produced 1,017 false
+  positives on the now-developmental seed 88421 TEST partition, touched INR 44,10,560.75 of
+  legitimate amount, and severely intervened on 32.88% of POWER_SHOPPER and 91.63% of TRAVELLER
+  transactions.
+- **Cause:** the monetary objective represented assumed loss, friction, and operating costs, but
+  omitted hard budgets for false positives, severe intervention, review capacity, abuse capture,
+  and cohort concentration. A low scalar cost therefore did not imply an acceptable operating
+  policy.
+- **Diagnosis:** this was not a model or policy-engine bug. The optimizer correctly solved the
+  incomplete objective it was given. Persona was used only to expose the offline cohort failure;
+  it was never added to runtime policy input.
+- **Fix:** preserved policy-v1 as a development experiment and introduced risk-policy-v2, which
+  minimizes the same balanced-v1 cost only among candidates satisfying predetermined validation
+  operating constraints. Zero feasible candidates fails without relaxing those constraints.
+- **Evaluation discipline:** seed 88421 was retired as final policy evidence because its results
+  had been observed. Policy-v2 and its constraints were frozen and hashed before synthetic-v2 seed
+  91573 was generated or evaluated. External results were reported without retuning.
+- **Result:** on external seed 91573, legitimate intervention fell from 25.27% under policy-v1 to
+  11.17% under policy-v2 and legitimate severe intervention fell from 23.67% to zero. The 5%
+  aggregate validation intervention budget did not generalize, demonstrating remaining synthetic
+  distribution shift rather than prompting post-hoc threshold changes.
+
+## Phase 6: the first cost optimizer collapsed the VERIFY band
+
+- **Observed:** the first completed validation optimization selected equal verify and hold
+  thresholds, producing no VERIFY decisions.
+- **Cause:** the policy schema correctly permits `verify_threshold <= hold_threshold`, but the
+  optimizer lacked the stronger operational requirement that policy-v1 retain a meaningful
+  intermediate verification band.
+- **Fix:** the affected policy/test output was invalidated. Optimization now searches strict
+  `verify_threshold < hold_threshold` pairs and rejects candidates with no validation VERIFY
+  decisions before writing the freeze checkpoint.
+- **Result:** the correction is based only on validation behavior and the declared policy design;
+  no TEST metric or label is used to select replacement thresholds.
+
+## Phase 6: first policy reconstruction compared different split-manifest shapes
+
+- **Observed:** the first frozen policy build reconstructed all 50,000 point-in-time rows, then
+  stopped before optimization because its split-hash guard reported a mismatch.
+- **Cause:** Phase 5 adds dataset/model traceability fields to the core split manifest before
+  hashing it. The Phase 6 guard compared the core reconstructed manifest with the enriched stored
+  manifest, so equal boundaries and memberships had different serialized shapes.
+- **Fix:** Phase 6 now adds the exact same frozen dataset, seed, feature, and graph traceability
+  fields before comparing hashes.
+- **Result:** no policy freeze or test evaluation occurred during the failed run; the guard failed
+  closed as designed.
+
 ## Phase 5: the first synthetic benchmark was too separable
 
 - **Observed:** `risk-lgbm-v1` produced effectively perfect tabular and combined held-out results,

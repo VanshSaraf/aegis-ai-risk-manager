@@ -1,0 +1,42 @@
+{
+  "ACCOUNT_FARM": {
+    "ALLOW": 0,
+    "ESCALATE": 133,
+    "HOLD": 42,
+    "RECOMMEND_BLOCK": 235,
+    "VERIFY": 430,
+    "intervention_rate": 1.0,
+    "severe_intervention_rate": 0.4880952380952381,
+    "transactions": 840
+  },
+  "CARD_TESTING": {
+    "ALLOW": 0,
+    "ESCALATE": 30,
+    "HOLD": 190,
+    "RECOMMEND_BLOCK": 170,
+    "VERIFY": 590,
+    "intervention_rate": 1.0,
+    "severe_intervention_rate": 0.3979591836734694,
+    "transactions": 980
+  },
+  "COLLUSIVE_RING": {
+    "ALLOW": 0,
+    "ESCALATE": 169,
+    "HOLD": 102,
+    "RECOMMEND_BLOCK": 118,
+    "VERIFY": 451,
+    "intervention_rate": 1.0,
+    "severe_intervention_rate": 0.4630952380952381,
+    "transactions": 840
+  },
+  "IDENTITY_ROTATION": {
+    "ALLOW": 2,
+    "ESCALATE": 47,
+    "HOLD": 57,
+    "RECOMMEND_BLOCK": 125,
+    "VERIFY": 609,
+    "intervention_rate": 0.9976190476190476,
+    "severe_intervention_rate": 0.2726190476190476,
+    "transactions": 840
+  }
+}

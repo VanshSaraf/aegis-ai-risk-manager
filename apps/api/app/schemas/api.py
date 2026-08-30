@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from apps.api.app.core.enums import ProcessingStatus
+from apps.api.app.core.enums import PolicyAction, ProcessingStatus, RiskSeverity
 from apps.api.app.schemas.contracts import NormalizedTransaction
 
 
@@ -39,3 +39,38 @@ class IngestionFailure(BaseModel):
     event_id: str
     processing_status: ProcessingStatus
     detail: str
+
+
+class ModelScoreResponse(BaseModel):
+    version: str
+    score: float
+    semantics: str
+
+
+class GraphEvidenceResponse(BaseModel):
+    version: str
+    structural_score: float
+    signals: list[str]
+    detected_cluster_id: str | None
+
+
+class RiskResponse(BaseModel):
+    severity: RiskSeverity
+
+
+class PolicyResponse(BaseModel):
+    version: str
+    action: PolicyAction
+    requires_human_review: bool
+    reason_codes: list[str]
+
+
+class OperationalAssessmentResponse(BaseModel):
+    transaction_id: str
+    risk_prediction_id: str
+    policy_decision_id: str
+    model: ModelScoreResponse
+    graph: GraphEvidenceResponse
+    risk: RiskResponse
+    policy: PolicyResponse
+    latency_ms: dict[str, float]

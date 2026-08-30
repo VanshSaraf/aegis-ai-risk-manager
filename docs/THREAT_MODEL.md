@@ -2,7 +2,11 @@
 
 ## Scope
 
-Aegis is a defensive system intended to identify coordinated payment abuse. It currently implements validated ingestion, synthetic data, point-in-time tabular features, point-in-time graph assessment, and deterministic structural cluster discovery. No trained AI model, final fraud prediction, policy automation, or investigator functionality is implemented.
+Aegis is a defensive system intended to identify coordinated payment abuse. It implements
+validated ingestion, synthetic data, point-in-time tabular and graph intelligence, the trained
+synthetic-benchmark `risk-lgbm-v2` model, and bounded `risk-policy-v2` recommendations. The model
+is uncalibrated and not production validated. No external payment action or investigator
+functionality is implemented.
 
 ## Data handling boundaries
 
@@ -15,6 +19,10 @@ Aegis is a defensive system intended to identify coordinated payment abuse. It c
 
 Aegis has no offensive capability. It does not generate attack instructions, probe payment systems, acquire credentials, or automate abuse. Current graph analysis and any future model components are intended only to analyze evidence already available to the defensive system.
 
-The planned LLM investigator will be read-only, evidence-grounded, and outside the transaction decision path. It must not execute payment actions or override deterministic policy. No LLM integration currently exists.
+The planned LLM investigator will be read-only, evidence-grounded, and outside the transaction decision path. It must not execute payment actions or override deterministic policy. No LLM integration currently exists. Policy `RECOMMEND_BLOCK` always requires human review and is not a block instruction.
+
+Graph evidence is corroborative only. It cannot move a low-score ALLOW or intermediate VERIFY to
+a severe action; only an existing model-score HOLD can be escalated. Offline persona metadata may
+audit validation cohorts but is structurally excluded from runtime policy input.
 
 This document will be expanded when model intelligence, deployment boundaries, authentication, and operational controls are designed.

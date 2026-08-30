@@ -114,11 +114,15 @@ class RiskAssessment(StrictModel):
     transaction_public_id: str
     model_version: str
     feature_version: str
-    ml_score: float = Field(ge=0, le=1)
-    graph_score: float = Field(ge=0, le=1)
-    fused_score: float = Field(ge=0, le=1)
+    graph_version: str
+    model_score: float = Field(ge=0, le=1)
+    graph_structure_score: float = Field(ge=0, le=1)
     severity: RiskSeverity
-    signals: list[dict[str, Any]] = Field(default_factory=list)
+    graph_signals: list[dict[str, Any]] = Field(default_factory=list)
+    detected_cluster_id: str | None = None
+    rule_signals: list[str] = Field(default_factory=list)
+    policy_context: dict[str, Any]
+    computed_at: datetime
 
 
 class PolicyDecisionResult(StrictModel):
@@ -126,6 +130,7 @@ class PolicyDecisionResult(StrictModel):
     transaction_public_id: str
     policy_version: str
     action: PolicyAction
-    decision_reason: dict[str, Any]
+    severity: RiskSeverity
+    reason_codes: list[str]
     requires_human_review: bool
     created_at: datetime

@@ -1,0 +1,173 @@
+[
+  {
+    "estimated_net_protected_value": 92479749,
+    "hold_threshold": 0.9622880006886806,
+    "intervention_precision": 0.9094138543516874,
+    "intervention_recall": 0.9941747572815534,
+    "operating_metrics": {
+      "abuse_count": 515,
+      "abuse_intervention_recall": 0.9941747572815534,
+      "human_review_count": 144,
+      "legitimate_count": 6985,
+      "legitimate_intervention_rate": 0.007301360057265569,
+      "legitimate_severe_intervention_rate": 0.0,
+      "maximum_legitimate_persona": "TRAVELLER",
+      "maximum_legitimate_persona_severe_intervention_rate": 0.0,
+      "total_human_review_rate": 0.0192
+    },
+    "total_policy_expected_cost": 78168304,
+    "verify_threshold": 0.0054821592162737475
+  },
+  {
+    "estimated_net_protected_value": 88977059,
+    "hold_threshold": 0.9622880006886806,
+    "intervention_precision": 0.9690522243713733,
+    "intervention_recall": 0.9728155339805825,
+    "operating_metrics": {
+      "abuse_count": 515,
+      "abuse_intervention_recall": 0.9728155339805825,
+      "human_review_count": 144,
+      "legitimate_count": 6985,
+      "legitimate_intervention_rate": 0.002290622763063708,
+      "legitimate_severe_intervention_rate": 0.0,
+      "maximum_legitimate_persona": "TRAVELLER",
+      "maximum_legitimate_persona_severe_intervention_rate": 0.0,
+      "total_human_review_rate": 0.0192
+    },
+    "total_policy_expected_cost": 81670994,
+    "verify_threshold": 0.02
+  },
+  {
+    "estimated_net_protected_value": 88357484,
+    "hold_threshold": 0.9622880006886806,
+    "intervention_precision": 0.9746588693957114,
+    "intervention_recall": 0.970873786407767,
+    "operating_metrics": {
+      "abuse_count": 515,
+      "abuse_intervention_recall": 0.970873786407767,
+      "human_review_count": 144,
+      "legitimate_count": 6985,
+      "legitimate_intervention_rate": 0.0018611309949892628,
+      "legitimate_severe_intervention_rate": 0.0,
+      "maximum_legitimate_persona": "TRAVELLER",
+      "maximum_legitimate_persona_severe_intervention_rate": 0.0,
+      "total_human_review_rate": 0.0192
+    },
+    "total_policy_expected_cost": 82290569,
+    "verify_threshold": 0.025348712732535115
+  },
+  {
+    "estimated_net_protected_value": 59897011,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.9094138543516874,
+    "intervention_recall": 0.9941747572815534,
+    "operating_metrics": {
+      "abuse_count": 515,
+      "abuse_intervention_recall": 0.9941747572815534,
+      "human_review_count": 12,
+      "legitimate_count": 6985,
+      "legitimate_intervention_rate": 0.007301360057265569,
+      "legitimate_severe_intervention_rate": 0.0,
+      "maximum_legitimate_persona": "TRAVELLER",
+      "maximum_legitimate_persona_severe_intervention_rate": 0.0,
+      "total_human_review_rate": 0.0016
+    },
+    "total_policy_expected_cost": 110751042,
+    "verify_threshold": 0.0054821592162737475
+  },
+  {
+    "estimated_net_protected_value": 58524949,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.9094138543516874,
+    "intervention_recall": 0.9941747572815534,
+    "operating_metrics": {
+      "abuse_count": 515,
+      "abuse_intervention_recall": 0.9941747572815534,
+      "human_review_count": 0,
+      "legitimate_count": 6985,
+      "legitimate_intervention_rate": 0.007301360057265569,
+      "legitimate_severe_intervention_rate": 0.0,
+      "maximum_legitimate_persona": "TRAVELLER",
+      "maximum_legitimate_persona_severe_intervention_rate": 0.0,
+      "total_human_review_rate": 0.0
+    },
+    "total_policy_expected_cost": 112123104,
+    "verify_threshold": 0.0054821592162737475
+  },
+  {
+    "estimated_net_protected_value": 56394321,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.9690522243713733,
+    "intervention_recall": 0.9728155339805825,
+    "operating_metrics": {
+      "abuse_count": 515,
+      "abuse_intervention_recall": 0.9728155339805825,
+      "human_review_count": 12,
+      "legitimate_count": 6985,
+      "legitimate_intervention_rate": 0.002290622763063708,
+      "legitimate_severe_intervention_rate": 0.0,
+      "maximum_legitimate_persona": "TRAVELLER",
+      "maximum_legitimate_persona_severe_intervention_rate": 0.0,
+      "total_human_review_rate": 0.0016
+    },
+    "total_policy_expected_cost": 114253732,
+    "verify_threshold": 0.02
+  },
+  {
+    "estimated_net_protected_value": 55774746,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.9746588693957114,
+    "intervention_recall": 0.970873786407767,
+    "operating_metrics": {
+      "abuse_count": 515,
+      "abuse_intervention_recall": 0.970873786407767,
+      "human_review_count": 12,
+      "legitimate_count": 6985,
+      "legitimate_intervention_rate": 0.0018611309949892628,
+      "legitimate_severe_intervention_rate": 0.0,
+      "maximum_legitimate_persona": "TRAVELLER",
+      "maximum_legitimate_persona_severe_intervention_rate": 0.0,
+      "total_human_review_rate": 0.0016
+    },
+    "total_policy_expected_cost": 114873307,
+    "verify_threshold": 0.025348712732535115
+  },
+  {
+    "estimated_net_protected_value": 55022259,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.9690522243713733,
+    "intervention_recall": 0.9728155339805825,
+    "operating_metrics": {
+      "abuse_count": 515,
+      "abuse_intervention_recall": 0.9728155339805825,
+      "human_review_count": 0,
+      "legitimate_count": 6985,
+      "legitimate_intervention_rate": 0.002290622763063708,
+      "legitimate_severe_intervention_rate": 0.0,
+      "maximum_legitimate_persona": "TRAVELLER",
+      "maximum_legitimate_persona_severe_intervention_rate": 0.0,
+      "total_human_review_rate": 0.0
+    },
+    "total_policy_expected_cost": 115625794,
+    "verify_threshold": 0.02
+  },
+  {
+    "estimated_net_protected_value": 54402684,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.9746588693957114,
+    "intervention_recall": 0.970873786407767,
+    "operating_metrics": {
+      "abuse_count": 515,
+      "abuse_intervention_recall": 0.970873786407767,
+      "human_review_count": 0,
+      "legitimate_count": 6985,
+      "legitimate_intervention_rate": 0.0018611309949892628,
+      "legitimate_severe_intervention_rate": 0.0,
+      "maximum_legitimate_persona": "TRAVELLER",
+      "maximum_legitimate_persona_severe_intervention_rate": 0.0,
+      "total_human_review_rate": 0.0
+    },
+    "total_policy_expected_cost": 116245369,
+    "verify_threshold": 0.025348712732535115
+  }
+]

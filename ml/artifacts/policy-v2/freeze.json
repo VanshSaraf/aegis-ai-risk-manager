@@ -1,0 +1,47 @@
+{
+  "candidate_generation": "41 evenly spaced validation-score quantiles plus 0, 1, configured thresholds, Phase 5 threshold, and risk-policy-v1 thresholds; exact duplicates removed",
+  "candidate_threshold_count": 21,
+  "checkpoint": "RISK-POLICY-V2 FROZEN",
+  "cost_config_hash": "5cc3cde3757c9c22582b32ab6c0dc47bc77bd6d8a4364ddaf6bc225986d53111",
+  "cost_profile": "balanced-v1",
+  "evaluated_pair_count": 210,
+  "external_evaluation_seed": 91573,
+  "external_seed_evaluated_at_checkpoint": false,
+  "feasible_candidate_count": 9,
+  "feature_schema_hash": "d14d120c8e218b10cbb624b2ac720e984af87b89f09c33fc8418e088499ce76e",
+  "feature_version": "features-v1",
+  "frozen_at": "2026-08-30T17:00:51.502414+00:00",
+  "graph_corroboration": {
+    "minimum_strong_signals": 2,
+    "recommend_block_minimum_strong_signals": 3,
+    "recommend_block_requires_active_cluster": true,
+    "strong_signal_codes": [
+      "DEVICE_MULTI_CUSTOMER_CONCENTRATION",
+      "DEVICE_MULTI_INSTRUMENT_CONCENTRATION",
+      "RAPID_RELATIONSHIP_EXPANSION",
+      "MULTI_COMPONENT_BRIDGE",
+      "DENSE_MULTI_ENTITY_STRUCTURE"
+    ]
+  },
+  "graph_schema_hash": "df69def87d1c110b0eb6c0008da56b5a7d65895b1e62b9b41aa498222e92b15b",
+  "graph_version": "graph-v1",
+  "hold_threshold": 0.9622880006886806,
+  "model_metadata_hash": "b6f6c3c06b8d321987b55d2d1f049eb0d990c566b9c781a1c8855d7c03526ab1",
+  "model_version": "risk-lgbm-v2",
+  "objective": "minimum validation synthetic total_policy_expected_cost",
+  "operating_constraints": {
+    "assumptions_label": "ILLUSTRATIVE SYNTHETIC OPERATING ASSUMPTIONS",
+    "maximum_any_legitimate_persona_severe_intervention_rate": 0.1,
+    "maximum_legitimate_intervention_rate": 0.05,
+    "maximum_legitimate_severe_intervention_rate": 0.015,
+    "maximum_total_human_review_rate": 0.02,
+    "minimum_abuse_intervention_recall": 0.95
+  },
+  "operating_constraints_hash": "9fd74217d466f5caa5fc9d45bf473afcb3bb939b65f20d8548c5ffd690d5bb6e",
+  "policy_config_hash": "b49092c1a274e35edf8b311cf5eeffc79dfd730555243a59b46a40ae64322cbf",
+  "policy_version": "risk-policy-v2",
+  "source_dataset_version": "synthetic-v2-seed-88421-b4d7eb9e6d",
+  "threshold_selection_data": "seed 88421 validation partition only",
+  "tie_break": "lower legitimate amount touched, then lower human-review count, then lower legitimate severe-intervention count, then fewer total interventions, then higher intervention precision, then higher verify threshold, then higher hold threshold",
+  "verify_threshold": 0.0054821592162737475
+}

@@ -1,0 +1,10 @@
+cost_profile_version: loss-averse-v1
+assumptions_label: ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS
+currency: INR
+abuse_loss_fraction: 1.0
+actions:
+  ALLOW: {legitimate_fixed_cost_paise: 0, legitimate_friction_fraction: 0.0, operational_cost_paise: 0, abuse_intervention_effectiveness: 0.0}
+  VERIFY: {legitimate_fixed_cost_paise: 50, legitimate_friction_fraction: 0.0005, operational_cost_paise: 25, abuse_intervention_effectiveness: 0.45}
+  HOLD: {legitimate_fixed_cost_paise: 150, legitimate_friction_fraction: 0.002, operational_cost_paise: 75, abuse_intervention_effectiveness: 0.85}
+  ESCALATE: {legitimate_fixed_cost_paise: 150, legitimate_friction_fraction: 0.003, operational_cost_paise: 1000, abuse_intervention_effectiveness: 0.93}
+  RECOMMEND_BLOCK: {legitimate_fixed_cost_paise: 150, legitimate_friction_fraction: 0.005, operational_cost_paise: 1800, abuse_intervention_effectiveness: 0.98}

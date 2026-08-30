@@ -1,0 +1,97 @@
+{
+  "ALLOW": {
+    "action": "ALLOW",
+    "detected_cluster_id": null,
+    "graph_signals": [],
+    "graph_structure_score": 0.129167,
+    "graph_version": "graph-v1",
+    "model_score": 0.003274261576368767,
+    "model_version": "risk-lgbm-v2",
+    "reason_codes": [
+      "MODEL_SCORE_BELOW_VERIFY"
+    ],
+    "requires_human_review": false,
+    "score_semantics": "uncalibrated model score; not a fraud probability",
+    "severity": "LOW",
+    "transaction_public_id": "evt_syn_88421_b4d7eb9e_00042500"
+  },
+  "ESCALATE": {
+    "action": "ESCALATE",
+    "detected_cluster_id": null,
+    "graph_signals": [
+      "MULTI_COMPONENT_BRIDGE",
+      "DENSE_MULTI_ENTITY_STRUCTURE"
+    ],
+    "graph_structure_score": 0.539583,
+    "graph_version": "graph-v1",
+    "model_score": 0.9632833529346319,
+    "model_version": "risk-lgbm-v2",
+    "reason_codes": [
+      "MODEL_SCORE_HOLD_BAND",
+      "GRAPH_CORROBORATED",
+      "MULTIPLE_STRUCTURAL_SIGNALS",
+      "GRAPH_CORROBORATED_ESCALATION"
+    ],
+    "requires_human_review": true,
+    "score_semantics": "uncalibrated model score; not a fraud probability",
+    "severity": "CRITICAL",
+    "transaction_public_id": "evt_syn_88421_b4d7eb9e_00042616"
+  },
+  "HOLD": {
+    "action": "HOLD",
+    "detected_cluster_id": null,
+    "graph_signals": [],
+    "graph_structure_score": 0.168202,
+    "graph_version": "graph-v1",
+    "model_score": 0.0038069225184472846,
+    "model_version": "risk-lgbm-v2",
+    "reason_codes": [
+      "MODEL_SCORE_HOLD_BAND"
+    ],
+    "requires_human_review": false,
+    "score_semantics": "uncalibrated model score; not a fraud probability",
+    "severity": "HIGH",
+    "transaction_public_id": "evt_syn_88421_b4d7eb9e_00042502"
+  },
+  "RECOMMEND_BLOCK": {
+    "action": "RECOMMEND_BLOCK",
+    "detected_cluster_id": "offline-structural:evt_syn_88421_b4d7eb9e_00042665",
+    "graph_signals": [
+      "DEVICE_MULTI_CUSTOMER_CONCENTRATION",
+      "DEVICE_MULTI_INSTRUMENT_CONCENTRATION",
+      "DENSE_MULTI_ENTITY_STRUCTURE"
+    ],
+    "graph_structure_score": 0.671429,
+    "graph_version": "graph-v1",
+    "model_score": 0.9632833529346319,
+    "model_version": "risk-lgbm-v2",
+    "reason_codes": [
+      "MODEL_SCORE_HOLD_BAND",
+      "GRAPH_CORROBORATED",
+      "MULTIPLE_STRUCTURAL_SIGNALS",
+      "GRAPH_CORROBORATED_ESCALATION",
+      "ACTIVE_CLUSTER_CORROBORATION",
+      "HUMAN_REVIEW_RECOMMENDATION"
+    ],
+    "requires_human_review": true,
+    "score_semantics": "uncalibrated model score; not a fraud probability",
+    "severity": "CRITICAL",
+    "transaction_public_id": "evt_syn_88421_b4d7eb9e_00042665"
+  },
+  "VERIFY": {
+    "action": "VERIFY",
+    "detected_cluster_id": null,
+    "graph_signals": [],
+    "graph_structure_score": 0.216667,
+    "graph_version": "graph-v1",
+    "model_score": 0.0033938437229383265,
+    "model_version": "risk-lgbm-v2",
+    "reason_codes": [
+      "MODEL_SCORE_VERIFY_BAND"
+    ],
+    "requires_human_review": false,
+    "score_semantics": "uncalibrated model score; not a fraud probability",
+    "severity": "MEDIUM",
+    "transaction_public_id": "evt_syn_88421_b4d7eb9e_00042533"
+  }
+}

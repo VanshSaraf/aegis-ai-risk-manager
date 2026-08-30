@@ -1,0 +1,802 @@
+[
+  {
+    "estimated_net_protected_value": 136231843,
+    "hold_threshold": 0.0033995407602229865,
+    "intervention_precision": 0.34015852047556144,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 34416210,
+    "verify_threshold": 0.003321526422929731
+  },
+  {
+    "estimated_net_protected_value": 136012391,
+    "hold_threshold": 0.0033995407602229865,
+    "intervention_precision": 0.2679500520291363,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 34635662,
+    "verify_threshold": 0.0032932100207504716
+  },
+  {
+    "estimated_net_protected_value": 135816342,
+    "hold_threshold": 0.0033995407602229865,
+    "intervention_precision": 0.22828014184397163,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 34831711,
+    "verify_threshold": 0.0032756203683087103
+  },
+  {
+    "estimated_net_protected_value": 135693160,
+    "hold_threshold": 0.003321526422929731,
+    "intervention_precision": 0.2679500520291363,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 34954893,
+    "verify_threshold": 0.0032932100207504716
+  },
+  {
+    "estimated_net_protected_value": 135497111,
+    "hold_threshold": 0.003321526422929731,
+    "intervention_precision": 0.22828014184397163,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 35150942,
+    "verify_threshold": 0.0032756203683087103
+  },
+  {
+    "estimated_net_protected_value": 134601834,
+    "hold_threshold": 0.0032932100207504716,
+    "intervention_precision": 0.22828014184397163,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 36046219,
+    "verify_threshold": 0.0032756203683087103
+  },
+  {
+    "estimated_net_protected_value": 133659500,
+    "hold_threshold": 0.0033995407602229865,
+    "intervention_precision": 0.0867003367003367,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 36988553,
+    "verify_threshold": 0.003274261576368767
+  },
+  {
+    "estimated_net_protected_value": 133568800,
+    "hold_threshold": 0.0033995407602229865,
+    "intervention_precision": 0.08415032679738563,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 37079253,
+    "verify_threshold": 0.0032735385265637096
+  },
+  {
+    "estimated_net_protected_value": 133408147,
+    "hold_threshold": 0.0033995407602229865,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 37239906,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 133340269,
+    "hold_threshold": 0.003321526422929731,
+    "intervention_precision": 0.0867003367003367,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 37307784,
+    "verify_threshold": 0.003274261576368767
+  },
+  {
+    "estimated_net_protected_value": 133249569,
+    "hold_threshold": 0.003321526422929731,
+    "intervention_precision": 0.08415032679738563,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 37398484,
+    "verify_threshold": 0.0032735385265637096
+  },
+  {
+    "estimated_net_protected_value": 133088916,
+    "hold_threshold": 0.003321526422929731,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 37559137,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 132875195,
+    "hold_threshold": 0.0033995407602229865,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 37772858,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 132819486,
+    "hold_threshold": 0.0033995407602229865,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 37828567,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 132819486,
+    "hold_threshold": 0.0033995407602229865,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 37828567,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 132555964,
+    "hold_threshold": 0.003321526422929731,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 38092089,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 132500255,
+    "hold_threshold": 0.003321526422929731,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 38147798,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 132500255,
+    "hold_threshold": 0.003321526422929731,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 38147798,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 132444992,
+    "hold_threshold": 0.0032932100207504716,
+    "intervention_precision": 0.0867003367003367,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 38203061,
+    "verify_threshold": 0.003274261576368767
+  },
+  {
+    "estimated_net_protected_value": 132354292,
+    "hold_threshold": 0.0032932100207504716,
+    "intervention_precision": 0.08415032679738563,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 38293761,
+    "verify_threshold": 0.0032735385265637096
+  },
+  {
+    "estimated_net_protected_value": 132193639,
+    "hold_threshold": 0.0032932100207504716,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 38454414,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 131736411,
+    "hold_threshold": 0.025348712732535115,
+    "intervention_precision": 0.35988819007686934,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 38911642,
+    "verify_threshold": 0.0033995407602229865
+  },
+  {
+    "estimated_net_protected_value": 131684410,
+    "hold_threshold": 0.025348712732535115,
+    "intervention_precision": 0.34015852047556144,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 38963643,
+    "verify_threshold": 0.003321526422929731
+  },
+  {
+    "estimated_net_protected_value": 131660687,
+    "hold_threshold": 0.0032932100207504716,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 38987366,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 131604978,
+    "hold_threshold": 0.0032932100207504716,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 39043075,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 131604978,
+    "hold_threshold": 0.0032932100207504716,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 39043075,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 131464958,
+    "hold_threshold": 0.025348712732535115,
+    "intervention_precision": 0.2679500520291363,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 39183095,
+    "verify_threshold": 0.0032932100207504716
+  },
+  {
+    "estimated_net_protected_value": 131268909,
+    "hold_threshold": 0.025348712732535115,
+    "intervention_precision": 0.22828014184397163,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 39379144,
+    "verify_threshold": 0.0032756203683087103
+  },
+  {
+    "estimated_net_protected_value": 131170127,
+    "hold_threshold": 0.0032756203683087103,
+    "intervention_precision": 0.0867003367003367,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 39477926,
+    "verify_threshold": 0.003274261576368767
+  },
+  {
+    "estimated_net_protected_value": 131079427,
+    "hold_threshold": 0.0032756203683087103,
+    "intervention_precision": 0.08415032679738563,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 39568626,
+    "verify_threshold": 0.0032735385265637096
+  },
+  {
+    "estimated_net_protected_value": 130918774,
+    "hold_threshold": 0.0032756203683087103,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 39729279,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 130385822,
+    "hold_threshold": 0.0032756203683087103,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 40262231,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 130330113,
+    "hold_threshold": 0.0032756203683087103,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 40317940,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 130330113,
+    "hold_threshold": 0.0032756203683087103,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 40317940,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 129112067,
+    "hold_threshold": 0.025348712732535115,
+    "intervention_precision": 0.0867003367003367,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 41535986,
+    "verify_threshold": 0.003274261576368767
+  },
+  {
+    "estimated_net_protected_value": 129021367,
+    "hold_threshold": 0.025348712732535115,
+    "intervention_precision": 0.08415032679738563,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 41626686,
+    "verify_threshold": 0.0032735385265637096
+  },
+  {
+    "estimated_net_protected_value": 128860714,
+    "hold_threshold": 0.025348712732535115,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 41787339,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 128327762,
+    "hold_threshold": 0.025348712732535115,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 42320291,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 128272053,
+    "hold_threshold": 0.025348712732535115,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 42376000,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 128272053,
+    "hold_threshold": 0.025348712732535115,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 42376000,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 125342419,
+    "hold_threshold": 0.003274261576368767,
+    "intervention_precision": 0.08415032679738563,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 45305634,
+    "verify_threshold": 0.0032735385265637096
+  },
+  {
+    "estimated_net_protected_value": 125181766,
+    "hold_threshold": 0.003274261576368767,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 45466287,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 124648814,
+    "hold_threshold": 0.003274261576368767,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 45999239,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 124593105,
+    "hold_threshold": 0.003274261576368767,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 46054948,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 124593105,
+    "hold_threshold": 0.003274261576368767,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 46054948,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 124586492,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.35988819007686934,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 46061561,
+    "verify_threshold": 0.0033995407602229865
+  },
+  {
+    "estimated_net_protected_value": 124534491,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.34015852047556144,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 46113562,
+    "verify_threshold": 0.003321526422929731
+  },
+  {
+    "estimated_net_protected_value": 124487369,
+    "hold_threshold": 0.0032735385265637096,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 46160684,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 124315039,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.2679500520291363,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 46333014,
+    "verify_threshold": 0.0032932100207504716
+  },
+  {
+    "estimated_net_protected_value": 124118990,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.22828014184397163,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 46529063,
+    "verify_threshold": 0.0032756203683087103
+  },
+  {
+    "estimated_net_protected_value": 123954417,
+    "hold_threshold": 0.0032735385265637096,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 46693636,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 123898708,
+    "hold_threshold": 0.0032735385265637096,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 46749345,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 123898708,
+    "hold_threshold": 0.0032735385265637096,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 46749345,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 123401686,
+    "hold_threshold": 0.0032446555539019897,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 47246367,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 123345977,
+    "hold_threshold": 0.0032446555539019897,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 47302076,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 123345977,
+    "hold_threshold": 0.0032446555539019897,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 47302076,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 121962148,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.0867003367003367,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 48685905,
+    "verify_threshold": 0.003274261576368767
+  },
+  {
+    "estimated_net_protected_value": 121936652,
+    "hold_threshold": 0.003239162021338458,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 48711401,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 121936652,
+    "hold_threshold": 0.003239162021338458,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 48711401,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 121871448,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.08415032679738563,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 48776605,
+    "verify_threshold": 0.0032735385265637096
+  },
+  {
+    "estimated_net_protected_value": 121710795,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 48937258,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 121177843,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 49470210,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 121122134,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 49525919,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 121122134,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 49525919,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 119838840,
+    "hold_threshold": 0.25,
+    "intervention_precision": 0.9746588693957114,
+    "intervention_recall": 0.970873786407767,
+    "total_policy_expected_cost": 50809213,
+    "verify_threshold": 0.025348712732535115
+  },
+  {
+    "estimated_net_protected_value": 115769625,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.35988819007686934,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 54878428,
+    "verify_threshold": 0.0033995407602229865
+  },
+  {
+    "estimated_net_protected_value": 115717624,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.34015852047556144,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 54930429,
+    "verify_threshold": 0.003321526422929731
+  },
+  {
+    "estimated_net_protected_value": 115498172,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.2679500520291363,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 55149881,
+    "verify_threshold": 0.0032932100207504716
+  },
+  {
+    "estimated_net_protected_value": 115302123,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.22828014184397163,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 55345930,
+    "verify_threshold": 0.0032756203683087103
+  },
+  {
+    "estimated_net_protected_value": 113145281,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.0867003367003367,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 57502772,
+    "verify_threshold": 0.003274261576368767
+  },
+  {
+    "estimated_net_protected_value": 113054581,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.08415032679738563,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 57593472,
+    "verify_threshold": 0.0032735385265637096
+  },
+  {
+    "estimated_net_protected_value": 112893928,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 57754125,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 112360976,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 58287077,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 112305267,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 58342786,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 112305267,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 58342786,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 111021973,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.9746588693957114,
+    "intervention_recall": 0.970873786407767,
+    "total_policy_expected_cost": 59626080,
+    "verify_threshold": 0.025348712732535115
+  },
+  {
+    "estimated_net_protected_value": 104750909,
+    "hold_threshold": 0.9368022774307869,
+    "intervention_precision": 0.9955654101995566,
+    "intervention_recall": 0.8718446601941747,
+    "total_policy_expected_cost": 65897144,
+    "verify_threshold": 0.25
+  },
+  {
+    "estimated_net_protected_value": 60522398,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.35988819007686934,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 110125655,
+    "verify_threshold": 0.0033995407602229865
+  },
+  {
+    "estimated_net_protected_value": 60470397,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.34015852047556144,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 110177656,
+    "verify_threshold": 0.003321526422929731
+  },
+  {
+    "estimated_net_protected_value": 60250945,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.2679500520291363,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 110397108,
+    "verify_threshold": 0.0032932100207504716
+  },
+  {
+    "estimated_net_protected_value": 60054896,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.22828014184397163,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 110593157,
+    "verify_threshold": 0.0032756203683087103
+  },
+  {
+    "estimated_net_protected_value": 59150336,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.35988819007686934,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 111497717,
+    "verify_threshold": 0.0033995407602229865
+  },
+  {
+    "estimated_net_protected_value": 59098335,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.34015852047556144,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 111549718,
+    "verify_threshold": 0.003321526422929731
+  },
+  {
+    "estimated_net_protected_value": 58878883,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.2679500520291363,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 111769170,
+    "verify_threshold": 0.0032932100207504716
+  },
+  {
+    "estimated_net_protected_value": 58682834,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.22828014184397163,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 111965219,
+    "verify_threshold": 0.0032756203683087103
+  },
+  {
+    "estimated_net_protected_value": 57898054,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.0867003367003367,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 112749999,
+    "verify_threshold": 0.003274261576368767
+  },
+  {
+    "estimated_net_protected_value": 57807354,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.08415032679738563,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 112840699,
+    "verify_threshold": 0.0032735385265637096
+  },
+  {
+    "estimated_net_protected_value": 57646701,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 113001352,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 57113749,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 113534304,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 57058040,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 113590013,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 57058040,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 113590013,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 56525992,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.0867003367003367,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 114122061,
+    "verify_threshold": 0.003274261576368767
+  },
+  {
+    "estimated_net_protected_value": 56435292,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.08415032679738563,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 114212761,
+    "verify_threshold": 0.0032735385265637096
+  },
+  {
+    "estimated_net_protected_value": 56274639,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.08040593286494926,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 114373414,
+    "verify_threshold": 0.0032446555539019897
+  },
+  {
+    "estimated_net_protected_value": 55774746,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.9746588693957114,
+    "intervention_recall": 0.970873786407767,
+    "total_policy_expected_cost": 114873307,
+    "verify_threshold": 0.025348712732535115
+  },
+  {
+    "estimated_net_protected_value": 55741687,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.06954760297096556,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 114906366,
+    "verify_threshold": 0.003239162021338458
+  },
+  {
+    "estimated_net_protected_value": 55685978,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 114962075,
+    "verify_threshold": 0.003197289131885395
+  },
+  {
+    "estimated_net_protected_value": 55685978,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.06866666666666667,
+    "intervention_recall": 1.0,
+    "total_policy_expected_cost": 114962075,
+    "verify_threshold": 0.0
+  },
+  {
+    "estimated_net_protected_value": 54402684,
+    "hold_threshold": 1.0,
+    "intervention_precision": 0.9746588693957114,
+    "intervention_recall": 0.970873786407767,
+    "total_policy_expected_cost": 116245369,
+    "verify_threshold": 0.025348712732535115
+  },
+  {
+    "estimated_net_protected_value": 49503682,
+    "hold_threshold": 0.9666522633540491,
+    "intervention_precision": 0.9955654101995566,
+    "intervention_recall": 0.8718446601941747,
+    "total_policy_expected_cost": 121144371,
+    "verify_threshold": 0.25
+  }
+]

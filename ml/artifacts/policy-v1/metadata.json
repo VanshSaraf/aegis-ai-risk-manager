@@ -1,0 +1,20 @@
+{
+  "candidate_threshold_count": 15,
+  "cost_config_hash": "5cc3cde3757c9c22582b32ab6c0dc47bc77bd6d8a4364ddaf6bc225986d53111",
+  "cost_profile_version": "balanced-v1",
+  "dataset_version": "synthetic-v2-seed-88421-b4d7eb9e6d",
+  "evaluated_pair_count": 104,
+  "feature_schema_hash": "d14d120c8e218b10cbb624b2ac720e984af87b89f09c33fc8418e088499ce76e",
+  "graph_schema_hash": "df69def87d1c110b0eb6c0008da56b5a7d65895b1e62b9b41aa498222e92b15b",
+  "model_metadata_hash": "b6f6c3c06b8d321987b55d2d1f049eb0d990c566b9c781a1c8855d7c03526ab1",
+  "model_version": "risk-lgbm-v2",
+  "pipeline_runtimes": {
+    "feature_generation_seconds": 4.627884167000957,
+    "graph_generation_seconds": 343.0632794999983,
+    "synthetic_generation_seconds": 1.9105319999998756
+  },
+  "policy_config_hash": "ba3d4dc40f0fe2509404880c594254ec3afdb8f4726244ae687e2f7ed9561c87",
+  "policy_version": "risk-policy-v1",
+  "split_manifest_hash": "df306c94de8bcb8af47c96c6ba7fcd964de50aa7f080a1c02a89dc5e2035c8b1",
+  "test_evaluated_at": "2026-08-30T13:25:14.326688+00:00"
+}

@@ -1,0 +1,10 @@
+cost_profile_version: customer-protective-v1
+assumptions_label: ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS
+currency: INR
+abuse_loss_fraction: 0.75
+actions:
+  ALLOW: {legitimate_fixed_cost_paise: 0, legitimate_friction_fraction: 0.0, operational_cost_paise: 0, abuse_intervention_effectiveness: 0.0}
+  VERIFY: {legitimate_fixed_cost_paise: 200, legitimate_friction_fraction: 0.003, operational_cost_paise: 100, abuse_intervention_effectiveness: 0.30}
+  HOLD: {legitimate_fixed_cost_paise: 600, legitimate_friction_fraction: 0.01, operational_cost_paise: 200, abuse_intervention_effectiveness: 0.70}
+  ESCALATE: {legitimate_fixed_cost_paise: 600, legitimate_friction_fraction: 0.015, operational_cost_paise: 2000, abuse_intervention_effectiveness: 0.80}
+  RECOMMEND_BLOCK: {legitimate_fixed_cost_paise: 600, legitimate_friction_fraction: 0.025, operational_cost_paise: 3500, abuse_intervention_effectiveness: 0.90}

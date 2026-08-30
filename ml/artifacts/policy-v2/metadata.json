@@ -1,0 +1,28 @@
+{
+  "candidate_generation": "41 evenly spaced validation-score quantiles plus 0, 1, configured thresholds, Phase 5 threshold, and risk-policy-v1 thresholds; exact duplicates removed",
+  "candidate_threshold_count": 21,
+  "cost_config_hash": "5cc3cde3757c9c22582b32ab6c0dc47bc77bd6d8a4364ddaf6bc225986d53111",
+  "evaluated_pair_count": 210,
+  "external_evaluation": {
+    "dataset_version": "synthetic-v2-seed-91573-a766696cac",
+    "evaluated_at": "2026-08-30T17:07:44.419750+00:00",
+    "seed": 91573
+  },
+  "feasible_candidate_count": 9,
+  "operating_constraints_hash": "9fd74217d466f5caa5fc9d45bf473afcb3bb939b65f20d8548c5ffd690d5bb6e",
+  "pipeline_runtimes": {
+    "feature_generation_seconds": 4.594065375000355,
+    "graph_generation_seconds": 343.32209837499977,
+    "synthetic_generation_seconds": 2.0293431669997517
+  },
+  "policy_config_hash": "b49092c1a274e35edf8b311cf5eeffc79dfd730555243a59b46a40ae64322cbf",
+  "policy_version": "risk-policy-v2",
+  "rejected_by_constraint": {
+    "maximum_any_legitimate_persona_severe_intervention_rate": 77,
+    "maximum_legitimate_intervention_rate": 181,
+    "maximum_legitimate_severe_intervention_rate": 77,
+    "maximum_total_human_review_rate": 152,
+    "minimum_abuse_intervention_recall": 10,
+    "populated_verify_band": 1
+  }
+}

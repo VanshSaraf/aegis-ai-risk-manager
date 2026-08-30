@@ -105,6 +105,36 @@ Ground-truth label, scenario, and ring identifiers exist on synthetic transactio
 `risk-lgbm-v2` consumes exactly the registered 52 features-v1 and 25 graph-v1 raw metrics. Offline
 assembly keeps evaluation truth separate, computes point-in-time history before chronological
 group splitting, and serializes a schema-validated LightGBM model. Runtime inference returns only
-an uncalibrated `model_score`. Later, and only after approval, a deterministic policy layer may
-combine that score with graph evidence and business constraints; an investigator may explain
-already assembled evidence. Neither later component performs computation yet.
+an uncalibrated `model_score`.
+
+## Bounded policy and operational assessment
+
+The submission-facing decision path is:
+
+```text
+seed 88421 VALIDATION metadata -> cost objective + operating constraints
+                                             -> frozen risk-policy-v2 thresholds
+
+features-v1 + graph-v1 -> risk-lgbm-v2 -> uncalibrated model score
+graph-v1 --------------------------------> separate corroborating evidence
+                                             -> risk-policy-v2 -> bounded action
+```
+
+The offline optimizer may read labels, amounts, personas, and validation distributions. It uses
+them only to select and freeze global thresholds subject to abuse-capture, legitimate-friction,
+severe-intervention, review-capacity, and cohort budgets. Runtime policy does not receive or load
+that evaluation metadata, cost profiles, or operating constraints.
+
+`risk-policy-v2` maps the score into ALLOW, VERIFY, or HOLD, then permits named graph-v1 evidence
+to corroborate only an existing HOLD as ESCALATE or, with stricter evidence and an active cluster,
+RECOMMEND_BLOCK. There is no weighted fused score because the model already consumes graph
+metrics. Model score, structural score, and evidence remain separately traceable. Policy-v1 is
+retained as an unconstrained development policy for reproducibility and comparison.
+
+The API assessment path reuses immutable point-in-time feature and graph snapshots, loads the
+frozen model, persists versioned prediction and decision rows, and writes truth-free audit events.
+It has no payment-action adapter. Future model and policy versions can coexist; a mismatch under
+the same version is rejected. See [POLICY_ENGINE.md](POLICY_ENGINE.md).
+
+The investigator boundary remains unimplemented. Any future LLM must be read-only,
+evidence-grounded, and outside the transaction decision path.

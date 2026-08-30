@@ -68,8 +68,15 @@ is not promised across LightGBM, operating-system, or CPU versions.
   certainty, especially within subtype slices.
 - Graph-only outperforming combined F1 at their independently selected thresholds shows that the
   current fusion and threshold objective are not globally optimized.
-- No final risk fusion, policy, human-review workflow, explanations, or autonomous action exists.
+- `risk-lgbm-v2` was not retrained or altered during Phase 6B. `risk-policy-v2` is a separate
+  constrained operating layer over its unchanged uncalibrated score, not probability calibration,
+  a deployed review workflow, an explanation system, or an autonomous action.
+- Policy-v1's unconstrained synthetic cost optimization touched substantial legitimate volume.
+  Policy-v2 reduces that friction using predetermined validation budgets, but its external 11.17%
+  legitimate intervention rate exceeded its 5% validation budget. Neither policy is suitable for
+  production adoption without real-data validation and governance.
 
 The easier `risk-lgbm-v1` artifact is retained for reproducibility and diagnosis, not as the
 submission headline. Full traceability is in `ml/artifacts/model-v2/benchmark.json`, with the
-method in [ML_EVALUATION.md](ML_EVALUATION.md).
+method in [ML_EVALUATION.md](ML_EVALUATION.md). Phase 6 policy behavior and cost assumptions are
+documented in [POLICY_ENGINE.md](POLICY_ENGINE.md).

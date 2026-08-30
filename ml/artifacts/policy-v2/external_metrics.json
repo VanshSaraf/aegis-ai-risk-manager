@@ -1,0 +1,51 @@
+{
+  "assumptions_label": "ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS",
+  "dataset": {
+    "abuse_count": 3500,
+    "abuse_prevalence": 0.07,
+    "dataset_version": "synthetic-v2-seed-91573-a766696cac",
+    "legitimate_count": 46500,
+    "persona_distribution": {
+      "CORPORATE_OR_CAMPUS_NETWORK": 7034,
+      "FAMILY_HOUSEHOLD": 8077,
+      "POWER_SHOPPER": 8848,
+      "STANDARD_RETAIL": 19940,
+      "TRAVELLER": 2601
+    },
+    "ring_count": 130,
+    "rings_by_scenario": {
+      "ACCOUNT_FARM": 28,
+      "CARD_TESTING": 40,
+      "COLLUSIVE_RING": 28,
+      "IDENTITY_ROTATION": 34
+    },
+    "seed": 91573,
+    "subtype_distribution": {
+      "ACCOUNT_FARM": 840,
+      "CARD_TESTING": 980,
+      "COLLUSIVE_RING": 840,
+      "IDENTITY_ROTATION": 840
+    },
+    "transaction_count": 50000
+  },
+  "evaluated_at": "2026-08-30T17:07:44.419750+00:00",
+  "evaluation_type": "external held-out synthetic benchmark",
+  "model_diagnostic": {
+    "f1": 0.806098696461825,
+    "false_negative": 37,
+    "false_positive": 1629,
+    "pr_auc": 0.9858323924950751,
+    "precision": 0.6800864100549883,
+    "recall": 0.9894285714285714,
+    "roc_auc": 0.9983916559139785,
+    "threshold": 0.025348712732535115,
+    "true_negative": 44871,
+    "true_positive": 3463
+  },
+  "pipeline_runtimes": {
+    "feature_generation_seconds": 4.684039042000222,
+    "graph_generation_seconds": 344.68409925000014,
+    "synthetic_generation_seconds": 1.9335195839994412
+  },
+  "policy_freeze_timestamp": "2026-08-30T17:00:51.502414+00:00"
+}

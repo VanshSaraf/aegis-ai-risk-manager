@@ -4,11 +4,12 @@ Aegis is a graph-assisted system intended to detect coordinated payment abuse su
 
 This repository implements the Phase 1 backend/data foundation, Phase 2 deterministic synthetic
 payment world, Phase 3 point-in-time feature engineering, Phase 4 point-in-time graph intelligence,
-and Phase 5 leakage-controlled LightGBM training and held-out synthetic evaluation.
+Phase 5 leakage-controlled LightGBM training and held-out synthetic evaluation, and Phase 6
+cost-aware bounded policy recommendations with an operational assessment API.
 
-**Final risk fusion, policy decisions, calibrated probabilities, SHAP explanations, LLM
-investigation, frontend, and realtime streaming are not implemented.** `risk-lgbm-v2` produces an
-uncalibrated model score, not a fraud probability or payment decision.
+**Calibrated probabilities, SHAP explanations, LLM investigation, frontend, realtime streaming,
+and autonomous payment actions are not implemented.** `risk-lgbm-v2` produces an uncalibrated
+model score. `risk-policy-v2` produces bounded recommendations; it performs no payment action.
 
 ## Architecture boundaries
 
@@ -18,7 +19,9 @@ uncalibrated model score, not a fraud probability or payment decision.
 - `packages/synthetic` owns reproducible population, behavior, scenarios, manifests, and sanity validation.
 - `ml/training` and `ml/evaluation` own offline assembly, grouped temporal splitting, training,
   diagnostics, and reproducible artifacts.
-- `packages/policy_engine` and `packages/investigator` remain unimplemented boundaries.
+- `packages/policy_engine` owns cost profiles, validation-only threshold optimization, bounded
+  runtime decisions, backtesting, and operational persistence. `packages/investigator` remains an
+  unimplemented boundary.
 - `ml` and `configs` hold versioned offline artifacts and experiment configuration.
 - PostgreSQL is the system of record. Each valid incoming event is committed to `raw_events` before normalization starts.
 
@@ -27,6 +30,8 @@ See [docs/FEATURES.md](docs/FEATURES.md) for scoring-moment, window, registry, a
 See [docs/GRAPH_INTELLIGENCE.md](docs/GRAPH_INTELLIGENCE.md) for graph and cluster semantics.
 See [docs/ML_EVALUATION.md](docs/ML_EVALUATION.md) and [docs/MODEL_CARD.md](docs/MODEL_CARD.md)
 for the Phase 5 methodology, actual metrics, and limitations.
+See [docs/POLICY_ENGINE.md](docs/POLICY_ENGINE.md) for Phase 6 score bands, graph corroboration,
+cost assumptions, freeze discipline, and operational limitations.
 
 ## Local development
 
@@ -55,6 +60,8 @@ uvicorn apps.api.app.main:app --reload
 make test
 make lint
 make ml-smoke
+make policy-build
+make policy-v2-freeze
 ```
 
 Integration tests require `AEGIS_TEST_DATABASE_URL` pointing to a disposable PostgreSQL database. They skip explicitly when it is absent.
@@ -110,6 +117,32 @@ from 0.967010 to 0.964948. These designed synthetic results do not estimate perf
 Razorpay or other production traffic. The easier `risk-lgbm-v1` benchmark remains available only
 as a retrospective diagnostic baseline.
 
+## Constrained bounded policy assessment
+
+The submission-facing `risk-policy-v2` uses separate model and graph evidence; there is no weighted
+fused score. It minimizes the balanced-v1 illustrative synthetic cost only among validation
+candidates satisfying predetermined abuse-capture, customer-friction, severe-intervention,
+human-review, and cohort budgets. Persona is offline validation metadata and never a runtime input.
+
+Policy-v1 remains reproducible as a development failure: unconstrained cost optimization was
+mathematically valid but created excessive customer friction. Build the preserved policy-v1 report
+or the policy-v2 freeze with:
+
+```bash
+python scripts/build_policy_artifacts.py
+python scripts/build_policy_v2_artifacts.py
+```
+
+Policy-v2 was frozen before the previously unseen 50,000-event synthetic-v2 seed 91573 was
+generated. On that external held-out synthetic benchmark, it reduced legitimate intervention from
+policy-v1's 25.27% to 11.17% and eliminated severe legitimate interventions, while allowing 2 abuse
+transactions and producing higher remaining assumed abuse loss. Its external legitimate
+intervention rate exceeded the 5% validation budget, an honestly retained generalization failure.
+
+All monetary outputs and operating budgets are illustrative synthetic assumptions, not production
+or Razorpay economics. The operational API defaults to risk-policy-v2 and reuses immutable feature,
+graph, prediction, and versioned policy rows for repeated identical assessments.
+
 ## Implemented API
 
 - `GET /health`
@@ -117,4 +150,5 @@ as a retrospective diagnostic baseline.
 - `POST /api/v1/transactions`
 - `GET /api/v1/transactions`
 - `GET /api/v1/transactions/{public_id}`
+- `POST /api/v1/transactions/{public_id}/assess`
 - `GET /api/v1/entities/{entity_type}/{public_id}/neighbors`

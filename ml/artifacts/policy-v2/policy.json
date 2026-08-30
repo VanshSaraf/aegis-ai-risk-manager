@@ -1,0 +1,26 @@
+{
+  "cost_profile": "balanced-v1",
+  "feature_version": "features-v1",
+  "graph_corroboration": {
+    "minimum_strong_signals": 2,
+    "recommend_block_minimum_strong_signals": 3,
+    "recommend_block_requires_active_cluster": true,
+    "strong_signal_codes": [
+      "DEVICE_MULTI_CUSTOMER_CONCENTRATION",
+      "DEVICE_MULTI_INSTRUMENT_CONCENTRATION",
+      "RAPID_RELATIONSHIP_EXPANSION",
+      "MULTI_COMPONENT_BRIDGE",
+      "DENSE_MULTI_ENTITY_STRUCTURE"
+    ]
+  },
+  "graph_version": "graph-v1",
+  "hold_threshold": 0.9622880006886806,
+  "human_review_actions": [
+    "ESCALATE",
+    "RECOMMEND_BLOCK"
+  ],
+  "model_version": "risk-lgbm-v2",
+  "policy_version": "risk-policy-v2",
+  "schema_version": "policy-schema-v1",
+  "verify_threshold": 0.0054821592162737475
+}

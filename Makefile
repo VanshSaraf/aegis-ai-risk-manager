@@ -1,4 +1,4 @@
-.PHONY: up down migrate test lint format synthetic synthetic-smoke features graph ml-smoke train-model train-model-v2
+.PHONY: up down migrate test lint format synthetic synthetic-smoke features graph ml-smoke train-model train-model-v2 policy-build policy-v2-freeze policy-v2-external
 
 up:
 	docker compose up --build
@@ -40,3 +40,12 @@ train-model:
 
 train-model-v2:
 	python scripts/train_model.py --config configs/ml/model-v2.yaml --artifact-directory ml/artifacts/model-v2 --evaluate-test
+
+policy-build:
+	python scripts/build_policy_artifacts.py
+
+policy-v2-freeze:
+	python scripts/build_policy_v2_artifacts.py
+
+policy-v2-external:
+	python scripts/build_policy_v2_artifacts.py --evaluate-external

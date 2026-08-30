@@ -1,0 +1,52 @@
+{
+  "CORPORATE_OR_CAMPUS_NETWORK": {
+    "ALLOW": 6534,
+    "ESCALATE": 0,
+    "HOLD": 0,
+    "RECOMMEND_BLOCK": 0,
+    "VERIFY": 500,
+    "intervention_rate": 0.0710833096388968,
+    "severe_intervention_rate": 0.0,
+    "transactions": 7034
+  },
+  "FAMILY_HOUSEHOLD": {
+    "ALLOW": 7224,
+    "ESCALATE": 0,
+    "HOLD": 0,
+    "RECOMMEND_BLOCK": 0,
+    "VERIFY": 853,
+    "intervention_rate": 0.10560851801411415,
+    "severe_intervention_rate": 0.0,
+    "transactions": 8077
+  },
+  "POWER_SHOPPER": {
+    "ALLOW": 7784,
+    "ESCALATE": 0,
+    "HOLD": 0,
+    "RECOMMEND_BLOCK": 0,
+    "VERIFY": 1064,
+    "intervention_rate": 0.12025316455696203,
+    "severe_intervention_rate": 0.0,
+    "transactions": 8848
+  },
+  "STANDARD_RETAIL": {
+    "ALLOW": 17647,
+    "ESCALATE": 0,
+    "HOLD": 0,
+    "RECOMMEND_BLOCK": 0,
+    "VERIFY": 2293,
+    "intervention_rate": 0.1149949849548646,
+    "severe_intervention_rate": 0.0,
+    "transactions": 19940
+  },
+  "TRAVELLER": {
+    "ALLOW": 2116,
+    "ESCALATE": 0,
+    "HOLD": 0,
+    "RECOMMEND_BLOCK": 0,
+    "VERIFY": 485,
+    "intervention_rate": 0.18646674356016918,
+    "severe_intervention_rate": 0.0,
+    "transactions": 2601
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "checkpoint": "RISK-POLICY-V1 FROZEN",
+  "cost_config_hash": "5cc3cde3757c9c22582b32ab6c0dc47bc77bd6d8a4364ddaf6bc225986d53111",
+  "cost_profile": "balanced-v1",
+  "feature_schema_hash": "d14d120c8e218b10cbb624b2ac720e984af87b89f09c33fc8418e088499ce76e",
+  "feature_version": "features-v1",
+  "frozen_at": "2026-08-30T13:25:14.197576+00:00",
+  "graph_corroboration": {
+    "minimum_strong_signals": 2,
+    "recommend_block_minimum_strong_signals": 3,
+    "recommend_block_requires_active_cluster": true,
+    "strong_signal_codes": [
+      "DEVICE_MULTI_CUSTOMER_CONCENTRATION",
+      "DEVICE_MULTI_INSTRUMENT_CONCENTRATION",
+      "RAPID_RELATIONSHIP_EXPANSION",
+      "MULTI_COMPONENT_BRIDGE",
+      "DENSE_MULTI_ENTITY_STRUCTURE"
+    ]
+  },
+  "graph_schema_hash": "df69def87d1c110b0eb6c0008da56b5a7d65895b1e62b9b41aa498222e92b15b",
+  "graph_version": "graph-v1",
+  "hold_threshold": 0.0033995407602229865,
+  "model_metadata_hash": "b6f6c3c06b8d321987b55d2d1f049eb0d990c566b9c781a1c8855d7c03526ab1",
+  "model_version": "risk-lgbm-v2",
+  "objective": "minimum validation synthetic total_policy_expected_cost",
+  "policy_config_hash": "ba3d4dc40f0fe2509404880c594254ec3afdb8f4726244ae687e2f7ed9561c87",
+  "policy_version": "risk-policy-v1",
+  "test_evaluated_at_checkpoint": false,
+  "threshold_selection_data": "validation only",
+  "tie_break": "lower legitimate amount touched, then fewer interventions, then higher verify threshold, then higher hold threshold",
+  "verify_threshold": 0.003321526422929731
+}

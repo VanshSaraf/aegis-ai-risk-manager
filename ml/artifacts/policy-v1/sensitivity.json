@@ -1,0 +1,920 @@
+{
+  "balanced-v1": {
+    "objective": "minimum validation synthetic total_policy_expected_cost",
+    "policy": {
+      "cost_profile": "balanced-v1",
+      "feature_version": "features-v1",
+      "graph_corroboration": {
+        "minimum_strong_signals": 2,
+        "recommend_block_minimum_strong_signals": 3,
+        "recommend_block_requires_active_cluster": true,
+        "strong_signal_codes": [
+          "DEVICE_MULTI_CUSTOMER_CONCENTRATION",
+          "DEVICE_MULTI_INSTRUMENT_CONCENTRATION",
+          "RAPID_RELATIONSHIP_EXPANSION",
+          "MULTI_COMPONENT_BRIDGE",
+          "DENSE_MULTI_ENTITY_STRUCTURE"
+        ]
+      },
+      "graph_version": "graph-v1",
+      "hold_threshold": 0.0033995407602229865,
+      "human_review_actions": [
+        "ESCALATE",
+        "RECOMMEND_BLOCK"
+      ],
+      "model_version": "risk-lgbm-v2",
+      "policy_version": "risk-policy-v1",
+      "schema_version": "policy-schema-v1",
+      "verify_threshold": 0.003321526422929731
+    },
+    "test": {
+      "action_counts": {
+        "ALLOW": 5998,
+        "ESCALATE": 115,
+        "HOLD": 1117,
+        "RECOMMEND_BLOCK": 208,
+        "VERIFY": 62
+      },
+      "amounts_paise": {
+        "abuse_amount_allowed": 0,
+        "abuse_amount_touched": 189189195,
+        "amount_weighted_abuse_intervention_rate": 1.0,
+        "legitimate_amount_touched": 441056075,
+        "total_abuse_amount": 189189195,
+        "total_legitimate_amount": 2858224358,
+        "total_transaction_amount": 3047413553
+      },
+      "assumptions_label": "ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS",
+      "cost_profile_hash": "5cc3cde3757c9c22582b32ab6c0dc47bc77bd6d8a4364ddaf6bc225986d53111",
+      "cost_profile_version": "balanced-v1",
+      "costs_paise": {
+        "allow_all_baseline_expected_loss": 189189195,
+        "estimated_net_protected_value": 155849570,
+        "legitimate_intervention_friction_cost": 2176948,
+        "operational_action_cost": 807300,
+        "remaining_abuse_loss": 30355377,
+        "total_policy_expected_cost": 33339625
+      },
+      "intervention": {
+        "f1": 0.48817312531454454,
+        "false_negative": 0,
+        "false_positive": 1017,
+        "precision": 0.3229027962716378,
+        "recall": 1.0,
+        "true_negative": 5998,
+        "true_positive": 485
+      },
+      "persona_actions": {
+        "CORPORATE_OR_CAMPUS_NETWORK": {
+          "ALLOW": 1005,
+          "ESCALATE": 0,
+          "HOLD": 11,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 0,
+          "severe_intervention_rate": 0.010826771653543307,
+          "transactions": 1016
+        },
+        "FAMILY_HOUSEHOLD": {
+          "ALLOW": 1247,
+          "ESCALATE": 11,
+          "HOLD": 39,
+          "RECOMMEND_BLOCK": 51,
+          "VERIFY": 48,
+          "severe_intervention_rate": 0.07234957020057306,
+          "transactions": 1396
+        },
+        "POWER_SHOPPER": {
+          "ALLOW": 834,
+          "ESCALATE": 3,
+          "HOLD": 409,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 7,
+          "severe_intervention_rate": 0.32881085395051873,
+          "transactions": 1253
+        },
+        "STANDARD_RETAIL": {
+          "ALLOW": 2884,
+          "ESCALATE": 0,
+          "HOLD": 48,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 0,
+          "severe_intervention_rate": 0.01637107776261937,
+          "transactions": 2932
+        },
+        "TRAVELLER": {
+          "ALLOW": 28,
+          "ESCALATE": 0,
+          "HOLD": 383,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 7,
+          "severe_intervention_rate": 0.916267942583732,
+          "transactions": 418
+        }
+      },
+      "policy_config_hash": "ba3d4dc40f0fe2509404880c594254ec3afdb8f4726244ae687e2f7ed9561c87",
+      "policy_version": "risk-policy-v1",
+      "scenario_actions": {
+        "ACCOUNT_FARM": {
+          "ALLOW": 0,
+          "ESCALATE": 35,
+          "HOLD": 30,
+          "RECOMMEND_BLOCK": 55,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "CARD_TESTING": {
+          "ALLOW": 0,
+          "ESCALATE": 10,
+          "HOLD": 67,
+          "RECOMMEND_BLOCK": 53,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 130
+        },
+        "COLLUSIVE_RING": {
+          "ALLOW": 0,
+          "ESCALATE": 38,
+          "HOLD": 58,
+          "RECOMMEND_BLOCK": 24,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "IDENTITY_ROTATION": {
+          "ALLOW": 0,
+          "ESCALATE": 18,
+          "HOLD": 72,
+          "RECOMMEND_BLOCK": 25,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 115
+        }
+      },
+      "severe_intervention": {
+        "f1": 0.503896103896104,
+        "false_negative": 0,
+        "false_positive": 955,
+        "precision": 0.3368055555555556,
+        "recall": 1.0,
+        "true_negative": 6060,
+        "true_positive": 485
+      },
+      "thresholds": {
+        "hold_threshold": 0.0033995407602229865,
+        "verify_threshold": 0.003321526422929731
+      }
+    },
+    "tie_break": "lower legitimate amount touched, then fewer interventions, then higher verify threshold, then higher hold threshold",
+    "validation": {
+      "action_counts": {
+        "ALLOW": 5986,
+        "ESCALATE": 107,
+        "HOLD": 1139,
+        "RECOMMEND_BLOCK": 185,
+        "VERIFY": 83
+      },
+      "amounts_paise": {
+        "abuse_amount_allowed": 0,
+        "abuse_amount_touched": 170648053,
+        "amount_weighted_abuse_intervention_rate": 1.0,
+        "legitimate_amount_touched": 452893673,
+        "total_abuse_amount": 170648053,
+        "total_legitimate_amount": 2967329641,
+        "total_transaction_amount": 3137977694
+      },
+      "assumptions_label": "ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS",
+      "cost_profile_hash": "5cc3cde3757c9c22582b32ab6c0dc47bc77bd6d8a4364ddaf6bc225986d53111",
+      "cost_profile_version": "balanced-v1",
+      "costs_paise": {
+        "allow_all_baseline_expected_loss": 170648053,
+        "estimated_net_protected_value": 136231843,
+        "legitimate_intervention_friction_cost": 1998601,
+        "operational_action_cost": 741050,
+        "remaining_abuse_loss": 31676559,
+        "total_policy_expected_cost": 34416210
+      },
+      "intervention": {
+        "f1": 0.507639231148349,
+        "false_negative": 0,
+        "false_positive": 999,
+        "precision": 0.34015852047556144,
+        "recall": 1.0,
+        "true_negative": 5986,
+        "true_positive": 515
+      },
+      "persona_actions": {
+        "CORPORATE_OR_CAMPUS_NETWORK": {
+          "ALLOW": 1030,
+          "ESCALATE": 0,
+          "HOLD": 8,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 0,
+          "severe_intervention_rate": 0.007707129094412331,
+          "transactions": 1038
+        },
+        "FAMILY_HOUSEHOLD": {
+          "ALLOW": 1124,
+          "ESCALATE": 1,
+          "HOLD": 9,
+          "RECOMMEND_BLOCK": 13,
+          "VERIFY": 47,
+          "severe_intervention_rate": 0.019262981574539362,
+          "transactions": 1194
+        },
+        "POWER_SHOPPER": {
+          "ALLOW": 979,
+          "ESCALATE": 1,
+          "HOLD": 472,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 26,
+          "severe_intervention_rate": 0.3200270635994587,
+          "transactions": 1478
+        },
+        "STANDARD_RETAIL": {
+          "ALLOW": 2800,
+          "ESCALATE": 0,
+          "HOLD": 49,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 1,
+          "severe_intervention_rate": 0.01719298245614035,
+          "transactions": 2850
+        },
+        "TRAVELLER": {
+          "ALLOW": 53,
+          "ESCALATE": 0,
+          "HOLD": 363,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 9,
+          "severe_intervention_rate": 0.8541176470588235,
+          "transactions": 425
+        }
+      },
+      "policy_config_hash": "ba3d4dc40f0fe2509404880c594254ec3afdb8f4726244ae687e2f7ed9561c87",
+      "policy_version": "risk-policy-v1",
+      "scenario_actions": {
+        "ACCOUNT_FARM": {
+          "ALLOW": 0,
+          "ESCALATE": 35,
+          "HOLD": 30,
+          "RECOMMEND_BLOCK": 55,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "CARD_TESTING": {
+          "ALLOW": 0,
+          "ESCALATE": 14,
+          "HOLD": 81,
+          "RECOMMEND_BLOCK": 55,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 150
+        },
+        "COLLUSIVE_RING": {
+          "ALLOW": 0,
+          "ESCALATE": 37,
+          "HOLD": 58,
+          "RECOMMEND_BLOCK": 25,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "IDENTITY_ROTATION": {
+          "ALLOW": 0,
+          "ESCALATE": 19,
+          "HOLD": 69,
+          "RECOMMEND_BLOCK": 37,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 125
+        }
+      },
+      "severe_intervention": {
+        "f1": 0.5292908530318603,
+        "false_negative": 0,
+        "false_positive": 916,
+        "precision": 0.35988819007686934,
+        "recall": 1.0,
+        "true_negative": 6069,
+        "true_positive": 515
+      },
+      "thresholds": {
+        "hold_threshold": 0.0033995407602229865,
+        "verify_threshold": 0.003321526422929731
+      }
+    }
+  },
+  "customer-protective-v1": {
+    "objective": "minimum validation synthetic total_policy_expected_cost",
+    "policy": {
+      "cost_profile": "customer-protective-v1",
+      "feature_version": "features-v1",
+      "graph_corroboration": {
+        "minimum_strong_signals": 2,
+        "recommend_block_minimum_strong_signals": 3,
+        "recommend_block_requires_active_cluster": true,
+        "strong_signal_codes": [
+          "DEVICE_MULTI_CUSTOMER_CONCENTRATION",
+          "DEVICE_MULTI_INSTRUMENT_CONCENTRATION",
+          "RAPID_RELATIONSHIP_EXPANSION",
+          "MULTI_COMPONENT_BRIDGE",
+          "DENSE_MULTI_ENTITY_STRUCTURE"
+        ]
+      },
+      "graph_version": "graph-v1",
+      "hold_threshold": 0.0033995407602229865,
+      "human_review_actions": [
+        "ESCALATE",
+        "RECOMMEND_BLOCK"
+      ],
+      "model_version": "risk-lgbm-v2",
+      "policy_version": "risk-policy-v1",
+      "schema_version": "policy-schema-v1",
+      "verify_threshold": 0.003321526422929731
+    },
+    "test": {
+      "action_counts": {
+        "ALLOW": 5998,
+        "ESCALATE": 115,
+        "HOLD": 1117,
+        "RECOMMEND_BLOCK": 208,
+        "VERIFY": 62
+      },
+      "amounts_paise": {
+        "abuse_amount_allowed": 0,
+        "abuse_amount_touched": 189189195,
+        "amount_weighted_abuse_intervention_rate": 1.0,
+        "legitimate_amount_touched": 441056075,
+        "total_abuse_amount": 189189195,
+        "total_legitimate_amount": 2858224358,
+        "total_transaction_amount": 3047413553
+      },
+      "assumptions_label": "ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS",
+      "cost_profile_hash": "9dbfa57d394397d2c1e224563fd45e30567b93d13dd29a8858293b74b656824c",
+      "cost_profile_version": "customer-protective-v1",
+      "costs_paise": {
+        "allow_all_baseline_expected_loss": 141891896,
+        "estimated_net_protected_value": 105533286,
+        "legitimate_intervention_friction_cost": 5309893,
+        "operational_action_cost": 1187600,
+        "remaining_abuse_loss": 29861117,
+        "total_policy_expected_cost": 36358610
+      },
+      "intervention": {
+        "f1": 0.48817312531454454,
+        "false_negative": 0,
+        "false_positive": 1017,
+        "precision": 0.3229027962716378,
+        "recall": 1.0,
+        "true_negative": 5998,
+        "true_positive": 485
+      },
+      "persona_actions": {
+        "CORPORATE_OR_CAMPUS_NETWORK": {
+          "ALLOW": 1005,
+          "ESCALATE": 0,
+          "HOLD": 11,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 0,
+          "severe_intervention_rate": 0.010826771653543307,
+          "transactions": 1016
+        },
+        "FAMILY_HOUSEHOLD": {
+          "ALLOW": 1247,
+          "ESCALATE": 11,
+          "HOLD": 39,
+          "RECOMMEND_BLOCK": 51,
+          "VERIFY": 48,
+          "severe_intervention_rate": 0.07234957020057306,
+          "transactions": 1396
+        },
+        "POWER_SHOPPER": {
+          "ALLOW": 834,
+          "ESCALATE": 3,
+          "HOLD": 409,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 7,
+          "severe_intervention_rate": 0.32881085395051873,
+          "transactions": 1253
+        },
+        "STANDARD_RETAIL": {
+          "ALLOW": 2884,
+          "ESCALATE": 0,
+          "HOLD": 48,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 0,
+          "severe_intervention_rate": 0.01637107776261937,
+          "transactions": 2932
+        },
+        "TRAVELLER": {
+          "ALLOW": 28,
+          "ESCALATE": 0,
+          "HOLD": 383,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 7,
+          "severe_intervention_rate": 0.916267942583732,
+          "transactions": 418
+        }
+      },
+      "policy_config_hash": "54abbcbf83b4afffa5c402461d56686e2b3f651c951d150fb6835745c15f59d6",
+      "policy_version": "risk-policy-v1",
+      "scenario_actions": {
+        "ACCOUNT_FARM": {
+          "ALLOW": 0,
+          "ESCALATE": 35,
+          "HOLD": 30,
+          "RECOMMEND_BLOCK": 55,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "CARD_TESTING": {
+          "ALLOW": 0,
+          "ESCALATE": 10,
+          "HOLD": 67,
+          "RECOMMEND_BLOCK": 53,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 130
+        },
+        "COLLUSIVE_RING": {
+          "ALLOW": 0,
+          "ESCALATE": 38,
+          "HOLD": 58,
+          "RECOMMEND_BLOCK": 24,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "IDENTITY_ROTATION": {
+          "ALLOW": 0,
+          "ESCALATE": 18,
+          "HOLD": 72,
+          "RECOMMEND_BLOCK": 25,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 115
+        }
+      },
+      "severe_intervention": {
+        "f1": 0.503896103896104,
+        "false_negative": 0,
+        "false_positive": 955,
+        "precision": 0.3368055555555556,
+        "recall": 1.0,
+        "true_negative": 6060,
+        "true_positive": 485
+      },
+      "thresholds": {
+        "hold_threshold": 0.0033995407602229865,
+        "verify_threshold": 0.003321526422929731
+      }
+    },
+    "tie_break": "lower legitimate amount touched, then fewer interventions, then higher verify threshold, then higher hold threshold",
+    "validation": {
+      "action_counts": {
+        "ALLOW": 5986,
+        "ESCALATE": 107,
+        "HOLD": 1139,
+        "RECOMMEND_BLOCK": 185,
+        "VERIFY": 83
+      },
+      "amounts_paise": {
+        "abuse_amount_allowed": 0,
+        "abuse_amount_touched": 170648053,
+        "amount_weighted_abuse_intervention_rate": 1.0,
+        "legitimate_amount_touched": 452893673,
+        "total_abuse_amount": 170648053,
+        "total_legitimate_amount": 2967329641,
+        "total_transaction_amount": 3137977694
+      },
+      "assumptions_label": "ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS",
+      "cost_profile_hash": "9dbfa57d394397d2c1e224563fd45e30567b93d13dd29a8858293b74b656824c",
+      "cost_profile_version": "customer-protective-v1",
+      "costs_paise": {
+        "allow_all_baseline_expected_loss": 127986040,
+        "estimated_net_protected_value": 91857052,
+        "legitimate_intervention_friction_cost": 4874681,
+        "operational_action_cost": 1097600,
+        "remaining_abuse_loss": 30156707,
+        "total_policy_expected_cost": 36128988
+      },
+      "intervention": {
+        "f1": 0.507639231148349,
+        "false_negative": 0,
+        "false_positive": 999,
+        "precision": 0.34015852047556144,
+        "recall": 1.0,
+        "true_negative": 5986,
+        "true_positive": 515
+      },
+      "persona_actions": {
+        "CORPORATE_OR_CAMPUS_NETWORK": {
+          "ALLOW": 1030,
+          "ESCALATE": 0,
+          "HOLD": 8,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 0,
+          "severe_intervention_rate": 0.007707129094412331,
+          "transactions": 1038
+        },
+        "FAMILY_HOUSEHOLD": {
+          "ALLOW": 1124,
+          "ESCALATE": 1,
+          "HOLD": 9,
+          "RECOMMEND_BLOCK": 13,
+          "VERIFY": 47,
+          "severe_intervention_rate": 0.019262981574539362,
+          "transactions": 1194
+        },
+        "POWER_SHOPPER": {
+          "ALLOW": 979,
+          "ESCALATE": 1,
+          "HOLD": 472,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 26,
+          "severe_intervention_rate": 0.3200270635994587,
+          "transactions": 1478
+        },
+        "STANDARD_RETAIL": {
+          "ALLOW": 2800,
+          "ESCALATE": 0,
+          "HOLD": 49,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 1,
+          "severe_intervention_rate": 0.01719298245614035,
+          "transactions": 2850
+        },
+        "TRAVELLER": {
+          "ALLOW": 53,
+          "ESCALATE": 0,
+          "HOLD": 363,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 9,
+          "severe_intervention_rate": 0.8541176470588235,
+          "transactions": 425
+        }
+      },
+      "policy_config_hash": "54abbcbf83b4afffa5c402461d56686e2b3f651c951d150fb6835745c15f59d6",
+      "policy_version": "risk-policy-v1",
+      "scenario_actions": {
+        "ACCOUNT_FARM": {
+          "ALLOW": 0,
+          "ESCALATE": 35,
+          "HOLD": 30,
+          "RECOMMEND_BLOCK": 55,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "CARD_TESTING": {
+          "ALLOW": 0,
+          "ESCALATE": 14,
+          "HOLD": 81,
+          "RECOMMEND_BLOCK": 55,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 150
+        },
+        "COLLUSIVE_RING": {
+          "ALLOW": 0,
+          "ESCALATE": 37,
+          "HOLD": 58,
+          "RECOMMEND_BLOCK": 25,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "IDENTITY_ROTATION": {
+          "ALLOW": 0,
+          "ESCALATE": 19,
+          "HOLD": 69,
+          "RECOMMEND_BLOCK": 37,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 125
+        }
+      },
+      "severe_intervention": {
+        "f1": 0.5292908530318603,
+        "false_negative": 0,
+        "false_positive": 916,
+        "precision": 0.35988819007686934,
+        "recall": 1.0,
+        "true_negative": 6069,
+        "true_positive": 515
+      },
+      "thresholds": {
+        "hold_threshold": 0.0033995407602229865,
+        "verify_threshold": 0.003321526422929731
+      }
+    }
+  },
+  "loss-averse-v1": {
+    "objective": "minimum validation synthetic total_policy_expected_cost",
+    "policy": {
+      "cost_profile": "loss-averse-v1",
+      "feature_version": "features-v1",
+      "graph_corroboration": {
+        "minimum_strong_signals": 2,
+        "recommend_block_minimum_strong_signals": 3,
+        "recommend_block_requires_active_cluster": true,
+        "strong_signal_codes": [
+          "DEVICE_MULTI_CUSTOMER_CONCENTRATION",
+          "DEVICE_MULTI_INSTRUMENT_CONCENTRATION",
+          "RAPID_RELATIONSHIP_EXPANSION",
+          "MULTI_COMPONENT_BRIDGE",
+          "DENSE_MULTI_ENTITY_STRUCTURE"
+        ]
+      },
+      "graph_version": "graph-v1",
+      "hold_threshold": 0.0033995407602229865,
+      "human_review_actions": [
+        "ESCALATE",
+        "RECOMMEND_BLOCK"
+      ],
+      "model_version": "risk-lgbm-v2",
+      "policy_version": "risk-policy-v1",
+      "schema_version": "policy-schema-v1",
+      "verify_threshold": 0.003321526422929731
+    },
+    "test": {
+      "action_counts": {
+        "ALLOW": 5998,
+        "ESCALATE": 115,
+        "HOLD": 1117,
+        "RECOMMEND_BLOCK": 208,
+        "VERIFY": 62
+      },
+      "amounts_paise": {
+        "abuse_amount_allowed": 0,
+        "abuse_amount_touched": 189189195,
+        "amount_weighted_abuse_intervention_rate": 1.0,
+        "legitimate_amount_touched": 441056075,
+        "total_abuse_amount": 189189195,
+        "total_legitimate_amount": 2858224358,
+        "total_transaction_amount": 3047413553
+      },
+      "assumptions_label": "ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS",
+      "cost_profile_hash": "ff885a1be6871897e19528d6b0adc870049e4f3e3b96975a0b8f239ab4f85dc2",
+      "cost_profile_version": "loss-averse-v1",
+      "costs_paise": {
+        "allow_all_baseline_expected_loss": 189189195,
+        "estimated_net_protected_value": 170634856,
+        "legitimate_intervention_friction_cost": 1088465,
+        "operational_action_cost": 574725,
+        "remaining_abuse_loss": 16891149,
+        "total_policy_expected_cost": 18554339
+      },
+      "intervention": {
+        "f1": 0.48817312531454454,
+        "false_negative": 0,
+        "false_positive": 1017,
+        "precision": 0.3229027962716378,
+        "recall": 1.0,
+        "true_negative": 5998,
+        "true_positive": 485
+      },
+      "persona_actions": {
+        "CORPORATE_OR_CAMPUS_NETWORK": {
+          "ALLOW": 1005,
+          "ESCALATE": 0,
+          "HOLD": 11,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 0,
+          "severe_intervention_rate": 0.010826771653543307,
+          "transactions": 1016
+        },
+        "FAMILY_HOUSEHOLD": {
+          "ALLOW": 1247,
+          "ESCALATE": 11,
+          "HOLD": 39,
+          "RECOMMEND_BLOCK": 51,
+          "VERIFY": 48,
+          "severe_intervention_rate": 0.07234957020057306,
+          "transactions": 1396
+        },
+        "POWER_SHOPPER": {
+          "ALLOW": 834,
+          "ESCALATE": 3,
+          "HOLD": 409,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 7,
+          "severe_intervention_rate": 0.32881085395051873,
+          "transactions": 1253
+        },
+        "STANDARD_RETAIL": {
+          "ALLOW": 2884,
+          "ESCALATE": 0,
+          "HOLD": 48,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 0,
+          "severe_intervention_rate": 0.01637107776261937,
+          "transactions": 2932
+        },
+        "TRAVELLER": {
+          "ALLOW": 28,
+          "ESCALATE": 0,
+          "HOLD": 383,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 7,
+          "severe_intervention_rate": 0.916267942583732,
+          "transactions": 418
+        }
+      },
+      "policy_config_hash": "928da7e3ebf0a40f9e382fbfdec3d3208385ba19f4ac6ba5e67174bb019e797a",
+      "policy_version": "risk-policy-v1",
+      "scenario_actions": {
+        "ACCOUNT_FARM": {
+          "ALLOW": 0,
+          "ESCALATE": 35,
+          "HOLD": 30,
+          "RECOMMEND_BLOCK": 55,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "CARD_TESTING": {
+          "ALLOW": 0,
+          "ESCALATE": 10,
+          "HOLD": 67,
+          "RECOMMEND_BLOCK": 53,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 130
+        },
+        "COLLUSIVE_RING": {
+          "ALLOW": 0,
+          "ESCALATE": 38,
+          "HOLD": 58,
+          "RECOMMEND_BLOCK": 24,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "IDENTITY_ROTATION": {
+          "ALLOW": 0,
+          "ESCALATE": 18,
+          "HOLD": 72,
+          "RECOMMEND_BLOCK": 25,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 115
+        }
+      },
+      "severe_intervention": {
+        "f1": 0.503896103896104,
+        "false_negative": 0,
+        "false_positive": 955,
+        "precision": 0.3368055555555556,
+        "recall": 1.0,
+        "true_negative": 6060,
+        "true_positive": 485
+      },
+      "thresholds": {
+        "hold_threshold": 0.0033995407602229865,
+        "verify_threshold": 0.003321526422929731
+      }
+    },
+    "tie_break": "lower legitimate amount touched, then fewer interventions, then higher verify threshold, then higher hold threshold",
+    "validation": {
+      "action_counts": {
+        "ALLOW": 5986,
+        "ESCALATE": 107,
+        "HOLD": 1139,
+        "RECOMMEND_BLOCK": 185,
+        "VERIFY": 83
+      },
+      "amounts_paise": {
+        "abuse_amount_allowed": 0,
+        "abuse_amount_touched": 170648053,
+        "amount_weighted_abuse_intervention_rate": 1.0,
+        "legitimate_amount_touched": 452893673,
+        "total_abuse_amount": 170648053,
+        "total_legitimate_amount": 2967329641,
+        "total_transaction_amount": 3137977694
+      },
+      "assumptions_label": "ILLUSTRATIVE SYNTHETIC POLICY ASSUMPTIONS",
+      "cost_profile_hash": "ff885a1be6871897e19528d6b0adc870049e4f3e3b96975a0b8f239ab4f85dc2",
+      "cost_profile_version": "loss-averse-v1",
+      "costs_paise": {
+        "allow_all_baseline_expected_loss": 170648053,
+        "estimated_net_protected_value": 151207808,
+        "legitimate_intervention_friction_cost": 999289,
+        "operational_action_cost": 527500,
+        "remaining_abuse_loss": 17913456,
+        "total_policy_expected_cost": 19440245
+      },
+      "intervention": {
+        "f1": 0.507639231148349,
+        "false_negative": 0,
+        "false_positive": 999,
+        "precision": 0.34015852047556144,
+        "recall": 1.0,
+        "true_negative": 5986,
+        "true_positive": 515
+      },
+      "persona_actions": {
+        "CORPORATE_OR_CAMPUS_NETWORK": {
+          "ALLOW": 1030,
+          "ESCALATE": 0,
+          "HOLD": 8,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 0,
+          "severe_intervention_rate": 0.007707129094412331,
+          "transactions": 1038
+        },
+        "FAMILY_HOUSEHOLD": {
+          "ALLOW": 1124,
+          "ESCALATE": 1,
+          "HOLD": 9,
+          "RECOMMEND_BLOCK": 13,
+          "VERIFY": 47,
+          "severe_intervention_rate": 0.019262981574539362,
+          "transactions": 1194
+        },
+        "POWER_SHOPPER": {
+          "ALLOW": 979,
+          "ESCALATE": 1,
+          "HOLD": 472,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 26,
+          "severe_intervention_rate": 0.3200270635994587,
+          "transactions": 1478
+        },
+        "STANDARD_RETAIL": {
+          "ALLOW": 2800,
+          "ESCALATE": 0,
+          "HOLD": 49,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 1,
+          "severe_intervention_rate": 0.01719298245614035,
+          "transactions": 2850
+        },
+        "TRAVELLER": {
+          "ALLOW": 53,
+          "ESCALATE": 0,
+          "HOLD": 363,
+          "RECOMMEND_BLOCK": 0,
+          "VERIFY": 9,
+          "severe_intervention_rate": 0.8541176470588235,
+          "transactions": 425
+        }
+      },
+      "policy_config_hash": "928da7e3ebf0a40f9e382fbfdec3d3208385ba19f4ac6ba5e67174bb019e797a",
+      "policy_version": "risk-policy-v1",
+      "scenario_actions": {
+        "ACCOUNT_FARM": {
+          "ALLOW": 0,
+          "ESCALATE": 35,
+          "HOLD": 30,
+          "RECOMMEND_BLOCK": 55,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "CARD_TESTING": {
+          "ALLOW": 0,
+          "ESCALATE": 14,
+          "HOLD": 81,
+          "RECOMMEND_BLOCK": 55,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 150
+        },
+        "COLLUSIVE_RING": {
+          "ALLOW": 0,
+          "ESCALATE": 37,
+          "HOLD": 58,
+          "RECOMMEND_BLOCK": 25,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 120
+        },
+        "IDENTITY_ROTATION": {
+          "ALLOW": 0,
+          "ESCALATE": 19,
+          "HOLD": 69,
+          "RECOMMEND_BLOCK": 37,
+          "VERIFY": 0,
+          "severe_intervention_rate": 1.0,
+          "transactions": 125
+        }
+      },
+      "severe_intervention": {
+        "f1": 0.5292908530318603,
+        "false_negative": 0,
+        "false_positive": 916,
+        "precision": 0.35988819007686934,
+        "recall": 1.0,
+        "true_negative": 6069,
+        "true_positive": 515
+      },
+      "thresholds": {
+        "hold_threshold": 0.0033995407602229865,
+        "verify_threshold": 0.003321526422929731
+      }
+    }
+  }
+}
