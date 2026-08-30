@@ -11,5 +11,8 @@ htmlcov/
 *.egg-info/
 ml/artifacts/*
 !ml/artifacts/.gitkeep
+!ml/artifacts/features-v1/
+ml/artifacts/features-v1/*
+!ml/artifacts/features-v1/schema.json
 ml/datasets/generated/*
 !ml/datasets/generated/.gitkeep

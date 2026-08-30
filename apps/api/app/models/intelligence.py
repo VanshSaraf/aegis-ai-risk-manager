@@ -2,7 +2,16 @@ import uuid
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import BigInteger, DateTime, Float, ForeignKey, Index, Integer, String
+from sqlalchemy import (
+    BigInteger,
+    DateTime,
+    Float,
+    ForeignKey,
+    Index,
+    Integer,
+    String,
+    UniqueConstraint,
+)
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -12,16 +21,26 @@ from apps.api.app.db.base import Base, CreatedAtMixin, TimestampMixin, UUIDPrima
 
 class TransactionFeature(UUIDPrimaryKeyMixin, Base):
     __tablename__ = "transaction_features"
+    __table_args__ = (
+        UniqueConstraint(
+            "transaction_id",
+            "feature_version",
+            name="uq_transaction_features_transaction_version",
+        ),
+        Index("ix_transaction_features_version_transaction", "feature_version", "transaction_id"),
+    )
 
     transaction_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("transactions.id"), unique=True, nullable=False
+        UUID(as_uuid=True), ForeignKey("transactions.id"), nullable=False
     )
     feature_version: Mapped[str] = mapped_column(
         String(100), ForeignKey("feature_versions.version"), nullable=False
     )
     features: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
     computed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    max_source_event_time: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    max_source_event_time: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
 
 
 class RiskPrediction(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):

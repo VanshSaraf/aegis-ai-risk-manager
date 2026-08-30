@@ -2,20 +2,21 @@
 
 Aegis is a graph-assisted system intended to detect coordinated payment abuse such as card-testing rings, account farms, identity rotation, and collusive payment clusters.
 
-This repository implements the Phase 1 backend/data foundation and the Phase 2 deterministic synthetic payment world. Synthetic legitimate personas and coordinated-abuse rings flow through the real ingestion pipeline and produce versioned manifests, scenario runs, ground truth, entities, edges, and audit records.
+This repository implements the Phase 1 backend/data foundation, Phase 2 deterministic synthetic payment world, and Phase 3 point-in-time feature engineering. Synthetic legitimate personas and coordinated-abuse rings flow through the real ingestion pipeline; the shared feature engine then produces immutable `features-v1` snapshots without temporal or ground-truth leakage.
 
-**Risk scoring, feature computation, graph abuse detection, policy decision logic, model training, and LLM investigation are not implemented.** No endpoint returns placeholder scores or fake AI output.
+**Model training or prediction, graph abuse detection or scoring, risk fusion, policy decisions, LLM investigation, frontend, and realtime streaming are not implemented.** No endpoint returns placeholder scores or fake AI output.
 
 ## Architecture boundaries
 
 - `apps/api` owns HTTP transport, orchestration, and persistence models.
-- `packages/risk_engine/features` reserves the shared training/inference feature boundary.
+- `packages/risk_engine/features` owns the shared online/offline point-in-time feature boundary.
 - `packages/synthetic` owns reproducible population, behavior, scenarios, manifests, and sanity validation.
 - `packages/graph_engine`, `packages/policy_engine`, and `packages/investigator` remain unimplemented boundaries.
 - `ml` and `configs` hold future offline artifacts and versioned configuration.
 - PostgreSQL is the system of record. Each valid incoming event is committed to `raw_events` before normalization starts.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the detailed design.
+See [docs/FEATURES.md](docs/FEATURES.md) for scoring-moment, window, registry, and leakage semantics.
 
 ## Local development
 
@@ -57,6 +58,18 @@ python scripts/generate_synthetic.py --scenario CARD_TESTING --seed 1234 --trans
 ```
 
 The CLI validates before ingestion and optionally writes `manifest.json` and `events.jsonl` beneath `ml/datasets/generated/`, which is ignored by Git. See [docs/DATA_GENERATION.md](docs/DATA_GENERATION.md).
+
+## Point-in-time feature snapshots
+
+After transactions have been ingested, build or verify immutable `features-v1` snapshots:
+
+```bash
+python scripts/build_features.py --feature-version features-v1
+```
+
+The engine computes each vector before allowing the current transaction into history. Current
+payment outcomes and synthetic truth are excluded. PostgreSQL and indexed in-memory providers
+share the same `FeatureEngine` semantics and are covered by an exact parity test.
 
 ## Implemented API
 

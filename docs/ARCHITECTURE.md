@@ -2,11 +2,11 @@
 
 ## Problem and current scope
 
-Aegis targets coordinated payment abuse: behavior that becomes meaningful across transactions and linked entities rather than from one payment in isolation. Phase 1 established durable ingestion, normalized entities, relationship observations, contracts, and version registries. Phase 2 adds a deterministic synthetic payment world and defensive abuse scenarios for exercising that same foundation.
+Aegis targets coordinated payment abuse: behavior that becomes meaningful across transactions and linked entities rather than from one payment in isolation. Phase 1 established durable ingestion and normalized entities. Phase 2 added a deterministic synthetic payment world. Phase 3 adds reusable point-in-time feature vectors without training or scoring a model.
 
 ## Non-goals
 
-This phase does not implement transaction risk scoring, temporal feature computation, graph algorithms, policy decisions, investigator prompts or LLM calls, a dashboard, or production deployment claims. Kafka, Redis, Celery, Neo4j, and microservice boundaries are deliberately absent.
+This phase does not implement model training, predictions, graph detection or scoring, risk fusion, policy decisions, investigator prompts or LLM calls, a dashboard, realtime streaming, or production deployment claims. Kafka, Redis, Celery, Neo4j, and microservice boundaries are deliberately absent.
 
 ## Synthetic-world data flow
 
@@ -42,18 +42,28 @@ Entity edges are stored relationally because only direct relationship persistenc
 
 No PAN, CVV, name, email, phone number, or street address is required. Inputs use synthetic source references, hashes, or fingerprints.
 
-## Storage and model boundary
+## Point-in-time feature boundary
 
-The future risk model will never query storage directly. The planned path is:
+The future risk model will never query storage directly. The implemented feature path is:
 
 ```text
-PostgreSQL/history -> FeatureEngine -> FeatureVector -> RiskModel
-                                             |
-                                  same feature implementation
-                                  for training and inference
+Historical state -> HistoryProvider -> FeatureEngine -> FeatureVector
+                                                     -> TransactionFeature
 ```
 
-This prevents storage details and point-in-time query behavior from leaking into model code. `FeatureVector` is an explicit domain contract and the reserved `packages/risk_engine/features` boundary will hold shared feature implementations.
+`FeatureEngine` owns one set of feature definitions for online and offline use. The PostgreSQL
+provider enforces `event_time < current.event_time` in SQL. The indexed in-memory provider is
+updated only after a transaction's vector is computed and validated; equal-time transactions are
+handled as a batch and cannot see each other. Final `EntityEdge` state is excluded because it can
+contain observations from the future.
+
+Current outcome is structurally absent from the engine's scoring-context type. Mutable customer
+and merchant profile fields are also absent from `features-v1`, because their normalized entity
+rows may be updated by later ingestion and are not immutable point-in-time snapshots.
+
+Feature snapshots are immutable and unique by `(transaction_id, feature_version)`. Their
+`max_source_event_time` is null without relevant history and otherwise strictly earlier than the
+current transaction. See [FEATURES.md](FEATURES.md) for the complete registry and semantics.
 
 ## Ground-truth separation
 
@@ -61,4 +71,4 @@ Ground-truth label, scenario, and ring identifiers exist on synthetic transactio
 
 ## Planned intelligence pipeline
 
-Later, and only after approval, deterministic temporal features will feed a versioned LightGBM model; relationship analysis will supply graph evidence; a deterministic policy layer will choose allowed actions; and an investigator may explain evidence already assembled by the system. The current repository contains persistence contracts for versioning and outputs, but none of these components performs computation yet.
+Later, and only after approval, the point-in-time features may feed a versioned model; relationship analysis may supply graph evidence; a deterministic policy layer may choose allowed actions; and an investigator may explain evidence already assembled by the system. None of those later components performs computation yet.

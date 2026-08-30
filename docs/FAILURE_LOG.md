@@ -1,5 +1,30 @@
 # Failure Log
 
+## Phase 3: optional context features could read future profile state
+
+- **Observed:** a late leakage review found that three proposed features read customer or merchant
+  attributes from normalized entity rows that later ingestion can update. Recomputing an old
+  transaction could therefore produce a different vector even with a strict transaction-history
+  cutoff.
+- **Affected candidates:** `home_network_region_match`, `home_merchant_region_match`, and
+  `merchant_risk_baseline`.
+- **Fix:** all three were removed from `features-v1`; scoring input was split from historical
+  records so current `status` and `failure_code` are structurally unavailable to `FeatureEngine`.
+  A PostgreSQL regression test mutates those future entity profiles and proves the old vector is
+  unchanged.
+
+## Phase 3: feature snapshots initially allowed only one version
+
+- **Observed:** the Phase 1 `transaction_features.transaction_id` uniqueness constraint prevented
+  `features-v1` and a future feature version from coexisting for one transaction. Its required
+  `max_source_event_time` also could not represent a transaction with no relevant history.
+- **Cause:** the initial schema treated a feature row as one-per-transaction rather than an
+  immutable, versioned snapshot.
+- **Fix:** migration `8b73f4a91c2e` changes uniqueness to
+  `(transaction_id, feature_version)`, adds a version-first lookup index, and permits a null
+  historical watermark. Idempotency tests verify identical recomputation does not duplicate or
+  overwrite a snapshot.
+
 Copy this template for each genuine development or evaluation failure. Do not record hypothetical failures.
 
 ## Date

@@ -1,4 +1,4 @@
-.PHONY: up down migrate test lint format synthetic synthetic-smoke
+.PHONY: up down migrate test lint format synthetic synthetic-smoke features
 
 up:
 	docker compose up --build
@@ -25,3 +25,6 @@ synthetic:
 
 synthetic-smoke:
 	python scripts/generate_synthetic.py --seed 42017 --transactions 250 --no-export
+
+features:
+	python scripts/build_features.py --feature-version features-v1

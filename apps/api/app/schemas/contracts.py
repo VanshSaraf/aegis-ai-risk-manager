@@ -98,7 +98,7 @@ class FeatureVector(StrictModel):
     feature_version: str
     values: dict[str, float | int | bool]
     computed_at: datetime
-    max_source_event_time: datetime
+    max_source_event_time: datetime | None
 
 
 class ModelPrediction(StrictModel):

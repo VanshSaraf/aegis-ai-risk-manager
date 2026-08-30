@@ -1,0 +1,422 @@
+{
+  "feature_version": "features-v1",
+  "description": "Point-in-time predictive feature contract; no labels or outcomes.",
+  "features": [
+    {
+      "name": "amount_paise",
+      "family": "TRANSACTION",
+      "value_type": "int",
+      "description": "Requested amount in paise.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "log_amount",
+      "family": "TRANSACTION",
+      "value_type": "float",
+      "description": "Natural log of 1 + amount.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "account_age_hours",
+      "family": "TRANSACTION",
+      "value_type": "float",
+      "description": "Account age at request.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "hour_of_day",
+      "family": "TRANSACTION",
+      "value_type": "int",
+      "description": "UTC hour of request.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "day_of_week",
+      "family": "TRANSACTION",
+      "value_type": "int",
+      "description": "UTC weekday, Monday is zero.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "is_weekend",
+      "family": "TRANSACTION",
+      "value_type": "bool",
+      "description": "Whether request is on weekend.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "customer_txn_count_1h",
+      "family": "CUSTOMER",
+      "value_type": "int",
+      "description": "Prior customer payments.",
+      "window": "1h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "customer_txn_count_24h",
+      "family": "CUSTOMER",
+      "value_type": "int",
+      "description": "Prior customer payments.",
+      "window": "24h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "customer_txn_count_30d",
+      "family": "CUSTOMER",
+      "value_type": "int",
+      "description": "Prior customer payments.",
+      "window": "30d",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "customer_failed_txn_count_1h",
+      "family": "CUSTOMER",
+      "value_type": "int",
+      "description": "Prior failed customer payments.",
+      "window": "1h",
+      "uses_historical_outcome": true
+    },
+    {
+      "name": "customer_failed_txn_count_24h",
+      "family": "CUSTOMER",
+      "value_type": "int",
+      "description": "Prior failed customer payments.",
+      "window": "24h",
+      "uses_historical_outcome": true
+    },
+    {
+      "name": "customer_failure_rate_30d",
+      "family": "CUSTOMER",
+      "value_type": "float",
+      "description": "Prior customer failure rate.",
+      "window": "30d",
+      "uses_historical_outcome": true
+    },
+    {
+      "name": "customer_avg_amount_30d",
+      "family": "CUSTOMER",
+      "value_type": "float",
+      "description": "Mean prior customer amount.",
+      "window": "30d",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "customer_amount_std_30d",
+      "family": "CUSTOMER",
+      "value_type": "float",
+      "description": "Population standard deviation of prior amounts.",
+      "window": "30d",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "amount_vs_customer_mean",
+      "family": "CUSTOMER",
+      "value_type": "float",
+      "description": "Current amount divided by prior mean; zero without history.",
+      "window": "30d",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "amount_zscore_customer",
+      "family": "CUSTOMER",
+      "value_type": "float",
+      "description": "Current amount z-score; zero without usable variance.",
+      "window": "30d",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "customer_unique_devices_24h",
+      "family": "CUSTOMER",
+      "value_type": "int",
+      "description": "Distinct prior devices.",
+      "window": "24h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "customer_unique_instruments_24h",
+      "family": "CUSTOMER",
+      "value_type": "int",
+      "description": "Distinct prior instruments.",
+      "window": "24h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "customer_unique_ips_24h",
+      "family": "CUSTOMER",
+      "value_type": "int",
+      "description": "Distinct prior networks.",
+      "window": "24h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "customer_unique_addresses_30d",
+      "family": "CUSTOMER",
+      "value_type": "int",
+      "description": "Distinct prior addresses.",
+      "window": "30d",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "customer_merchant_txn_count_30d",
+      "family": "CUSTOMER",
+      "value_type": "int",
+      "description": "Prior payments by this customer at this merchant.",
+      "window": "30d",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "is_new_device_for_customer",
+      "family": "CUSTOMER",
+      "value_type": "bool",
+      "description": "Device has no prior use by customer.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "is_new_instrument_for_customer",
+      "family": "CUSTOMER",
+      "value_type": "bool",
+      "description": "Instrument has no prior use by customer.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "is_new_ip_for_customer",
+      "family": "CUSTOMER",
+      "value_type": "bool",
+      "description": "Network has no prior use by customer.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "is_new_address_for_customer",
+      "family": "CUSTOMER",
+      "value_type": "bool",
+      "description": "Address has no prior use by customer.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "device_txn_count_1m",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior device payments.",
+      "window": "1m",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "device_txn_count_10m",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior device payments.",
+      "window": "10m",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "device_txn_count_1h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior device payments.",
+      "window": "1h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "device_failed_txn_count_10m",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior failed device payments.",
+      "window": "10m",
+      "uses_historical_outcome": true
+    },
+    {
+      "name": "device_failed_txn_count_1h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior failed device payments.",
+      "window": "1h",
+      "uses_historical_outcome": true
+    },
+    {
+      "name": "device_unique_customers_1h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Distinct prior customers on device.",
+      "window": "1h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "device_unique_instruments_1h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Distinct prior instruments on device.",
+      "window": "1h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "ip_txn_count_10m",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior network payments.",
+      "window": "10m",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "ip_txn_count_1h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior network payments.",
+      "window": "1h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "ip_failed_txn_count_10m",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior failed network payments.",
+      "window": "10m",
+      "uses_historical_outcome": true
+    },
+    {
+      "name": "ip_failed_txn_count_1h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior failed network payments.",
+      "window": "1h",
+      "uses_historical_outcome": true
+    },
+    {
+      "name": "ip_unique_customers_1h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Distinct prior customers on network.",
+      "window": "1h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "ip_unique_customers_24h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Distinct prior customers on network.",
+      "window": "24h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "instrument_txn_count_10m",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior instrument payments.",
+      "window": "10m",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "instrument_txn_count_1h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior instrument payments.",
+      "window": "1h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "instrument_txn_count_24h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior instrument payments.",
+      "window": "24h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "instrument_failed_txn_count_1h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior failed instrument payments.",
+      "window": "1h",
+      "uses_historical_outcome": true
+    },
+    {
+      "name": "instrument_unique_devices_24h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Distinct prior devices for instrument.",
+      "window": "24h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "address_txn_count_1h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior address payments.",
+      "window": "1h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "address_txn_count_24h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Prior address payments.",
+      "window": "24h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "address_unique_customers_24h",
+      "family": "VELOCITY",
+      "value_type": "int",
+      "description": "Distinct prior customers at address.",
+      "window": "24h",
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "historical_customers_on_current_device",
+      "family": "RELATIONSHIP",
+      "value_type": "int",
+      "description": "All prior customers linked to device.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "historical_instruments_on_current_device",
+      "family": "RELATIONSHIP",
+      "value_type": "int",
+      "description": "All prior instruments linked to device.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "historical_customers_on_current_ip",
+      "family": "RELATIONSHIP",
+      "value_type": "int",
+      "description": "All prior customers linked to network.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "historical_devices_on_current_ip",
+      "family": "RELATIONSHIP",
+      "value_type": "int",
+      "description": "All prior devices linked to network.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "historical_customers_on_current_address",
+      "family": "RELATIONSHIP",
+      "value_type": "int",
+      "description": "All prior customers linked to address.",
+      "window": null,
+      "uses_historical_outcome": false
+    },
+    {
+      "name": "historical_devices_for_current_instrument",
+      "family": "RELATIONSHIP",
+      "value_type": "int",
+      "description": "All prior devices linked to instrument.",
+      "window": null,
+      "uses_historical_outcome": false
+    }
+  ]
+}
