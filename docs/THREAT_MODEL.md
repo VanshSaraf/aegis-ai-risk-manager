@@ -19,7 +19,11 @@ functionality is implemented.
 
 Aegis has no offensive capability. It does not generate attack instructions, probe payment systems, acquire credentials, or automate abuse. Current graph analysis and any future model components are intended only to analyze evidence already available to the defensive system.
 
-The planned LLM investigator will be read-only, evidence-grounded, and outside the transaction decision path. It must not execute payment actions or override deterministic policy. No LLM integration currently exists. Policy `RECOMMEND_BLOCK` always requires human review and is not a block instruction.
+The investigator is read-only, evidence-grounded, and outside the transaction decision path. An
+optional injected LLM provider receives only a bounded truth-free EvidenceBundle. It cannot query
+arbitrary data, mutate transactions, change policy, execute payment actions, or override the
+deterministic recommendation. Provider failure falls back to deterministic explanation. Policy
+`RECOMMEND_BLOCK` always requires human review and is not a block instruction.
 
 Graph evidence is corroborative only. It cannot move a low-score ALLOW or intermediate VERIFY to
 a severe action; only an existing model-score HOLD can be escalated. Offline persona metadata may

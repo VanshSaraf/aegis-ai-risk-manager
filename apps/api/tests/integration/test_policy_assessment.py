@@ -1,15 +1,20 @@
+from datetime import UTC, datetime, timedelta
+
 from sqlalchemy import func, select
 
 from apps.api.app.db.session import SessionFactory
 from apps.api.app.models import (
     AuditEvent,
     GraphAssessmentSnapshot,
+    Merchant,
     PolicyDecision,
     RiskPrediction,
     RiskSignal,
     TransactionFeature,
 )
 from apps.api.tests.factories import raw_event_payload
+from packages.investigator.evidence import EvidenceBuilder
+from packages.investigator.service import InvestigatorService
 from packages.policy_engine.config import load_policy_config
 from packages.policy_engine.service import assess_transaction
 
@@ -54,6 +59,27 @@ async def test_operational_assessment_is_idempotent_truth_free_and_audited(clien
         audit_payloads = list(await session.scalars(select(AuditEvent.payload)))
         assert all("ground_truth" not in str(payload).lower() for payload in audit_payloads)
 
+    investigation = await client.get(f"/api/v1/transactions/{transaction_id}/investigation")
+    assert investigation.status_code == 200
+    investigation_body = investigation.json()
+    assert investigation_body["generated_by"] == "DETERMINISTIC"
+    assert investigation_body["llm_status"] == "DISABLED"
+    assert investigation_body["policy"]["version"] == "risk-policy-v2"
+    assert investigation_body["model"]["version"] == "risk-lgbm-v2"
+    assert investigation_body["graph"]["version"] == "graph-v1"
+    assert "not a fraud probability" in investigation_body["model"]["semantics"]
+    serialized_investigation = str(investigation_body).lower()
+    for forbidden in (
+        "ground_truth",
+        "ring_id",
+        "persona",
+        "scenario",
+        "split",
+        "failure_code",
+        "fraud_probability",
+    ):
+        assert forbidden not in serialized_investigation
+
 
 async def test_assessment_rejects_an_immutable_prediction_mismatch(client) -> None:
     created = await client.post(
@@ -92,3 +118,80 @@ async def test_policy_v1_and_v2_can_coexist_and_remain_idempotent(client) -> Non
         assert versions == {"risk-policy-v1", "risk-policy-v2"}
         assert await session.scalar(select(func.count()).select_from(RiskPrediction)) == 1
         assert await session.scalar(select(func.count()).select_from(PolicyDecision)) == 2
+
+
+async def test_investigation_is_point_in_time_and_provider_failure_is_read_only(client) -> None:
+    current_time = datetime(2026, 8, 30, 12, 0, tzinfo=UTC)
+    prior = raw_event_payload(
+        "evt_investigation_prior",
+        event_time=(current_time - timedelta(minutes=5)).isoformat(),
+        customer_ref="investigation_prior_customer",
+        instrument_fingerprint="investigation_prior_instrument",
+    )
+    current = raw_event_payload(
+        "evt_investigation_current",
+        event_time=current_time.isoformat(),
+        customer_ref="investigation_current_customer",
+        instrument_fingerprint="investigation_current_instrument",
+        merchant_ref="investigation_mutable_merchant",
+        merchant_category="CATEGORY_A",
+    )
+    assert (await client.post("/api/v1/transactions", json=prior)).status_code == 201
+    created = await client.post("/api/v1/transactions", json=current)
+    transaction_id = created.json()["transaction_public_id"]
+    assert (await client.post(f"/api/v1/transactions/{transaction_id}/assess")).status_code == 200
+    before = (await client.get(f"/api/v1/transactions/{transaction_id}/investigation")).json()
+    async with SessionFactory() as session:
+        bundle_before = await EvidenceBuilder().build(session, transaction_id)
+    assert "merchant_category" not in bundle_before.transaction.model_dump()
+    assert len(before["timeline"]) == 1
+    timeline_time = datetime.fromisoformat(
+        before["timeline"][0]["event_time"].replace("Z", "+00:00")
+    )
+    assert timeline_time < current_time
+
+    future = raw_event_payload(
+        "evt_investigation_future",
+        event_time=(current_time + timedelta(minutes=5)).isoformat(),
+        customer_ref="investigation_future_customer",
+        instrument_fingerprint="investigation_future_instrument",
+        merchant_ref="investigation_mutable_merchant",
+        merchant_category="CATEGORY_B",
+    )
+    assert (await client.post("/api/v1/transactions", json=future)).status_code == 201
+    after = (await client.get(f"/api/v1/transactions/{transaction_id}/investigation")).json()
+    async with SessionFactory() as session:
+        bundle_after = await EvidenceBuilder().build(session, transaction_id)
+        merchant_category = await session.scalar(
+            select(Merchant.category).where(Merchant.source_ref == "investigation_mutable_merchant")
+        )
+    assert merchant_category == "CATEGORY_B"
+    assert bundle_before == bundle_after
+    assert "merchant_category" not in bundle_after.transaction.model_dump()
+    assert "CATEGORY_B" not in str(bundle_after.model_dump())
+    assert "CATEGORY_B" not in str(after)
+    before.pop("generated_at")
+    after.pop("generated_at")
+    assert before == after
+
+    class ThrowingProvider:
+        async def generate(self, evidence):
+            del evidence
+            raise RuntimeError("simulated provider outage")
+
+    async with SessionFactory() as session:
+        predictions_before = await session.scalar(select(func.count()).select_from(RiskPrediction))
+        decisions_before = await session.scalar(select(func.count()).select_from(PolicyDecision))
+        report = await InvestigatorService(provider=ThrowingProvider()).investigate(
+            session, transaction_id
+        )
+        assert report.generated_by.value == "DETERMINISTIC"
+        assert report.llm_status.value == "UNAVAILABLE"
+        assert (
+            await session.scalar(select(func.count()).select_from(RiskPrediction))
+            == predictions_before
+        )
+        assert (
+            await session.scalar(select(func.count()).select_from(PolicyDecision))
+            == decisions_before
+        )

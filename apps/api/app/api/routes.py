@@ -26,6 +26,8 @@ from apps.api.app.services.transactions import (
     ingest_transaction,
     list_transactions,
 )
+from packages.investigator.domain import InvestigationReport
+from packages.investigator.service import InvestigatorService
 from packages.policy_engine.service import AssessmentConflictError, assess_transaction
 
 router = APIRouter()
@@ -129,6 +131,24 @@ async def assess(public_id: str, session: Session) -> OperationalAssessmentRespo
         ),
         latency_ms=result.latency_ms,
     )
+
+
+@router.get(
+    "/api/v1/transactions/{public_id}/investigation",
+    response_model=InvestigationReport,
+)
+async def investigation(public_id: str, session: Session) -> InvestigationReport:
+    try:
+        return await InvestigatorService().investigate(session, public_id)
+    except LookupError as exc:
+        if str(exc) == "transaction not found":
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="transaction not found"
+            ) from exc
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="transaction must be assessed before investigation",
+        ) from exc
 
 
 @router.get("/api/v1/entities/{entity_type}/{public_id}/neighbors", response_model=NeighborList)

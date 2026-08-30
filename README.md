@@ -7,9 +7,11 @@ payment world, Phase 3 point-in-time feature engineering, Phase 4 point-in-time 
 Phase 5 leakage-controlled LightGBM training and held-out synthetic evaluation, and Phase 6
 cost-aware bounded policy recommendations with an operational assessment API.
 
-**Calibrated probabilities, SHAP explanations, LLM investigation, frontend, realtime streaming,
+**Calibrated probabilities, SHAP, a bundled network LLM provider, frontend, realtime streaming,
 and autonomous payment actions are not implemented.** `risk-lgbm-v2` produces an uncalibrated
 model score. `risk-policy-v2` produces bounded recommendations; it performs no payment action.
+AI-assisted investigation operates afterward on bounded deterministic evidence and cannot change
+the recommendation.
 
 ## Architecture boundaries
 
@@ -20,8 +22,9 @@ model score. `risk-policy-v2` produces bounded recommendations; it performs no p
 - `ml/training` and `ml/evaluation` own offline assembly, grouped temporal splitting, training,
   diagnostics, and reproducible artifacts.
 - `packages/policy_engine` owns cost profiles, validation-only threshold optimization, bounded
-  runtime decisions, backtesting, and operational persistence. `packages/investigator` remains an
-  unimplemented boundary.
+  runtime decisions, backtesting, and operational persistence.
+- `packages/investigator` owns truth-free evidence bundles, point-in-time timelines, deterministic
+  explanations, and the optional read-only provider boundary.
 - `ml` and `configs` hold versioned offline artifacts and experiment configuration.
 - PostgreSQL is the system of record. Each valid incoming event is committed to `raw_events` before normalization starts.
 
@@ -32,6 +35,8 @@ See [docs/ML_EVALUATION.md](docs/ML_EVALUATION.md) and [docs/MODEL_CARD.md](docs
 for the Phase 5 methodology, actual metrics, and limitations.
 See [docs/POLICY_ENGINE.md](docs/POLICY_ENGINE.md) for Phase 6 score bands, graph corroboration,
 cost assumptions, freeze discipline, and operational limitations.
+See [docs/INVESTIGATOR.md](docs/INVESTIGATOR.md) for evidence selection, point-in-time timelines,
+provider configuration, and degraded behavior.
 
 ## Local development
 
@@ -143,6 +148,19 @@ All monetary outputs and operating budgets are illustrative synthetic assumption
 or Razorpay economics. The operational API defaults to risk-policy-v2 and reuses immutable feature,
 graph, prediction, and versioned policy rows for repeated identical assessments.
 
+## Evidence-first investigation
+
+After a transaction is assessed, retrieve its structured explanation with:
+
+```text
+GET /api/v1/transactions/{public_id}/investigation
+```
+
+The response includes the model and policy basis, selected behavioral and graph evidence, safe
+related entities, a bounded strictly-prior timeline, limitations, and an action-consistent next
+step. No LLM key is required; deterministic explanation is the default. Optional injected provider
+prose is supplementary, and provider failure degrades to the same deterministic HTTP 200 response.
+
 ## Implemented API
 
 - `GET /health`
@@ -151,4 +169,5 @@ graph, prediction, and versioned policy rows for repeated identical assessments.
 - `GET /api/v1/transactions`
 - `GET /api/v1/transactions/{public_id}`
 - `POST /api/v1/transactions/{public_id}/assess`
+- `GET /api/v1/transactions/{public_id}/investigation`
 - `GET /api/v1/entities/{entity_type}/{public_id}/neighbors`

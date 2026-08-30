@@ -136,5 +136,20 @@ frozen model, persists versioned prediction and decision rows, and writes truth-
 It has no payment-action adapter. Future model and policy versions can coexist; a mismatch under
 the same version is rejected. See [POLICY_ENGINE.md](POLICY_ENGINE.md).
 
-The investigator boundary remains unimplemented. Any future LLM must be read-only,
-evidence-grounded, and outside the transaction decision path.
+## Evidence and investigation layer
+
+```text
+Transaction -> features-v1 -> graph-v1 -> risk-lgbm-v2 -> risk-policy-v2
+                                                        -> RiskAssessment
+                                                        -> EvidenceBuilder
+                                                        -> EvidenceBundle
+                                                           |-> deterministic explanation
+                                                           `-> optional injected LLM provider
+                                                               -> supplementary narrative
+```
+
+The investigator sits strictly after the immutable policy decision. EvidenceBuilder reads the
+existing feature snapshot, graph snapshot, prediction, policy decision, safe entity references,
+and a bounded strictly-prior timeline. It receives no ground truth, persona, scenario, ring, split,
+or current outcome. The bundled deterministic renderer is always available; provider failure never
+changes or blocks assessment. See [INVESTIGATOR.md](INVESTIGATOR.md).
