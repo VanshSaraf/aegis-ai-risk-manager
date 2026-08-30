@@ -1,0 +1,23 @@
+{
+  "checkpoint": "SYNTHETIC-V2 FROZEN",
+  "development_dataset_version": "synthetic-v2-seed-24681-d461e3ea45",
+  "development_validation_passed": true,
+  "feature_schema_hash": "d14d120c8e218b10cbb624b2ac720e984af87b89f09c33fc8418e088499ce76e",
+  "feature_version": "features-v1",
+  "final_generator_config_hash": "1b207b0e9436e37ee1888ee079cbfe89664c089e863db5b7de6a56b1875dcb8c",
+  "final_seed": 88421,
+  "final_seed_evaluated_at_checkpoint": false,
+  "frozen_on": "2026-08-30",
+  "generator_implementation_hash": "eb1800952834409150654fce07f05908e75ee9f09b905eefcfe57a2982c8d5e4",
+  "generator_version": "synthetic-v2",
+  "graph_schema_hash": "df69def87d1c110b0eb6c0008da56b5a7d65895b1e62b9b41aa498222e92b15b",
+  "graph_version": "graph-v1",
+  "methodology": {
+    "split": "strict chronological timestamp boundaries nearest 70/85 that do not split abuse infrastructure supergroups",
+    "test": "explicit sealed evaluation after freeze",
+    "threshold": "validation_f1"
+  },
+  "model_training_config_hash": "236b35aaf2ce4332adeb091593a1d26ea19f284f8ff14266aa698bda89c2a69c",
+  "model_version": "risk-lgbm-v2",
+  "split_methodology_hash": "c180b0a83c04c62e2a52d393e4ed5c6f6daab56eb618a0ca66b13b4a8a337b14"
+}

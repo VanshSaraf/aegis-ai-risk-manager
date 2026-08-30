@@ -1,0 +1,12 @@
+{
+  "constant_features": [],
+  "exact_label_aliases": [],
+  "feature_count": 77,
+  "forbidden_column_check": "passed",
+  "near_constant_features": [],
+  "non_finite_count": 0,
+  "registered_schema_check": "passed",
+  "strongest_feature": "device_unique_customers_1h",
+  "strongest_univariate_auc": 0.7889130092307693,
+  "suspicious_features": []
+}

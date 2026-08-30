@@ -1,0 +1,3350 @@
+{
+  "diagnostics": {
+    "graph_cluster_matching": {
+      "discovered_clusters_touching_test": 223,
+      "ground_truth_rings_in_test": 19,
+      "median_best_overlap": 1.0,
+      "metric": "typed_entity_jaccard_restricted_to_test_entities",
+      "overlap_threshold": 0.5,
+      "rings_above_threshold": 13
+    },
+    "persona_false_positives": {
+      "combined_lightgbm": {
+        "CORPORATE_OR_CAMPUS_NETWORK": {
+          "false_positive": 1,
+          "false_positive_rate": 0.000984251968503937,
+          "legitimate_transactions": 1016
+        },
+        "FAMILY_HOUSEHOLD": {
+          "false_positive": 0,
+          "false_positive_rate": 0.0,
+          "legitimate_transactions": 1396
+        },
+        "POWER_SHOPPER": {
+          "false_positive": 0,
+          "false_positive_rate": 0.0,
+          "legitimate_transactions": 1253
+        },
+        "STANDARD_RETAIL": {
+          "false_positive": 3,
+          "false_positive_rate": 0.0010231923601637107,
+          "legitimate_transactions": 2932
+        },
+        "TRAVELLER": {
+          "false_positive": 0,
+          "false_positive_rate": 0.0,
+          "legitimate_transactions": 418
+        }
+      },
+      "graph_lightgbm": {
+        "CORPORATE_OR_CAMPUS_NETWORK": {
+          "false_positive": 0,
+          "false_positive_rate": 0.0,
+          "legitimate_transactions": 1016
+        },
+        "FAMILY_HOUSEHOLD": {
+          "false_positive": 0,
+          "false_positive_rate": 0.0,
+          "legitimate_transactions": 1396
+        },
+        "POWER_SHOPPER": {
+          "false_positive": 3,
+          "false_positive_rate": 0.0023942537909018356,
+          "legitimate_transactions": 1253
+        },
+        "STANDARD_RETAIL": {
+          "false_positive": 8,
+          "false_positive_rate": 0.002728512960436562,
+          "legitimate_transactions": 2932
+        },
+        "TRAVELLER": {
+          "false_positive": 2,
+          "false_positive_rate": 0.004784688995215311,
+          "legitimate_transactions": 418
+        }
+      },
+      "tabular_lightgbm": {
+        "CORPORATE_OR_CAMPUS_NETWORK": {
+          "false_positive": 2,
+          "false_positive_rate": 0.001968503937007874,
+          "legitimate_transactions": 1016
+        },
+        "FAMILY_HOUSEHOLD": {
+          "false_positive": 75,
+          "false_positive_rate": 0.053724928366762174,
+          "legitimate_transactions": 1396
+        },
+        "POWER_SHOPPER": {
+          "false_positive": 0,
+          "false_positive_rate": 0.0,
+          "legitimate_transactions": 1253
+        },
+        "STANDARD_RETAIL": {
+          "false_positive": 5,
+          "false_positive_rate": 0.0017053206002728514,
+          "legitimate_transactions": 2932
+        },
+        "TRAVELLER": {
+          "false_positive": 1,
+          "false_positive_rate": 0.0023923444976076554,
+          "legitimate_transactions": 418
+        }
+      }
+    },
+    "scenario_recall": {
+      "combined_lightgbm": {
+        "ACCOUNT_FARM": {
+          "positive_transactions": 120,
+          "recall": 0.975,
+          "true_positive": 117
+        },
+        "CARD_TESTING": {
+          "positive_transactions": 130,
+          "recall": 0.9846153846153847,
+          "true_positive": 128
+        },
+        "COLLUSIVE_RING": {
+          "positive_transactions": 120,
+          "recall": 0.975,
+          "true_positive": 117
+        },
+        "IDENTITY_ROTATION": {
+          "positive_transactions": 115,
+          "recall": 0.9217391304347826,
+          "true_positive": 106
+        }
+      },
+      "graph_lightgbm": {
+        "ACCOUNT_FARM": {
+          "positive_transactions": 120,
+          "recall": 1.0,
+          "true_positive": 120
+        },
+        "CARD_TESTING": {
+          "positive_transactions": 130,
+          "recall": 1.0,
+          "true_positive": 130
+        },
+        "COLLUSIVE_RING": {
+          "positive_transactions": 120,
+          "recall": 1.0,
+          "true_positive": 120
+        },
+        "IDENTITY_ROTATION": {
+          "positive_transactions": 115,
+          "recall": 1.0,
+          "true_positive": 115
+        }
+      },
+      "tabular_lightgbm": {
+        "ACCOUNT_FARM": {
+          "positive_transactions": 120,
+          "recall": 0.975,
+          "true_positive": 117
+        },
+        "CARD_TESTING": {
+          "positive_transactions": 130,
+          "recall": 0.9923076923076923,
+          "true_positive": 129
+        },
+        "COLLUSIVE_RING": {
+          "positive_transactions": 120,
+          "recall": 1.0,
+          "true_positive": 120
+        },
+        "IDENTITY_ROTATION": {
+          "positive_transactions": 115,
+          "recall": 0.8956521739130435,
+          "true_positive": 103
+        }
+      }
+    }
+  },
+  "family_ablation": {
+    "distributions": {
+      "account_age_hours": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 22266.35138888889,
+          "mean": 6647.239833809524,
+          "p50": 3525.9998611111114,
+          "p90": 19417.274499999992,
+          "p95": 21694.017319444425,
+          "p99": 22180.746152777778
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 36670.93161298278,
+          "mean": 14385.84910441948,
+          "p50": 13190.691035675554,
+          "p90": 31654.387161932387,
+          "p95": 34016.63246827449,
+          "p99": 35957.824072460025
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 36643.09806898833,
+          "mean": 15045.322026554622,
+          "p50": 14370.005411442777,
+          "p90": 31396.626692488084,
+          "p95": 33612.81408423379,
+          "p99": 35541.893630848725
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 36613.474420868886,
+          "mean": 14984.52570994055,
+          "p50": 13826.58925358375,
+          "p90": 32185.258372072112,
+          "p95": 34483.490398265545,
+          "p99": 36083.25892565482
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 36611.455577404726,
+          "mean": 14116.05741044376,
+          "p50": 13019.482527611111,
+          "p90": 30817.94768067734,
+          "p95": 33292.336667511576,
+          "p99": 35910.92918886564
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 36670.93161298278,
+          "mean": 13956.98097144169,
+          "p50": 12100.196931358056,
+          "p90": 31765.133333236554,
+          "p95": 34424.64323395594,
+          "p99": 35995.303428669446
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 36454.433605771665,
+          "mean": 15019.418815961255,
+          "p50": 14903.283663595,
+          "p90": 32041.20255542117,
+          "p95": 33815.59700825332,
+          "p99": 35709.04626641514
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 17984.855277777777,
+          "mean": 6751.409769510582,
+          "p50": 4800.618888888888,
+          "p90": 17778.27902777778,
+          "p95": 17881.54963888889,
+          "p99": 17982.067358333334
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 10783.853888888889,
+          "mean": 4128.490532596372,
+          "p50": 1747.9279166666665,
+          "p90": 10503.573416666666,
+          "p95": 10643.675791666667,
+          "p99": 10718.623852777779
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 19904.841944444444,
+          "mean": 8402.00978373016,
+          "p50": 6600.6194444444445,
+          "p90": 19698.28022222222,
+          "p95": 19801.585305555553,
+          "p99": 19902.075366666668
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 22266.35138888889,
+          "mean": 7726.840799603175,
+          "p50": 2417.9606944444445,
+          "p90": 22016.499944444447,
+          "p95": 22178.404972222223,
+          "p99": 22263.520944444444
+        }
+      },
+      "address_txn_count_24h": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 14.0,
+          "mean": 2.7208571428571426,
+          "p50": 2.0,
+          "p90": 6.0,
+          "p95": 8.0,
+          "p99": 12.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 13.0,
+          "mean": 0.8416344086021506,
+          "p50": 0.0,
+          "p90": 3.0,
+          "p95": 5.0,
+          "p99": 8.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 4.0,
+          "mean": 0.26129408335762166,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 13.0,
+          "mean": 1.811401305876444,
+          "p50": 1.0,
+          "p90": 5.0,
+          "p95": 7.0,
+          "p99": 9.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 10.0,
+          "mean": 0.9955917260088165,
+          "p50": 0.0,
+          "p90": 4.0,
+          "p95": 6.0,
+          "p99": 8.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 9.0,
+          "mean": 0.6711579575398996,
+          "p50": 0.0,
+          "p90": 2.0,
+          "p95": 5.0,
+          "p99": 7.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 3.0,
+          "mean": 0.2247605011053795,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 14.0,
+          "mean": 4.375,
+          "p50": 4.0,
+          "p90": 9.0,
+          "p95": 11.049999999999955,
+          "p99": 14.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 9.0,
+          "mean": 2.7775510204081635,
+          "p50": 3.0,
+          "p90": 6.0,
+          "p95": 6.0,
+          "p99": 8.210000000000036
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 12.0,
+          "mean": 3.2416666666666667,
+          "p50": 3.0,
+          "p90": 7.0,
+          "p95": 8.0,
+          "p99": 11.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 1.0,
+          "mean": 0.4797619047619048,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        }
+      },
+      "address_unique_customers_24h": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 6.0,
+          "mean": 1.6657142857142857,
+          "p50": 1.0,
+          "p90": 3.0,
+          "p95": 5.0,
+          "p99": 6.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 4.0,
+          "mean": 0.4599354838709677,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 2.0,
+          "p99": 4.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 1.0,
+          "mean": 0.23069076071116293,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 4.0,
+          "mean": 1.3022350577599195,
+          "p50": 1.0,
+          "p90": 4.0,
+          "p95": 4.0,
+          "p99": 4.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 1.0,
+          "mean": 0.35096642929806715,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 1.0,
+          "mean": 0.2874757619450107,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.20117907148120856,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 6.0,
+          "mean": 3.0166666666666666,
+          "p50": 3.0,
+          "p90": 6.0,
+          "p95": 6.0,
+          "p99": 6.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 3.0,
+          "mean": 1.4948979591836735,
+          "p50": 2.0,
+          "p90": 2.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 3.0,
+          "mean": 1.7,
+          "p50": 2.0,
+          "p90": 3.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 1.0,
+          "mean": 0.4797619047619048,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        }
+      },
+      "customer_amount_std_30d": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 2490895.0,
+          "mean": 62290.860798010995,
+          "p50": 0.0,
+          "p90": 161493.24999999994,
+          "p95": 370307.72499999835,
+          "p99": 1148124.4640252306
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 2498509.5,
+          "mean": 340030.0361942618,
+          "p50": 186210.87126709434,
+          "p90": 934853.7738313706,
+          "p95": 1348639.1042761828,
+          "p99": 1943744.337479803
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 2481392.0,
+          "mean": 344257.4216864143,
+          "p50": 183901.70989843237,
+          "p90": 933453.0517554044,
+          "p95": 1432276.43434504,
+          "p99": 1931620.4121469702
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 2498509.5,
+          "mean": 315334.0385699696,
+          "p50": 179370.23890167562,
+          "p90": 843214.7981331962,
+          "p95": 1235747.0745526187,
+          "p99": 1862961.3508565254
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 2496864.0,
+          "mean": 408867.68716472364,
+          "p50": 253275.2568602784,
+          "p90": 1112215.8657037877,
+          "p95": 1502259.5868067113,
+          "p99": 2024822.8098225351
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 2497517.5,
+          "mean": 325460.78495365166,
+          "p50": 176178.10532526454,
+          "p90": 908292.2755592904,
+          "p95": 1286628.0584776977,
+          "p99": 1933684.9363511717
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 2489088.0,
+          "mean": 285385.6949633948,
+          "p50": 126967.93295599656,
+          "p90": 809899.3950959112,
+          "p95": 1194819.7700203431,
+          "p99": 1977887.1509549608
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 2472272.0,
+          "mean": 42569.326785714286,
+          "p50": 0.0,
+          "p90": 64207.85000000006,
+          "p95": 234805.59999999998,
+          "p99": 939020.9200000005
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 2490895.0,
+          "mean": 91039.91368486089,
+          "p50": 0.0,
+          "p90": 235511.31548400669,
+          "p95": 453700.0426557613,
+          "p99": 1544325.1400000025
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 2482758.5,
+          "mean": 110762.69390699382,
+          "p50": 0.0,
+          "p90": 330703.8000000001,
+          "p95": 609335.340137968,
+          "p99": 1589301.464743828
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 0.0,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        }
+      },
+      "customer_txn_count_30d": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 4.0,
+          "mean": 0.9551428571428572,
+          "p50": 1.0,
+          "p90": 2.0,
+          "p95": 3.0,
+          "p99": 4.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 27.0,
+          "mean": 4.300064516129032,
+          "p50": 4.0,
+          "p90": 9.0,
+          "p95": 11.0,
+          "p99": 15.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 18.0,
+          "mean": 4.209997085397843,
+          "p50": 4.0,
+          "p90": 9.0,
+          "p95": 10.0,
+          "p99": 12.390000000000327
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 18.0,
+          "mean": 4.23455549974887,
+          "p50": 4.0,
+          "p90": 9.0,
+          "p95": 10.0,
+          "p99": 13.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 27.0,
+          "mean": 4.880750536905166,
+          "p50": 4.0,
+          "p90": 11.0,
+          "p95": 13.0,
+          "p99": 17.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 26.0,
+          "mean": 4.228061452791727,
+          "p50": 3.0,
+          "p90": 9.0,
+          "p95": 11.0,
+          "p99": 15.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 15.0,
+          "mean": 3.3607221812822403,
+          "p50": 3.0,
+          "p90": 7.0,
+          "p95": 8.0,
+          "p99": 11.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 2.0,
+          "mean": 0.725,
+          "p50": 1.0,
+          "p90": 2.0,
+          "p95": 2.0,
+          "p99": 2.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 4.0,
+          "mean": 1.292857142857143,
+          "p50": 1.0,
+          "p90": 3.0,
+          "p95": 4.0,
+          "p99": 4.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 4.0,
+          "mean": 1.2666666666666666,
+          "p50": 1.0,
+          "p90": 3.0,
+          "p95": 3.0,
+          "p99": 4.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 1.0,
+          "mean": 0.4797619047619048,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        }
+      },
+      "device_failed_txn_count_10m": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 7.0,
+          "mean": 0.43885714285714283,
+          "p50": 0.0,
+          "p90": 2.0,
+          "p95": 3.0,
+          "p99": 5.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 4.0,
+          "mean": 0.03774193548387097,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 1.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 1.0,
+          "mean": 0.0005829204313611193,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 3.0,
+          "mean": 0.0562531391260673,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 1.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 2.0,
+          "mean": 0.01865038996269922,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 1.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 4.0,
+          "mean": 0.05653060209814548,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 1.8800000000010186
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.00036845983787767134,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 5.0,
+          "mean": 0.36666666666666664,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 2.0,
+          "p99": 3.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 7.0,
+          "mean": 0.6989795918367347,
+          "p50": 0.0,
+          "p90": 3.0,
+          "p95": 4.0,
+          "p99": 6.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 4.0,
+          "mean": 0.25,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 2.0,
+          "p99": 3.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 6.0,
+          "mean": 0.3964285714285714,
+          "p50": 0.0,
+          "p90": 2.0,
+          "p95": 3.0,
+          "p99": 5.0
+        }
+      },
+      "device_txn_count_10m": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 10.0,
+          "mean": 1.2742857142857142,
+          "p50": 0.0,
+          "p90": 6.0,
+          "p95": 7.0,
+          "p99": 10.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 7.0,
+          "mean": 0.2384516129032258,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 2.0,
+          "p99": 5.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 1.0,
+          "mean": 0.005537744097930632,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 7.0,
+          "mean": 0.5960572576594676,
+          "p50": 0.0,
+          "p90": 3.0,
+          "p95": 5.0,
+          "p99": 7.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 4.0,
+          "mean": 0.19000791228665084,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 3.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 7.0,
+          "mean": 0.2296027444936111,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 2.0,
+          "p99": 5.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.0014738393515106854,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 6.0,
+          "mean": 1.2,
+          "p50": 0.0,
+          "p90": 5.100000000000023,
+          "p95": 6.0,
+          "p99": 6.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 10.0,
+          "mean": 1.5193877551020407,
+          "p50": 0.0,
+          "p90": 7.0,
+          "p95": 9.0,
+          "p99": 10.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 8.0,
+          "mean": 1.1714285714285715,
+          "p50": 0.0,
+          "p90": 5.0,
+          "p95": 7.0,
+          "p99": 8.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 10.0,
+          "mean": 1.1654761904761906,
+          "p50": 0.0,
+          "p90": 5.0,
+          "p95": 8.0,
+          "p99": 10.0
+        }
+      },
+      "device_txn_count_1h": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 12.0,
+          "mean": 2.3288571428571427,
+          "p50": 1.0,
+          "p90": 7.0,
+          "p95": 8.0,
+          "p99": 11.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 8.0,
+          "mean": 0.2441505376344086,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 2.0,
+          "p99": 6.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 1.0,
+          "mean": 0.012678519382104342,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 1.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 8.0,
+          "mean": 0.6038422903063787,
+          "p50": 0.0,
+          "p90": 3.0,
+          "p95": 5.0,
+          "p99": 7.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 4.0,
+          "mean": 0.19260766361478468,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 3.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 8.0,
+          "mean": 0.23546959677820314,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 2.0,
+          "p99": 5.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.006263817243920413,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 9.0,
+          "mean": 2.4154761904761903,
+          "p50": 1.0,
+          "p90": 7.0,
+          "p95": 8.0,
+          "p99": 9.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 12.0,
+          "mean": 3.2244897959183674,
+          "p50": 3.0,
+          "p90": 7.0,
+          "p95": 10.0,
+          "p99": 11.210000000000036
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 11.0,
+          "mean": 1.9833333333333334,
+          "p50": 1.0,
+          "p90": 6.0,
+          "p95": 7.0499999999999545,
+          "p99": 10.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 12.0,
+          "mean": 1.542857142857143,
+          "p50": 0.0,
+          "p90": 6.0,
+          "p95": 8.0,
+          "p99": 11.610000000000014
+        }
+      },
+      "device_unique_customers_1h": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 12.0,
+          "mean": 1.8662857142857143,
+          "p50": 1.0,
+          "p90": 5.0,
+          "p95": 5.0,
+          "p99": 9.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 4.0,
+          "mean": 0.14713978494623656,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 3.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 1.0,
+          "mean": 0.012678519382104342,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 1.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 4.0,
+          "mean": 0.4610748367654445,
+          "p50": 0.0,
+          "p90": 3.0,
+          "p95": 4.0,
+          "p99": 4.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 1.0,
+          "mean": 0.12964846840736974,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 1.0,
+          "mean": 0.09541092825535723,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.006263817243920413,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 5.0,
+          "mean": 1.8416666666666666,
+          "p50": 1.0,
+          "p90": 5.0,
+          "p95": 5.0,
+          "p99": 5.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 5.0,
+          "mean": 2.442857142857143,
+          "p50": 2.0,
+          "p90": 5.0,
+          "p95": 5.0,
+          "p99": 5.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 5.0,
+          "mean": 1.5416666666666667,
+          "p50": 1.0,
+          "p90": 4.100000000000023,
+          "p95": 5.0,
+          "p99": 5.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 12.0,
+          "mean": 1.542857142857143,
+          "p50": 0.0,
+          "p90": 6.0,
+          "p95": 8.0,
+          "p99": 11.610000000000014
+        }
+      },
+      "device_unique_instruments_1h": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 12.0,
+          "mean": 2.025714285714286,
+          "p50": 1.0,
+          "p90": 6.0,
+          "p95": 7.0,
+          "p99": 9.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 5.0,
+          "mean": 0.1561720430107527,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 3.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 1.0,
+          "mean": 0.012678519382104342,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 1.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 5.0,
+          "mean": 0.4040683073832245,
+          "p50": 0.0,
+          "p90": 2.0,
+          "p95": 3.0,
+          "p99": 4.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 3.0,
+          "mean": 0.18266078896801174,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 3.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 2.0,
+          "mean": 0.11554715855416894,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.006263817243920413,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 8.0,
+          "mean": 2.066666666666667,
+          "p50": 1.0,
+          "p90": 5.100000000000023,
+          "p95": 7.0499999999999545,
+          "p99": 8.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 7.0,
+          "mean": 2.7193877551020407,
+          "p50": 2.0,
+          "p90": 7.0,
+          "p95": 7.0,
+          "p99": 7.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 7.0,
+          "mean": 1.6583333333333334,
+          "p50": 1.0,
+          "p90": 4.100000000000023,
+          "p95": 6.0499999999999545,
+          "p99": 7.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 12.0,
+          "mean": 1.542857142857143,
+          "p50": 0.0,
+          "p90": 6.0,
+          "p95": 8.0,
+          "p99": 11.610000000000014
+        }
+      },
+      "historical_customers_on_current_device": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 12.0,
+          "mean": 2.672857142857143,
+          "p50": 2.0,
+          "p90": 5.0,
+          "p95": 7.0,
+          "p99": 9.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 4.0,
+          "mean": 0.9031182795698924,
+          "p50": 1.0,
+          "p90": 1.0,
+          "p95": 2.0,
+          "p99": 4.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 3.0,
+          "mean": 0.9487030020402215,
+          "p50": 1.0,
+          "p90": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 4.0,
+          "mean": 1.55047714716223,
+          "p50": 1.0,
+          "p90": 4.0,
+          "p95": 4.0,
+          "p99": 4.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 1.0,
+          "mean": 0.6796654233073358,
+          "p50": 1.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 1.0,
+          "mean": 0.7555312484462785,
+          "p50": 1.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.7103905674281503,
+          "p50": 1.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 5.0,
+          "mean": 3.0,
+          "p50": 3.5,
+          "p90": 5.0,
+          "p95": 5.0,
+          "p99": 5.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 7.0,
+          "mean": 3.686734693877551,
+          "p50": 4.0,
+          "p90": 7.0,
+          "p95": 7.0,
+          "p99": 7.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 5.0,
+          "mean": 2.05,
+          "p50": 2.0,
+          "p90": 4.100000000000023,
+          "p95": 5.0,
+          "p99": 5.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 12.0,
+          "mean": 1.7857142857142858,
+          "p50": 0.0,
+          "p90": 6.0,
+          "p95": 8.0,
+          "p99": 11.610000000000014
+        }
+      },
+      "historical_customers_on_current_ip": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 14.0,
+          "mean": 3.326285714285714,
+          "p50": 3.0,
+          "p90": 8.0,
+          "p95": 12.0,
+          "p99": 12.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 12.0,
+          "mean": 2.7563655913978495,
+          "p50": 1.0,
+          "p90": 11.0,
+          "p95": 12.0,
+          "p99": 12.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 12.0,
+          "mean": 10.61993587875255,
+          "p50": 12.0,
+          "p90": 12.0,
+          "p95": 12.0,
+          "p99": 12.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 4.0,
+          "mean": 3.5651682571572074,
+          "p50": 4.0,
+          "p90": 4.0,
+          "p95": 4.0,
+          "p99": 4.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 1.0,
+          "mean": 0.8441279529784108,
+          "p50": 1.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 1.0,
+          "mean": 0.8700343061701388,
+          "p50": 1.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.7137067059690494,
+          "p50": 1.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 14.0,
+          "mean": 5.85,
+          "p50": 5.0,
+          "p90": 12.0,
+          "p95": 12.0,
+          "p99": 14.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 7.0,
+          "mean": 3.1336734693877553,
+          "p50": 4.0,
+          "p90": 5.0,
+          "p95": 6.0,
+          "p99": 7.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 4.0,
+          "mean": 2.125,
+          "p50": 2.0,
+          "p90": 4.0,
+          "p95": 4.0,
+          "p99": 4.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 12.0,
+          "mean": 2.2285714285714286,
+          "p50": 0.0,
+          "p90": 8.0,
+          "p95": 10.0,
+          "p99": 11.610000000000014
+        }
+      },
+      "historical_instruments_on_current_device": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 12.0,
+          "mean": 2.670857142857143,
+          "p50": 2.0,
+          "p90": 7.0,
+          "p95": 8.0,
+          "p99": 9.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 9.0,
+          "mean": 1.2329677419354839,
+          "p50": 1.0,
+          "p90": 2.0,
+          "p95": 3.0,
+          "p99": 5.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 5.0,
+          "mean": 1.211454386476246,
+          "p50": 1.0,
+          "p90": 2.0,
+          "p95": 3.0,
+          "p99": 4.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 9.0,
+          "mean": 1.9790306378704168,
+          "p50": 2.0,
+          "p90": 5.0,
+          "p95": 6.0,
+          "p99": 7.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 5.0,
+          "mean": 1.2545495648242342,
+          "p50": 1.0,
+          "p90": 3.0,
+          "p95": 3.0,
+          "p99": 4.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 2.0,
+          "mean": 0.969174165962313,
+          "p50": 1.0,
+          "p90": 2.0,
+          "p95": 2.0,
+          "p99": 2.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 3.0,
+          "mean": 0.9826823876197495,
+          "p50": 1.0,
+          "p90": 2.0,
+          "p95": 2.0,
+          "p99": 3.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 8.0,
+          "mean": 3.025,
+          "p50": 3.0,
+          "p90": 5.100000000000023,
+          "p95": 7.0499999999999545,
+          "p99": 8.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 9.0,
+          "mean": 3.5510204081632653,
+          "p50": 3.0,
+          "p90": 7.0,
+          "p95": 9.0,
+          "p99": 9.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 7.0,
+          "mean": 2.175,
+          "p50": 2.0,
+          "p90": 5.0,
+          "p95": 6.0499999999999545,
+          "p99": 7.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 12.0,
+          "mean": 1.7857142857142858,
+          "p50": 0.0,
+          "p90": 6.0,
+          "p95": 8.0,
+          "p99": 11.610000000000014
+        }
+      },
+      "ip_failed_txn_count_10m": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 12.0,
+          "mean": 0.9628571428571429,
+          "p50": 0.0,
+          "p90": 4.0,
+          "p95": 6.0,
+          "p99": 9.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 4.0,
+          "mean": 0.082,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 3.0,
+          "mean": 0.08248324103759837,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 3.0,
+          "mean": 0.07132094424912104,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 3.0,
+          "mean": 0.058098790550469084,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 1.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 4.0,
+          "mean": 0.10759210460895938,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 1.0,
+          "p99": 2.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.00036845983787767134,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 11.0,
+          "mean": 1.1488095238095237,
+          "p50": 0.0,
+          "p90": 5.0,
+          "p95": 6.0,
+          "p99": 9.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 12.0,
+          "mean": 1.4857142857142858,
+          "p50": 0.0,
+          "p90": 7.0,
+          "p95": 8.0,
+          "p99": 10.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 4.0,
+          "mean": 0.3678571428571429,
+          "p50": 0.0,
+          "p90": 2.0,
+          "p95": 2.0,
+          "p99": 4.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 8.0,
+          "mean": 0.7619047619047619,
+          "p50": 0.0,
+          "p90": 3.0,
+          "p95": 5.0,
+          "p99": 8.0
+        }
+      },
+      "ip_txn_count_10m": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 20.0,
+          "mean": 2.708,
+          "p50": 0.0,
+          "p90": 11.0,
+          "p95": 17.0,
+          "p99": 20.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 8.0,
+          "mean": 0.5397634408602151,
+          "p50": 0.0,
+          "p90": 2.0,
+          "p95": 5.0,
+          "p99": 7.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 8.0,
+          "mean": 0.7825706791023025,
+          "p50": 0.0,
+          "p90": 4.0,
+          "p95": 6.0,
+          "p99": 7.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 7.0,
+          "mean": 0.7508789552988449,
+          "p50": 0.0,
+          "p90": 4.0,
+          "p95": 6.0,
+          "p99": 7.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 7.0,
+          "mean": 0.5910478128179044,
+          "p50": 0.0,
+          "p90": 3.0,
+          "p95": 5.0,
+          "p99": 7.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 8.0,
+          "mean": 0.42340774623377914,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 4.0,
+          "p99": 7.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.0014738393515106854,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 20.0,
+          "mean": 3.5654761904761907,
+          "p50": 0.0,
+          "p90": 17.100000000000023,
+          "p95": 19.0,
+          "p99": 20.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 20.0,
+          "mean": 3.2846938775510206,
+          "p50": 0.0,
+          "p90": 15.0,
+          "p95": 19.0,
+          "p99": 20.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 11.0,
+          "mean": 1.6488095238095237,
+          "p50": 0.0,
+          "p90": 8.0,
+          "p95": 10.0,
+          "p99": 11.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 17.0,
+          "mean": 2.236904761904762,
+          "p50": 0.0,
+          "p90": 11.0,
+          "p95": 15.049999999999955,
+          "p99": 17.0
+        }
+      },
+      "ip_txn_count_1h": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 29.0,
+          "mean": 4.0362857142857145,
+          "p50": 1.0,
+          "p90": 12.0,
+          "p95": 18.0,
+          "p99": 24.009999999999764
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 9.0,
+          "mean": 0.5678494623655914,
+          "p50": 0.0,
+          "p90": 2.0,
+          "p95": 5.0,
+          "p99": 7.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 9.0,
+          "mean": 0.8886621976100262,
+          "p50": 0.0,
+          "p90": 4.0,
+          "p95": 6.0,
+          "p99": 7.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 8.0,
+          "mean": 0.790557508789553,
+          "p50": 0.0,
+          "p90": 4.0,
+          "p95": 6.0,
+          "p99": 7.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 8.0,
+          "mean": 0.5987340341358652,
+          "p50": 0.0,
+          "p90": 3.0,
+          "p95": 5.0,
+          "p99": 7.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 8.0,
+          "mean": 0.4327549346194004,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 4.0,
+          "p99": 7.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.0036845983787767134,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 29.0,
+          "mean": 5.628571428571429,
+          "p50": 2.0,
+          "p90": 17.100000000000023,
+          "p95": 23.049999999999955,
+          "p99": 28.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 24.0,
+          "mean": 4.831632653061225,
+          "p50": 1.0,
+          "p90": 15.0,
+          "p95": 20.0,
+          "p99": 23.210000000000036
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 16.0,
+          "mean": 2.8214285714285716,
+          "p50": 1.0,
+          "p90": 8.100000000000023,
+          "p95": 11.049999999999955,
+          "p99": 15.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 20.0,
+          "mean": 2.730952380952381,
+          "p50": 0.0,
+          "p90": 11.0,
+          "p95": 16.0,
+          "p99": 19.610000000000014
+        }
+      },
+      "ip_unique_customers_1h": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 12.0,
+          "mean": 2.4577142857142857,
+          "p50": 1.0,
+          "p90": 7.0,
+          "p95": 11.0,
+          "p99": 12.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 9.0,
+          "mean": 0.31225806451612903,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 5.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 9.0,
+          "mean": 0.8828329932964151,
+          "p50": 0.0,
+          "p90": 4.0,
+          "p95": 6.0,
+          "p99": 7.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 4.0,
+          "mean": 0.5729532898041185,
+          "p50": 0.0,
+          "p90": 3.0,
+          "p95": 4.0,
+          "p99": 4.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 1.0,
+          "mean": 0.17983497230699672,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 1.0,
+          "mean": 0.11425446228807239,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.0036845983787767134,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 12.0,
+          "mean": 4.353571428571429,
+          "p50": 2.0,
+          "p90": 12.0,
+          "p95": 12.0,
+          "p99": 12.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 5.0,
+          "mean": 2.2438775510204083,
+          "p50": 1.0,
+          "p90": 5.0,
+          "p95": 5.0,
+          "p99": 5.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 4.0,
+          "mean": 1.438095238095238,
+          "p50": 1.0,
+          "p90": 4.0,
+          "p95": 4.0,
+          "p99": 4.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 12.0,
+          "mean": 1.8309523809523809,
+          "p50": 0.0,
+          "p90": 7.0,
+          "p95": 10.0,
+          "p99": 11.610000000000014
+        }
+      },
+      "ip_unique_customers_24h": {
+        "label:coordinated_abuse": {
+          "count": 3500,
+          "max": 14.0,
+          "mean": 3.326285714285714,
+          "p50": 3.0,
+          "p90": 8.0,
+          "p95": 12.0,
+          "p99": 12.0
+        },
+        "label:legitimate": {
+          "count": 46500,
+          "max": 12.0,
+          "mean": 0.9118924731182796,
+          "p50": 0.0,
+          "p90": 3.0,
+          "p95": 4.0,
+          "p99": 8.0
+        },
+        "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+          "count": 6862,
+          "max": 12.0,
+          "mean": 3.3720489653162344,
+          "p50": 3.0,
+          "p90": 7.900000000000546,
+          "p95": 8.0,
+          "p99": 10.0
+        },
+        "persona:FAMILY_HOUSEHOLD": {
+          "count": 7964,
+          "max": 4.0,
+          "mean": 1.3022350577599195,
+          "p50": 1.0,
+          "p90": 4.0,
+          "p95": 4.0,
+          "p99": 4.0
+        },
+        "persona:POWER_SHOPPER": {
+          "count": 8847,
+          "max": 1.0,
+          "mean": 0.31920425002825814,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:STANDARD_RETAIL": {
+          "count": 20113,
+          "max": 1.0,
+          "mean": 0.2874757619450107,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "persona:TRAVELLER": {
+          "count": 2714,
+          "max": 1.0,
+          "mean": 0.10574797347089167,
+          "p50": 0.0,
+          "p90": 1.0,
+          "p95": 1.0,
+          "p99": 1.0
+        },
+        "scenario:ACCOUNT_FARM": {
+          "count": 840,
+          "max": 14.0,
+          "mean": 5.85,
+          "p50": 5.0,
+          "p90": 12.0,
+          "p95": 12.0,
+          "p99": 14.0
+        },
+        "scenario:CARD_TESTING": {
+          "count": 980,
+          "max": 7.0,
+          "mean": 3.1336734693877553,
+          "p50": 4.0,
+          "p90": 5.0,
+          "p95": 6.0,
+          "p99": 7.0
+        },
+        "scenario:COLLUSIVE_RING": {
+          "count": 840,
+          "max": 4.0,
+          "mean": 2.125,
+          "p50": 2.0,
+          "p90": 4.0,
+          "p95": 4.0,
+          "p99": 4.0
+        },
+        "scenario:IDENTITY_ROTATION": {
+          "count": 840,
+          "max": 12.0,
+          "mean": 2.2285714285714286,
+          "p50": 0.0,
+          "p90": 8.0,
+          "p95": 10.0,
+          "p99": 11.610000000000014
+        }
+      }
+    },
+    "family_definitions": {
+      "address_behavior": [
+        "address_txn_count_1h",
+        "address_txn_count_24h",
+        "address_unique_customers_24h"
+      ],
+      "customer_behavior": [
+        "customer_txn_count_1h",
+        "customer_txn_count_24h",
+        "customer_txn_count_30d",
+        "customer_failed_txn_count_1h",
+        "customer_failed_txn_count_24h",
+        "customer_failure_rate_30d",
+        "customer_avg_amount_30d",
+        "customer_amount_std_30d",
+        "customer_unique_devices_24h",
+        "customer_unique_instruments_24h",
+        "customer_unique_ips_24h",
+        "customer_unique_addresses_30d",
+        "customer_merchant_txn_count_30d",
+        "is_new_device_for_customer",
+        "is_new_instrument_for_customer",
+        "is_new_ip_for_customer",
+        "is_new_address_for_customer",
+        "amount_vs_customer_mean",
+        "amount_zscore_customer"
+      ],
+      "device_velocity": [
+        "device_txn_count_1m",
+        "device_txn_count_10m",
+        "device_txn_count_1h",
+        "device_failed_txn_count_10m",
+        "device_failed_txn_count_1h",
+        "device_unique_customers_1h",
+        "device_unique_instruments_1h"
+      ],
+      "graph_v1": [
+        "device_customer_degree",
+        "device_instrument_degree",
+        "ip_customer_degree",
+        "ip_device_degree",
+        "address_customer_degree",
+        "instrument_device_degree",
+        "instrument_customer_degree",
+        "component_node_count",
+        "component_edge_count",
+        "component_customer_count",
+        "component_device_count",
+        "component_instrument_count",
+        "component_ip_count",
+        "component_address_count",
+        "component_multipartite_density",
+        "new_customer_device_edge",
+        "new_customer_instrument_edge",
+        "new_customer_ip_edge",
+        "new_customer_address_edge",
+        "new_instrument_device_edge",
+        "preexisting_component_count",
+        "components_bridged_by_transaction",
+        "customer_two_hop_customer_count_via_device_or_ip",
+        "component_new_edges_10m",
+        "device_new_identities_10m"
+      ],
+      "historical_relationships": [
+        "historical_customers_on_current_device",
+        "historical_instruments_on_current_device",
+        "historical_customers_on_current_ip",
+        "historical_devices_on_current_ip",
+        "historical_customers_on_current_address",
+        "historical_devices_for_current_instrument"
+      ],
+      "instrument_velocity": [
+        "instrument_txn_count_10m",
+        "instrument_txn_count_1h",
+        "instrument_txn_count_24h",
+        "instrument_failed_txn_count_1h",
+        "instrument_unique_devices_24h"
+      ],
+      "ip_network_velocity": [
+        "ip_txn_count_10m",
+        "ip_txn_count_1h",
+        "ip_failed_txn_count_10m",
+        "ip_failed_txn_count_1h",
+        "ip_unique_customers_1h",
+        "ip_unique_customers_24h"
+      ],
+      "transaction_context": [
+        "amount_paise",
+        "log_amount",
+        "account_age_hours",
+        "hour_of_day",
+        "day_of_week",
+        "is_weekend"
+      ]
+    },
+    "feature_importance": {
+      "combined_77": [
+        {
+          "feature": "component_address_count",
+          "gain": 42359.12203025818
+        },
+        {
+          "feature": "component_ip_count",
+          "gain": 35913.55604362488
+        },
+        {
+          "feature": "historical_devices_on_current_ip",
+          "gain": 28493.09112739563
+        },
+        {
+          "feature": "historical_customers_on_current_device",
+          "gain": 18996.719611883163
+        },
+        {
+          "feature": "is_new_ip_for_customer",
+          "gain": 18130.823232650757
+        },
+        {
+          "feature": "account_age_hours",
+          "gain": 15639.367931008339
+        },
+        {
+          "feature": "ip_txn_count_1h",
+          "gain": 10263.192405700684
+        },
+        {
+          "feature": "address_txn_count_1h",
+          "gain": 5678.920801639557
+        },
+        {
+          "feature": "device_unique_customers_1h",
+          "gain": 5026.41715657711
+        },
+        {
+          "feature": "component_new_edges_10m",
+          "gain": 2959.3257541656494
+        },
+        {
+          "feature": "instrument_txn_count_1h",
+          "gain": 2715.287030696869
+        },
+        {
+          "feature": "device_txn_count_1h",
+          "gain": 2488.1297892332077
+        },
+        {
+          "feature": "ip_device_degree",
+          "gain": 2186.335506916046
+        },
+        {
+          "feature": "day_of_week",
+          "gain": 1851.9078842401505
+        },
+        {
+          "feature": "historical_customers_on_current_address",
+          "gain": 1796.4943227767944
+        },
+        {
+          "feature": "component_node_count",
+          "gain": 1392.6466026306152
+        },
+        {
+          "feature": "hour_of_day",
+          "gain": 1351.1171898841858
+        },
+        {
+          "feature": "ip_unique_customers_24h",
+          "gain": 1299.2136504650116
+        },
+        {
+          "feature": "amount_paise",
+          "gain": 1282.2880378961563
+        },
+        {
+          "feature": "customer_txn_count_30d",
+          "gain": 1143.8972330093384
+        }
+      ],
+      "full_features_v1": [
+        {
+          "feature": "historical_customers_on_current_device",
+          "gain": 33899.761914253235
+        },
+        {
+          "feature": "device_unique_customers_1h",
+          "gain": 21332.342010498047
+        },
+        {
+          "feature": "historical_devices_on_current_ip",
+          "gain": 19432.390363693237
+        },
+        {
+          "feature": "is_new_ip_for_customer",
+          "gain": 13698.156066894531
+        },
+        {
+          "feature": "account_age_hours",
+          "gain": 12635.058884620667
+        },
+        {
+          "feature": "address_txn_count_1h",
+          "gain": 11945.670120239258
+        },
+        {
+          "feature": "historical_customers_on_current_address",
+          "gain": 6208.357672691345
+        },
+        {
+          "feature": "instrument_txn_count_24h",
+          "gain": 3579.8704767227173
+        },
+        {
+          "feature": "ip_unique_customers_24h",
+          "gain": 3214.994200706482
+        },
+        {
+          "feature": "ip_unique_customers_1h",
+          "gain": 3202.18501663208
+        },
+        {
+          "feature": "device_txn_count_1h",
+          "gain": 2277.5511322021484
+        },
+        {
+          "feature": "customer_txn_count_30d",
+          "gain": 1539.626106262207
+        },
+        {
+          "feature": "address_unique_customers_24h",
+          "gain": 1163.3394117355347
+        },
+        {
+          "feature": "historical_customers_on_current_ip",
+          "gain": 1134.977882385254
+        },
+        {
+          "feature": "ip_txn_count_1h",
+          "gain": 1099.021900177002
+        },
+        {
+          "feature": "customer_txn_count_1h",
+          "gain": 807.1175956726074
+        },
+        {
+          "feature": "instrument_txn_count_1h",
+          "gain": 760.3444986343384
+        },
+        {
+          "feature": "day_of_week",
+          "gain": 698.9899215698242
+        },
+        {
+          "feature": "amount_paise",
+          "gain": 475.9795951843262
+        },
+        {
+          "feature": "device_txn_count_1m",
+          "gain": 464.4293041229248
+        }
+      ],
+      "graph_v1": [
+        {
+          "feature": "component_address_count",
+          "gain": 178467.3489265442
+        },
+        {
+          "feature": "ip_device_degree",
+          "gain": 86877.85857391357
+        },
+        {
+          "feature": "new_customer_ip_edge",
+          "gain": 82658.74469947815
+        },
+        {
+          "feature": "device_customer_degree",
+          "gain": 16277.665703773499
+        },
+        {
+          "feature": "component_ip_count",
+          "gain": 14138.535223007202
+        },
+        {
+          "feature": "component_multipartite_density",
+          "gain": 10067.884912490845
+        },
+        {
+          "feature": "address_customer_degree",
+          "gain": 6924.012992858887
+        },
+        {
+          "feature": "new_customer_device_edge",
+          "gain": 6642.189987182617
+        },
+        {
+          "feature": "component_new_edges_10m",
+          "gain": 6014.965816497803
+        },
+        {
+          "feature": "component_node_count",
+          "gain": 2793.6867933273315
+        },
+        {
+          "feature": "component_customer_count",
+          "gain": 1673.0077056884766
+        },
+        {
+          "feature": "component_device_count",
+          "gain": 1250.975290298462
+        },
+        {
+          "feature": "new_customer_instrument_edge",
+          "gain": 1115.6714820861816
+        },
+        {
+          "feature": "ip_customer_degree",
+          "gain": 1087.689700126648
+        },
+        {
+          "feature": "instrument_device_degree",
+          "gain": 688.2898416519165
+        },
+        {
+          "feature": "instrument_customer_degree",
+          "gain": 672.8741979598999
+        },
+        {
+          "feature": "component_edge_count",
+          "gain": 465.68819427490234
+        },
+        {
+          "feature": "device_new_identities_10m",
+          "gain": 448.3726167678833
+        },
+        {
+          "feature": "new_customer_address_edge",
+          "gain": 201.0802001953125
+        },
+        {
+          "feature": "device_instrument_degree",
+          "gain": 28.959099769592285
+        }
+      ],
+      "non_relationship_features_v1": [
+        {
+          "feature": "device_txn_count_1h",
+          "gain": 134511.48811626434
+        },
+        {
+          "feature": "is_new_ip_for_customer",
+          "gain": 84799.04976034164
+        },
+        {
+          "feature": "account_age_hours",
+          "gain": 71163.23134851456
+        },
+        {
+          "feature": "customer_txn_count_30d",
+          "gain": 58166.77220249176
+        },
+        {
+          "feature": "instrument_txn_count_24h",
+          "gain": 37381.57160639763
+        },
+        {
+          "feature": "ip_unique_customers_24h",
+          "gain": 17635.239555358887
+        },
+        {
+          "feature": "ip_txn_count_1h",
+          "gain": 7061.795160293579
+        },
+        {
+          "feature": "address_txn_count_1h",
+          "gain": 6395.412873744965
+        },
+        {
+          "feature": "device_unique_customers_1h",
+          "gain": 6247.659507274628
+        },
+        {
+          "feature": "address_unique_customers_24h",
+          "gain": 5690.100333929062
+        },
+        {
+          "feature": "customer_amount_std_30d",
+          "gain": 5529.338075637817
+        },
+        {
+          "feature": "day_of_week",
+          "gain": 4118.045756578445
+        },
+        {
+          "feature": "ip_txn_count_10m",
+          "gain": 4113.349667549133
+        },
+        {
+          "feature": "device_txn_count_1m",
+          "gain": 4053.7500190734863
+        },
+        {
+          "feature": "address_txn_count_24h",
+          "gain": 3909.0705761909485
+        },
+        {
+          "feature": "instrument_txn_count_1h",
+          "gain": 2394.423677444458
+        },
+        {
+          "feature": "hour_of_day",
+          "gain": 2386.801918745041
+        },
+        {
+          "feature": "device_unique_instruments_1h",
+          "gain": 2034.9891548156738
+        },
+        {
+          "feature": "amount_paise",
+          "gain": 1539.7781536579132
+        },
+        {
+          "feature": "customer_txn_count_24h",
+          "gain": 1501.3994653224945
+        }
+      ]
+    },
+    "models": {
+      "combined_77": {
+        "feature_count": 77,
+        "selected_candidate": {
+          "best_iteration": 79,
+          "name": "balanced-medium",
+          "parameters": {
+            "colsample_bytree": 0.9,
+            "learning_rate": 0.04,
+            "min_child_samples": 40,
+            "n_estimators": 600,
+            "num_leaves": 31,
+            "reg_lambda": 1.0
+          },
+          "validation_pr_auc": 0.9966550621286787
+        },
+        "selected_threshold": 0.025348712732535115,
+        "test": {
+          "accuracy": 0.9972,
+          "f1": 0.9780564263322883,
+          "false_negative": 17,
+          "false_negative_rate": 0.03505154639175258,
+          "false_positive": 4,
+          "false_positive_rate": 0.0005702066999287242,
+          "pr_auc": 0.9983653151407939,
+          "precision": 0.9915254237288136,
+          "recall": 0.9649484536082474,
+          "roc_auc": 0.9998859586600143,
+          "threshold": 0.025348712732535115,
+          "true_negative": 7011,
+          "true_positive": 468
+        },
+        "validation": {
+          "accuracy": 0.9962666666666666,
+          "f1": 0.9727626459143969,
+          "false_negative": 15,
+          "false_negative_rate": 0.02912621359223301,
+          "false_positive": 13,
+          "false_positive_rate": 0.0018611309949892628,
+          "pr_auc": 0.9966550621286787,
+          "precision": 0.9746588693957114,
+          "recall": 0.970873786407767,
+          "roc_auc": 0.9997503665969381,
+          "threshold": 0.025348712732535115,
+          "true_negative": 6972,
+          "true_positive": 500
+        }
+      },
+      "full_features_v1": {
+        "feature_count": 52,
+        "selected_candidate": {
+          "best_iteration": 17,
+          "name": "balanced-medium",
+          "parameters": {
+            "colsample_bytree": 0.9,
+            "learning_rate": 0.04,
+            "min_child_samples": 40,
+            "n_estimators": 600,
+            "num_leaves": 31,
+            "reg_lambda": 1.0
+          },
+          "validation_pr_auc": 0.9937757392906922
+        },
+        "selected_threshold": 0.04946171647945835,
+        "test": {
+          "accuracy": 0.9868,
+          "f1": 0.9045323047251688,
+          "false_negative": 16,
+          "false_negative_rate": 0.032989690721649485,
+          "false_positive": 83,
+          "false_positive_rate": 0.011831789023521026,
+          "pr_auc": 0.9748940217450285,
+          "precision": 0.8496376811594203,
+          "recall": 0.9670103092783505,
+          "roc_auc": 0.9980042765502494,
+          "threshold": 0.04946171647945835,
+          "true_negative": 6932,
+          "true_positive": 469
+        },
+        "validation": {
+          "accuracy": 0.9953333333333333,
+          "f1": 0.9663137632338787,
+          "false_negative": 13,
+          "false_negative_rate": 0.02524271844660194,
+          "false_positive": 22,
+          "false_positive_rate": 0.0031496062992125984,
+          "pr_auc": 0.9937757392906922,
+          "precision": 0.9580152671755725,
+          "recall": 0.974757281553398,
+          "roc_auc": 0.9994954514180874,
+          "threshold": 0.04946171647945835,
+          "true_negative": 6963,
+          "true_positive": 502
+        }
+      },
+      "graph_v1": {
+        "feature_count": 25,
+        "selected_candidate": {
+          "best_iteration": 81,
+          "name": "weighted-small",
+          "parameters": {
+            "class_weight": "balanced",
+            "colsample_bytree": 1.0,
+            "learning_rate": 0.05,
+            "min_child_samples": 40,
+            "n_estimators": 500,
+            "num_leaves": 15,
+            "reg_lambda": 2.0
+          },
+          "validation_pr_auc": 0.9942149488949685
+        },
+        "selected_threshold": 0.47512402107515894,
+        "test": {
+          "accuracy": 0.9982666666666666,
+          "f1": 0.9867751780264495,
+          "false_negative": 0,
+          "false_negative_rate": 0.0,
+          "false_positive": 13,
+          "false_positive_rate": 0.0018531717747683535,
+          "pr_auc": 0.9965063326704237,
+          "precision": 0.9738955823293173,
+          "recall": 1.0,
+          "roc_auc": 0.9998571544040384,
+          "threshold": 0.47512402107515894,
+          "true_negative": 7002,
+          "true_positive": 485
+        },
+        "validation": {
+          "accuracy": 0.9964,
+          "f1": 0.9744560075685903,
+          "false_negative": 0,
+          "false_negative_rate": 0.0,
+          "false_positive": 27,
+          "false_positive_rate": 0.0038654259126700073,
+          "pr_auc": 0.9942149488949685,
+          "precision": 0.9501845018450185,
+          "recall": 1.0,
+          "roc_auc": 0.9997421659450557,
+          "threshold": 0.47512402107515894,
+          "true_negative": 6958,
+          "true_positive": 515
+        }
+      },
+      "non_relationship_features_v1": {
+        "feature_count": 46,
+        "selected_candidate": {
+          "best_iteration": 180,
+          "name": "weighted-small",
+          "parameters": {
+            "class_weight": "balanced",
+            "colsample_bytree": 1.0,
+            "learning_rate": 0.05,
+            "min_child_samples": 40,
+            "n_estimators": 500,
+            "num_leaves": 15,
+            "reg_lambda": 2.0
+          },
+          "validation_pr_auc": 0.9875723865183006
+        },
+        "selected_threshold": 0.1273477551710478,
+        "test": {
+          "accuracy": 0.9952,
+          "f1": 0.9624217118997913,
+          "false_negative": 24,
+          "false_negative_rate": 0.049484536082474224,
+          "false_positive": 12,
+          "false_positive_rate": 0.0017106200997861725,
+          "pr_auc": 0.9883978501460237,
+          "precision": 0.9746300211416491,
+          "recall": 0.9505154639175257,
+          "roc_auc": 0.9988595866001426,
+          "threshold": 0.1273477551710478,
+          "true_negative": 7003,
+          "true_positive": 461
+        },
+        "validation": {
+          "accuracy": 0.9954666666666667,
+          "f1": 0.9668615984405458,
+          "false_negative": 19,
+          "false_negative_rate": 0.036893203883495145,
+          "false_positive": 15,
+          "false_positive_rate": 0.0021474588403722263,
+          "pr_auc": 0.9875723865183006,
+          "precision": 0.9706457925636007,
+          "recall": 0.9631067961165048,
+          "roc_auc": 0.9987532229256868,
+          "threshold": 0.1273477551710478,
+          "true_negative": 6970,
+          "true_positive": 496
+        }
+      }
+    },
+    "purpose": "retrospective development diagnostic; not a new sealed benchmark",
+    "univariate": [
+      {
+        "directional_roc_auc": 0.8196645161290322,
+        "feature": "customer_txn_count_30d"
+      },
+      {
+        "directional_roc_auc": 0.790522737327189,
+        "feature": "device_unique_customers_1h"
+      },
+      {
+        "directional_roc_auc": 0.789609287250384,
+        "feature": "customer_amount_std_30d"
+      },
+      {
+        "directional_roc_auc": 0.7887149124423964,
+        "feature": "device_unique_instruments_1h"
+      },
+      {
+        "directional_roc_auc": 0.7817089370199694,
+        "feature": "device_txn_count_1h"
+      },
+      {
+        "directional_roc_auc": 0.7703702396313366,
+        "feature": "address_unique_customers_24h"
+      },
+      {
+        "directional_roc_auc": 0.7667524239631338,
+        "feature": "ip_unique_customers_24h"
+      },
+      {
+        "directional_roc_auc": 0.7599688141321044,
+        "feature": "ip_unique_customers_1h"
+      },
+      {
+        "directional_roc_auc": 0.7473804485407066,
+        "feature": "ip_txn_count_1h"
+      },
+      {
+        "directional_roc_auc": 0.746884479262673,
+        "feature": "address_txn_count_24h"
+      },
+      {
+        "directional_roc_auc": 0.7382427035330261,
+        "feature": "is_new_ip_for_customer"
+      },
+      {
+        "directional_roc_auc": 0.7382427035330261,
+        "feature": "new_customer_ip_edge"
+      },
+      {
+        "directional_roc_auc": 0.735817440860215,
+        "feature": "address_txn_count_1h"
+      },
+      {
+        "directional_roc_auc": 0.7332707895545315,
+        "feature": "component_new_edges_10m"
+      },
+      {
+        "directional_roc_auc": 0.7313392964669738,
+        "feature": "component_ip_count"
+      },
+      {
+        "directional_roc_auc": 0.7273741751152073,
+        "feature": "customer_two_hop_customer_count_via_device_or_ip"
+      },
+      {
+        "directional_roc_auc": 0.7245728233486942,
+        "feature": "component_address_count"
+      },
+      {
+        "directional_roc_auc": 0.719126162826421,
+        "feature": "component_customer_count"
+      },
+      {
+        "directional_roc_auc": 0.7183799293394777,
+        "feature": "device_customer_degree"
+      },
+      {
+        "directional_roc_auc": 0.7183799293394777,
+        "feature": "historical_customers_on_current_device"
+      },
+      {
+        "directional_roc_auc": 0.7168438894009217,
+        "feature": "instrument_txn_count_24h"
+      },
+      {
+        "directional_roc_auc": 0.715729643625192,
+        "feature": "instrument_unique_devices_24h"
+      },
+      {
+        "directional_roc_auc": 0.7107496159754223,
+        "feature": "is_new_instrument_for_customer"
+      },
+      {
+        "directional_roc_auc": 0.7107496159754223,
+        "feature": "new_customer_instrument_edge"
+      },
+      {
+        "directional_roc_auc": 0.7078783410138249,
+        "feature": "customer_avg_amount_30d"
+      },
+      {
+        "directional_roc_auc": 0.689570866359447,
+        "feature": "instrument_txn_count_1h"
+      },
+      {
+        "directional_roc_auc": 0.6819026912442396,
+        "feature": "component_multipartite_density"
+      },
+      {
+        "directional_roc_auc": 0.6722456344086022,
+        "feature": "component_edge_count"
+      },
+      {
+        "directional_roc_auc": 0.6687059293394777,
+        "feature": "account_age_hours"
+      },
+      {
+        "directional_roc_auc": 0.6672914039938557,
+        "feature": "customer_unique_ips_24h"
+      },
+      {
+        "directional_roc_auc": 0.6668321689708141,
+        "feature": "device_instrument_degree"
+      },
+      {
+        "directional_roc_auc": 0.6668321689708141,
+        "feature": "historical_instruments_on_current_device"
+      },
+      {
+        "directional_roc_auc": 0.6664884423963134,
+        "feature": "customer_unique_instruments_24h"
+      },
+      {
+        "directional_roc_auc": 0.6657856159754224,
+        "feature": "component_node_count"
+      },
+      {
+        "directional_roc_auc": 0.6624669738863287,
+        "feature": "is_new_device_for_customer"
+      },
+      {
+        "directional_roc_auc": 0.6624669738863287,
+        "feature": "new_customer_device_edge"
+      },
+      {
+        "directional_roc_auc": 0.6605158187403994,
+        "feature": "customer_txn_count_24h"
+      },
+      {
+        "directional_roc_auc": 0.6581942949308757,
+        "feature": "ip_failed_txn_count_1h"
+      },
+      {
+        "directional_roc_auc": 0.6546308940092166,
+        "feature": "customer_unique_devices_24h"
+      },
+      {
+        "directional_roc_auc": 0.6540783010752688,
+        "feature": "device_failed_txn_count_1h"
+      },
+      {
+        "directional_roc_auc": 0.6337891582181259,
+        "feature": "device_txn_count_10m"
+      },
+      {
+        "directional_roc_auc": 0.6326662887864823,
+        "feature": "device_new_identities_10m"
+      },
+      {
+        "directional_roc_auc": 0.6295483870967742,
+        "feature": "customer_unique_addresses_30d"
+      },
+      {
+        "directional_roc_auc": 0.6295483870967741,
+        "feature": "is_new_address_for_customer"
+      },
+      {
+        "directional_roc_auc": 0.6295483870967741,
+        "feature": "new_customer_address_edge"
+      },
+      {
+        "directional_roc_auc": 0.6294234224270353,
+        "feature": "ip_txn_count_10m"
+      },
+      {
+        "directional_roc_auc": 0.6233794685099846,
+        "feature": "customer_txn_count_1h"
+      },
+      {
+        "directional_roc_auc": 0.6202153609831029,
+        "feature": "component_instrument_count"
+      },
+      {
+        "directional_roc_auc": 0.6181463440860215,
+        "feature": "historical_devices_on_current_ip"
+      },
+      {
+        "directional_roc_auc": 0.6092949308755761,
+        "feature": "new_instrument_device_edge"
+      },
+      {
+        "directional_roc_auc": 0.6049464116743472,
+        "feature": "ip_failed_txn_count_10m"
+      },
+      {
+        "directional_roc_auc": 0.6033928817204302,
+        "feature": "historical_devices_for_current_instrument"
+      },
+      {
+        "directional_roc_auc": 0.6033928817204302,
+        "feature": "instrument_device_degree"
+      },
+      {
+        "directional_roc_auc": 0.5949080061443933,
+        "feature": "historical_customers_on_current_ip"
+      },
+      {
+        "directional_roc_auc": 0.5949080061443933,
+        "feature": "ip_customer_degree"
+      },
+      {
+        "directional_roc_auc": 0.5933368970814132,
+        "feature": "amount_vs_customer_mean"
+      },
+      {
+        "directional_roc_auc": 0.5928865622119815,
+        "feature": "device_failed_txn_count_10m"
+      },
+      {
+        "directional_roc_auc": 0.584912267281106,
+        "feature": "ip_device_degree"
+      },
+      {
+        "directional_roc_auc": 0.5785529247311828,
+        "feature": "amount_zscore_customer"
+      },
+      {
+        "directional_roc_auc": 0.5772859139784946,
+        "feature": "instrument_txn_count_10m"
+      },
+      {
+        "directional_roc_auc": 0.5729870844854071,
+        "feature": "address_customer_degree"
+      },
+      {
+        "directional_roc_auc": 0.5729870844854071,
+        "feature": "historical_customers_on_current_address"
+      },
+      {
+        "directional_roc_auc": 0.5626582488479263,
+        "feature": "customer_failure_rate_30d"
+      },
+      {
+        "directional_roc_auc": 0.5548299539170507,
+        "feature": "instrument_failed_txn_count_1h"
+      },
+      {
+        "directional_roc_auc": 0.5511339078341013,
+        "feature": "customer_failed_txn_count_24h"
+      },
+      {
+        "directional_roc_auc": 0.543609059907834,
+        "feature": "customer_failed_txn_count_1h"
+      },
+      {
+        "directional_roc_auc": 0.5423946666666667,
+        "feature": "customer_merchant_txn_count_30d"
+      },
+      {
+        "directional_roc_auc": 0.5278319078341014,
+        "feature": "amount_paise"
+      },
+      {
+        "directional_roc_auc": 0.5278319078341014,
+        "feature": "log_amount"
+      },
+      {
+        "directional_roc_auc": 0.524,
+        "feature": "components_bridged_by_transaction"
+      },
+      {
+        "directional_roc_auc": 0.5203701996927803,
+        "feature": "device_txn_count_1m"
+      },
+      {
+        "directional_roc_auc": 0.5127185775729646,
+        "feature": "instrument_customer_degree"
+      },
+      {
+        "directional_roc_auc": 0.5086825806451613,
+        "feature": "preexisting_component_count"
+      },
+      {
+        "directional_roc_auc": 0.5061866082949309,
+        "feature": "day_of_week"
+      },
+      {
+        "directional_roc_auc": 0.5046605529953916,
+        "feature": "component_device_count"
+      },
+      {
+        "directional_roc_auc": 0.5046236559139785,
+        "feature": "is_weekend"
+      },
+      {
+        "directional_roc_auc": 0.5044370015360983,
+        "feature": "hour_of_day"
+      }
+    ]
+  },
+  "test": {
+    "combined_lightgbm": {
+      "selected_threshold": {
+        "accuracy": 0.9972,
+        "f1": 0.9780564263322883,
+        "false_negative": 17,
+        "false_negative_rate": 0.03505154639175258,
+        "false_positive": 4,
+        "false_positive_rate": 0.0005702066999287242,
+        "pr_auc": 0.9983653151407939,
+        "precision": 0.9915254237288136,
+        "recall": 0.9649484536082474,
+        "roc_auc": 0.9998859586600143,
+        "threshold": 0.025348712732535115,
+        "true_negative": 7011,
+        "true_positive": 468
+      },
+      "threshold_0_5": {
+        "accuracy": 0.9901333333333333,
+        "f1": 0.9174107142857142,
+        "false_negative": 74,
+        "false_negative_rate": 0.15257731958762888,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 0.9983653151407939,
+        "precision": 1.0,
+        "recall": 0.8474226804123711,
+        "roc_auc": 0.9998859586600143,
+        "threshold": 0.5,
+        "true_negative": 7015,
+        "true_positive": 411
+      }
+    },
+    "deterministic_graph_baseline": {
+      "accuracy": 0.9054666666666666,
+      "f1": 0.34168987929433614,
+      "false_negative": 301,
+      "false_negative_rate": 0.6206185567010309,
+      "false_positive": 408,
+      "false_positive_rate": 0.058161083392729865,
+      "pr_auc": 0.15804918733166154,
+      "precision": 0.3108108108108108,
+      "recall": 0.37938144329896906,
+      "roc_auc": 0.6606101799531195,
+      "threshold": 0.5,
+      "true_negative": 6607,
+      "true_positive": 184
+    },
+    "dummy_class_prior": {
+      "accuracy": 0.06466666666666666,
+      "f1": 0.12147777082028803,
+      "false_negative": 0,
+      "false_negative_rate": 0.0,
+      "false_positive": 7015,
+      "false_positive_rate": 1.0,
+      "pr_auc": 0.06466666666666666,
+      "precision": 0.06466666666666666,
+      "recall": 1.0,
+      "roc_auc": 0.5,
+      "threshold": 0.07142857142857142,
+      "true_negative": 0,
+      "true_positive": 485
+    },
+    "graph_lightgbm": {
+      "selected_threshold": {
+        "accuracy": 0.9982666666666666,
+        "f1": 0.9867751780264495,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 13,
+        "false_positive_rate": 0.0018531717747683535,
+        "pr_auc": 0.9965063326704237,
+        "precision": 0.9738955823293173,
+        "recall": 1.0,
+        "roc_auc": 0.9998571544040384,
+        "threshold": 0.47512402107515894,
+        "true_negative": 7002,
+        "true_positive": 485
+      },
+      "threshold_0_5": {
+        "accuracy": 0.9914666666666667,
+        "f1": 0.9296703296703297,
+        "false_negative": 62,
+        "false_negative_rate": 0.12783505154639174,
+        "false_positive": 2,
+        "false_positive_rate": 0.0002851033499643621,
+        "pr_auc": 0.9965063326704237,
+        "precision": 0.9952941176470588,
+        "recall": 0.8721649484536083,
+        "roc_auc": 0.9998571544040384,
+        "threshold": 0.5,
+        "true_negative": 7013,
+        "true_positive": 423
+      }
+    },
+    "tabular_lightgbm": {
+      "selected_threshold": {
+        "accuracy": 0.9868,
+        "f1": 0.9045323047251688,
+        "false_negative": 16,
+        "false_negative_rate": 0.032989690721649485,
+        "false_positive": 83,
+        "false_positive_rate": 0.011831789023521026,
+        "pr_auc": 0.9748940217450285,
+        "precision": 0.8496376811594203,
+        "recall": 0.9670103092783505,
+        "roc_auc": 0.9980042765502494,
+        "threshold": 0.04946171647945835,
+        "true_negative": 6932,
+        "true_positive": 469
+      },
+      "threshold_0_5": {
+        "accuracy": 0.98,
+        "f1": 0.8170731707317073,
+        "false_negative": 150,
+        "false_negative_rate": 0.30927835051546393,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 0.9748940217450285,
+        "precision": 1.0,
+        "recall": 0.6907216494845361,
+        "roc_auc": 0.9980042765502494,
+        "threshold": 0.5,
+        "true_negative": 7015,
+        "true_positive": 335
+      }
+    }
+  },
+  "validation": {
+    "combined_lightgbm": {
+      "candidate_results": [
+        {
+          "best_iteration": 82,
+          "name": "balanced-small",
+          "parameters": {
+            "colsample_bytree": 0.9,
+            "learning_rate": 0.05,
+            "min_child_samples": 30,
+            "n_estimators": 500,
+            "num_leaves": 15,
+            "reg_lambda": 1.0
+          },
+          "validation_pr_auc": 0.9963626011922289
+        },
+        {
+          "best_iteration": 79,
+          "name": "balanced-medium",
+          "parameters": {
+            "colsample_bytree": 0.9,
+            "learning_rate": 0.04,
+            "min_child_samples": 40,
+            "n_estimators": 600,
+            "num_leaves": 31,
+            "reg_lambda": 1.0
+          },
+          "validation_pr_auc": 0.9966550621286787
+        },
+        {
+          "best_iteration": 5,
+          "name": "weighted-small",
+          "parameters": {
+            "class_weight": "balanced",
+            "colsample_bytree": 1.0,
+            "learning_rate": 0.05,
+            "min_child_samples": 40,
+            "n_estimators": 500,
+            "num_leaves": 15,
+            "reg_lambda": 2.0
+          },
+          "validation_pr_auc": 0.9848474564591152
+        }
+      ],
+      "input_count": 77,
+      "selected_candidate": {
+        "best_iteration": 79,
+        "name": "balanced-medium",
+        "parameters": {
+          "colsample_bytree": 0.9,
+          "learning_rate": 0.04,
+          "min_child_samples": 40,
+          "n_estimators": 600,
+          "num_leaves": 31,
+          "reg_lambda": 1.0
+        },
+        "validation_pr_auc": 0.9966550621286787
+      },
+      "selected_threshold": 0.025348712732535115,
+      "threshold_selection_objective": "validation_f1",
+      "training_seconds": 2.0915122919996065,
+      "validation_metrics": {
+        "accuracy": 0.9962666666666666,
+        "f1": 0.9727626459143969,
+        "false_negative": 15,
+        "false_negative_rate": 0.02912621359223301,
+        "false_positive": 13,
+        "false_positive_rate": 0.0018611309949892628,
+        "pr_auc": 0.9966550621286787,
+        "precision": 0.9746588693957114,
+        "recall": 0.970873786407767,
+        "roc_auc": 0.9997503665969381,
+        "threshold": 0.025348712732535115,
+        "true_negative": 6972,
+        "true_positive": 500
+      },
+      "validation_metrics_at_0_5": {
+        "accuracy": 0.9898666666666667,
+        "f1": 0.920335429769392,
+        "false_negative": 76,
+        "false_negative_rate": 0.14757281553398058,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 0.9966550621286787,
+        "precision": 1.0,
+        "recall": 0.8524271844660194,
+        "roc_auc": 0.9997503665969381,
+        "threshold": 0.5,
+        "true_negative": 6985,
+        "true_positive": 439
+      },
+      "validation_prediction_digest": "37f57bc904c66b1978af587766d05e742276fc27459efdb0e06fd16a93f9382c"
+    },
+    "deterministic_graph_baseline": {
+      "accuracy": 0.9124,
+      "f1": 0.3736892278360343,
+      "false_negative": 319,
+      "false_negative_rate": 0.6194174757281553,
+      "false_positive": 338,
+      "false_positive_rate": 0.04838940586972083,
+      "pr_auc": 0.18222279917093923,
+      "precision": 0.36704119850187267,
+      "recall": 0.38058252427184464,
+      "roc_auc": 0.6660965592010619,
+      "threshold": 0.5,
+      "true_negative": 6647,
+      "true_positive": 196
+    },
+    "dummy_class_prior": {
+      "accuracy": 0.06866666666666667,
+      "f1": 0.12850904553961323,
+      "false_negative": 0,
+      "false_negative_rate": 0.0,
+      "false_positive": 6985,
+      "false_positive_rate": 1.0,
+      "pr_auc": 0.06866666666666667,
+      "precision": 0.06866666666666667,
+      "recall": 1.0,
+      "roc_auc": 0.5,
+      "threshold": 0.07142857142857142,
+      "true_negative": 0,
+      "true_positive": 515
+    },
+    "graph_lightgbm": {
+      "candidate_results": [
+        {
+          "best_iteration": 92,
+          "name": "balanced-small",
+          "parameters": {
+            "colsample_bytree": 0.9,
+            "learning_rate": 0.05,
+            "min_child_samples": 30,
+            "n_estimators": 500,
+            "num_leaves": 15,
+            "reg_lambda": 1.0
+          },
+          "validation_pr_auc": 0.9942149488949685
+        },
+        {
+          "best_iteration": 89,
+          "name": "balanced-medium",
+          "parameters": {
+            "colsample_bytree": 0.9,
+            "learning_rate": 0.04,
+            "min_child_samples": 40,
+            "n_estimators": 600,
+            "num_leaves": 31,
+            "reg_lambda": 1.0
+          },
+          "validation_pr_auc": 0.9942149488949685
+        },
+        {
+          "best_iteration": 81,
+          "name": "weighted-small",
+          "parameters": {
+            "class_weight": "balanced",
+            "colsample_bytree": 1.0,
+            "learning_rate": 0.05,
+            "min_child_samples": 40,
+            "n_estimators": 500,
+            "num_leaves": 15,
+            "reg_lambda": 2.0
+          },
+          "validation_pr_auc": 0.9942149488949685
+        }
+      ],
+      "input_count": 25,
+      "selected_candidate": {
+        "best_iteration": 81,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 0.9942149488949685
+      },
+      "selected_threshold": 0.47512402107515894,
+      "threshold_selection_objective": "validation_f1",
+      "training_seconds": 1.4551603330000944,
+      "validation_metrics": {
+        "accuracy": 0.9964,
+        "f1": 0.9744560075685903,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 27,
+        "false_positive_rate": 0.0038654259126700073,
+        "pr_auc": 0.9942149488949685,
+        "precision": 0.9501845018450185,
+        "recall": 1.0,
+        "roc_auc": 0.9997421659450557,
+        "threshold": 0.47512402107515894,
+        "true_negative": 6958,
+        "true_positive": 515
+      },
+      "validation_metrics_at_0_5": {
+        "accuracy": 0.9918666666666667,
+        "f1": 0.9375639713408394,
+        "false_negative": 57,
+        "false_negative_rate": 0.11067961165048544,
+        "false_positive": 4,
+        "false_positive_rate": 0.000572655690765927,
+        "pr_auc": 0.9942149488949685,
+        "precision": 0.9913419913419913,
+        "recall": 0.8893203883495145,
+        "roc_auc": 0.9997421659450557,
+        "threshold": 0.5,
+        "true_negative": 6981,
+        "true_positive": 458
+      },
+      "validation_prediction_digest": "c79c9a5d7cf9a3ee8f703eb95149c8db3565a5cca0bfb371b1a860130f8a198f"
+    },
+    "tabular_lightgbm": {
+      "candidate_results": [
+        {
+          "best_iteration": 54,
+          "name": "balanced-small",
+          "parameters": {
+            "colsample_bytree": 0.9,
+            "learning_rate": 0.05,
+            "min_child_samples": 30,
+            "n_estimators": 500,
+            "num_leaves": 15,
+            "reg_lambda": 1.0
+          },
+          "validation_pr_auc": 0.988830368568832
+        },
+        {
+          "best_iteration": 17,
+          "name": "balanced-medium",
+          "parameters": {
+            "colsample_bytree": 0.9,
+            "learning_rate": 0.04,
+            "min_child_samples": 40,
+            "n_estimators": 600,
+            "num_leaves": 31,
+            "reg_lambda": 1.0
+          },
+          "validation_pr_auc": 0.9937757392906922
+        },
+        {
+          "best_iteration": 56,
+          "name": "weighted-small",
+          "parameters": {
+            "class_weight": "balanced",
+            "colsample_bytree": 1.0,
+            "learning_rate": 0.05,
+            "min_child_samples": 40,
+            "n_estimators": 500,
+            "num_leaves": 15,
+            "reg_lambda": 2.0
+          },
+          "validation_pr_auc": 0.9871489510232969
+        }
+      ],
+      "input_count": 52,
+      "selected_candidate": {
+        "best_iteration": 17,
+        "name": "balanced-medium",
+        "parameters": {
+          "colsample_bytree": 0.9,
+          "learning_rate": 0.04,
+          "min_child_samples": 40,
+          "n_estimators": 600,
+          "num_leaves": 31,
+          "reg_lambda": 1.0
+        },
+        "validation_pr_auc": 0.9937757392906922
+      },
+      "selected_threshold": 0.04946171647945835,
+      "threshold_selection_objective": "validation_f1",
+      "training_seconds": 1.1976191670000844,
+      "validation_metrics": {
+        "accuracy": 0.9953333333333333,
+        "f1": 0.9663137632338787,
+        "false_negative": 13,
+        "false_negative_rate": 0.02524271844660194,
+        "false_positive": 22,
+        "false_positive_rate": 0.0031496062992125984,
+        "pr_auc": 0.9937757392906922,
+        "precision": 0.9580152671755725,
+        "recall": 0.974757281553398,
+        "roc_auc": 0.9994954514180874,
+        "threshold": 0.04946171647945835,
+        "true_negative": 6963,
+        "true_positive": 502
+      },
+      "validation_metrics_at_0_5": {
+        "accuracy": 0.98,
+        "f1": 0.8295454545454545,
+        "false_negative": 150,
+        "false_negative_rate": 0.2912621359223301,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 0.9937757392906922,
+        "precision": 1.0,
+        "recall": 0.7087378640776699,
+        "roc_auc": 0.9994954514180874,
+        "threshold": 0.5,
+        "true_negative": 6985,
+        "true_positive": 365
+      },
+      "validation_prediction_digest": "739a0f72d84b1756bef44cd09937df7a556ddbd346627bfea90cba769ef227c2"
+    }
+  }
+}

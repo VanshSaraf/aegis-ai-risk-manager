@@ -37,7 +37,17 @@ Every abuse operation receives a stable `ring_*` identifier. Legitimate transact
 
 ## Reproducibility and time
 
-The generator version is `synthetic-v1`. Configuration, root seed, and generator version determine the semantic event stream. All randomness flows through named NumPy `Generator`/PCG64 streams derived from the root seed, including separate population and scenario streams. This isolates unrelated scenarios from many incidental changes elsewhere.
+Two explicit generator versions exist. `synthetic-v1` is retained at its canonical interface for
+reproduction of the first benchmark. Retrospective Phase 5 diagnostics found its abuse velocity
+and relationship patterns too easily separated from legitimate traffic, so it is not the
+submission benchmark. `synthetic-v2` adds legitimate burst, retry, household, corporate, and
+campus hard negatives plus multiple speed, failure-rate, entity-mix, and topology variants for
+each abuse subtype. These are designed stress cases, not measured production behavior.
+
+Configuration, root seed, and generator version determine the semantic event stream. All
+randomness flows through named NumPy `Generator`/PCG64 streams derived from the root seed,
+including separate population and scenario streams. This isolates unrelated scenarios from many
+incidental changes elsewhere.
 
 The offline simulation uses a configured UTC start time and duration, never wall-clock time. Events are returned in chronological order. Deterministic source references and event IDs preserve logical identity across same-seed runs; random database UUIDs and production public IDs are intentionally excluded from semantic determinism comparisons.
 
@@ -60,7 +70,8 @@ Later train/validation/test construction must be leakage-safe:
 - Grouped splits should prevent linked identities or infrastructure from leaking across partitions where appropriate.
 - Dataset, generator, configuration, and feature versions must be recorded together.
 
-No train/validation/test split, model metric, threshold, or performance claim exists in Phase 2.
+Phase 5 implements this split methodology for offline evaluation; generation itself still does not
+train a model or expose truth to runtime inputs.
 
 ## Usage
 

@@ -1,0 +1,48 @@
+generator_version: synthetic-v2
+dataset:
+  seed: 24681
+  transaction_count: 20000
+  start_time: "2026-01-01T00:00:00Z"
+  simulation_days: 30
+abuse:
+  prevalence: 0.07
+  prevalence_tolerance: 0.01
+  scenario_weights:
+    CARD_TESTING: 0.28
+    ACCOUNT_FARM: 0.24
+    IDENTITY_ROTATION: 0.24
+    COLLUSIVE_RING: 0.24
+legitimate_persona_weights:
+  STANDARD_RETAIL: 0.45
+  POWER_SHOPPER: 0.18
+  FAMILY_HOUSEHOLD: 0.16
+  CORPORATE_OR_CAMPUS_NETWORK: 0.14
+  TRAVELLER: 0.07
+behavior:
+  amount_min_paise: 1000
+  amount_max_paise: 5000000
+  low_value_paise: 5000
+  high_value_paise: 100000
+  amount_lognormal_sigma: 1.05
+  merchant_median_paise:
+    ECOMMERCE: 110000
+    FOOD: 45000
+    TRAVEL: 500000
+    ELECTRONICS: 650000
+    FASHION: 180000
+    GAMING: 60000
+    SUBSCRIPTION: 35000
+    EDUCATION: 300000
+  legitimate_failure_rate: 0.10
+  abuse_failure_rate: 0.20
+  new_account_fraction: 0.20
+  abuse_burst_spacing_seconds: 37
+population:
+  transactions_per_customer: 8
+  merchant_count: 32
+hardening:
+  legitimate_hard_event_fraction: 0.16
+  legitimate_retry_failure_rate: 0.45
+  household_dense_fraction: 0.55
+  corporate_shared_device_fraction: 0.25
+  abuse_strategy_variants: 4

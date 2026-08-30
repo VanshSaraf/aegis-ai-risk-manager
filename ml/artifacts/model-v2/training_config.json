@@ -1,0 +1,49 @@
+{
+  "abuse_prevalence": 0.07,
+  "benchmark_seed": 88421,
+  "early_stopping_rounds": 30,
+  "feature_version": "features-v1",
+  "generation_config_path": "configs/scenarios/hardened-v2.yaml",
+  "graph_version": "graph-v1",
+  "lightgbm_candidates": [
+    {
+      "class_weight": null,
+      "colsample_bytree": 0.9,
+      "learning_rate": 0.05,
+      "min_child_samples": 30,
+      "n_estimators": 500,
+      "name": "balanced-small",
+      "num_leaves": 15,
+      "reg_lambda": 1.0
+    },
+    {
+      "class_weight": null,
+      "colsample_bytree": 0.9,
+      "learning_rate": 0.04,
+      "min_child_samples": 40,
+      "n_estimators": 600,
+      "name": "balanced-medium",
+      "num_leaves": 31,
+      "reg_lambda": 1.0
+    },
+    {
+      "class_weight": "balanced",
+      "colsample_bytree": 1.0,
+      "learning_rate": 0.05,
+      "min_child_samples": 40,
+      "n_estimators": 500,
+      "name": "weighted-small",
+      "num_leaves": 15,
+      "reg_lambda": 2.0
+    }
+  ],
+  "model_version": "risk-lgbm-v2",
+  "random_seed": 73129,
+  "split_ratios": {
+    "test": 0.15,
+    "train": 0.7,
+    "validation": 0.15
+  },
+  "threshold_selection_objective": "validation_f1",
+  "transaction_count": 50000
+}

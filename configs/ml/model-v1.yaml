@@ -1,0 +1,36 @@
+model_version: risk-lgbm-v1
+benchmark_seed: 73129
+transaction_count: 50000
+abuse_prevalence: 0.07
+feature_version: features-v1
+graph_version: graph-v1
+split_ratios:
+  train: 0.70
+  validation: 0.15
+  test: 0.15
+random_seed: 73129
+early_stopping_rounds: 30
+threshold_selection_objective: validation_f1
+lightgbm_candidates:
+  - name: balanced-small
+    num_leaves: 15
+    min_child_samples: 30
+    learning_rate: 0.05
+    n_estimators: 500
+    colsample_bytree: 0.9
+    reg_lambda: 1.0
+  - name: balanced-medium
+    num_leaves: 31
+    min_child_samples: 40
+    learning_rate: 0.04
+    n_estimators: 600
+    colsample_bytree: 0.9
+    reg_lambda: 1.0
+  - name: weighted-small
+    num_leaves: 15
+    min_child_samples: 40
+    learning_rate: 0.05
+    n_estimators: 500
+    colsample_bytree: 1.0
+    reg_lambda: 2.0
+    class_weight: balanced

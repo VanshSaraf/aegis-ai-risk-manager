@@ -2,6 +2,7 @@ import hashlib
 import json
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -94,6 +95,14 @@ class PopulationConfig(ConfigModel):
     merchant_count: int = Field(default=32, ge=8, le=10_000)
 
 
+class HardeningConfig(ConfigModel):
+    legitimate_hard_event_fraction: float = Field(default=0.16, ge=0.05, le=0.4)
+    legitimate_retry_failure_rate: float = Field(default=0.45, ge=0.1, le=0.8)
+    household_dense_fraction: float = Field(default=0.55, ge=0.1, le=1.0)
+    corporate_shared_device_fraction: float = Field(default=0.25, ge=0, le=0.75)
+    abuse_strategy_variants: Literal[4] = 4
+
+
 class GenerationConfig(ConfigModel):
     generator_version: str = Field(default="synthetic-v1", min_length=1, max_length=100)
     dataset: DatasetConfig
@@ -101,6 +110,7 @@ class GenerationConfig(ConfigModel):
     legitimate_persona_weights: dict[str, float]
     behavior: BehaviorConfig
     population: PopulationConfig
+    hardening: HardeningConfig | None = None
 
     @model_validator(mode="after")
     def valid_persona_weights(self) -> "GenerationConfig":
@@ -115,10 +125,17 @@ class GenerationConfig(ConfigModel):
             raise ValueError("legitimate_persona_weights must contain every persona")
         if abs(sum(self.legitimate_persona_weights.values()) - 1.0) > 1e-9:
             raise ValueError("legitimate persona weights must sum to 1")
+        if self.generator_version == "synthetic-v2" and self.hardening is None:
+            raise ValueError("synthetic-v2 requires hardening configuration")
+        if self.generator_version != "synthetic-v2" and self.hardening is not None:
+            raise ValueError("hardening configuration is reserved for synthetic-v2")
         return self
 
     def canonical_dict(self) -> dict[str, object]:
-        return self.model_dump(mode="json")
+        values = self.model_dump(mode="json")
+        if self.hardening is None:
+            values.pop("hardening")
+        return values
 
     def config_hash(self) -> str:
         canonical = json.dumps(self.canonical_dict(), sort_keys=True, separators=(",", ":"))

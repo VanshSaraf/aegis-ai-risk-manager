@@ -21,6 +21,16 @@ SCENARIO_GENERATORS: dict[ScenarioType, ScenarioGenerator] = {
 }
 
 
+def _generators_and_population(config: GenerationConfig):
+    if config.generator_version == "synthetic-v1":
+        return SCENARIO_GENERATORS, build_population
+    if config.generator_version == "synthetic-v2":
+        from packages.synthetic.v2 import SCENARIO_GENERATORS_V2, build_population_v2
+
+        return SCENARIO_GENERATORS_V2, build_population_v2
+    raise ValueError(f"unsupported generator version: {config.generator_version}")
+
+
 def _event_counts(
     config: GenerationConfig, scenario: ScenarioType | None
 ) -> dict[ScenarioType, int]:
@@ -40,7 +50,8 @@ def generate_dataset(
     config: GenerationConfig, scenario: ScenarioType | None = None
 ) -> SyntheticDataset:
     counts = _event_counts(config, scenario)
-    population = build_population(config, counts[ScenarioType.NORMAL_TRAFFIC])
+    generators, population_builder = _generators_and_population(config)
+    population = population_builder(config, counts[ScenarioType.NORMAL_TRAFFIC])
     events: list[GeneratedEvent] = []
     for scenario_type in ScenarioType:
         count = counts[scenario_type]
@@ -52,7 +63,7 @@ def generate_dataset(
             rng=RandomStream(config.dataset.seed, scenario_type.value.lower()),
             scenario=scenario_type,
         )
-        events.extend(SCENARIO_GENERATORS[scenario_type].generate(context, count))
+        events.extend(generators[scenario_type].generate(context, count))
 
     events.sort(key=lambda event: (event.facts.event_time, event.facts.event_id))
     mode = scenario.value if scenario else "MIXED"

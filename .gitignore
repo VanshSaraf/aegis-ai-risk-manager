@@ -17,5 +17,11 @@ ml/artifacts/features-v1/*
 !ml/artifacts/graph-v1/
 ml/artifacts/graph-v1/*
 !ml/artifacts/graph-v1/schema.json
+!ml/artifacts/model-v1/
+!ml/artifacts/model-v1/*.json
+!ml/artifacts/model-v1/model.txt
+!ml/artifacts/model-v2/
+!ml/artifacts/model-v2/*.json
+!ml/artifacts/model-v2/model.txt
 ml/datasets/generated/*
 !ml/datasets/generated/.gitkeep

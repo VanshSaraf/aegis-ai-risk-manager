@@ -1,0 +1,96 @@
+{
+  "benchmark_seed": 88421,
+  "boundaries": {
+    "test_starts_at": "2026-01-26T13:48:09.578234+00:00",
+    "validation_starts_at": "2026-01-22T02:39:32+00:00"
+  },
+  "dataset_config_hash": "b4d7eb9e6d558d000db4217cea297b9db0c999b3e3040c334001107dad0bf5b8",
+  "dataset_version": "synthetic-v2-seed-88421-b4d7eb9e6d",
+  "feature_version": "features-v1",
+  "graph_version": "graph-v1",
+  "overlap_audit": {
+    "cross_ring_shared_entity_count": 0,
+    "ring_count": 130,
+    "supergroup_count": 130
+  },
+  "splits": {
+    "test": {
+      "abuse_prevalence": 0.06466666666666666,
+      "class_counts": {
+        "abuse": 485,
+        "legitimate": 7015
+      },
+      "end_time": "2026-01-30T23:58:53.572689+00:00",
+      "persona_counts": {
+        "CORPORATE_OR_CAMPUS_NETWORK": 1016,
+        "FAMILY_HOUSEHOLD": 1396,
+        "POWER_SHOPPER": 1253,
+        "STANDARD_RETAIL": 2932,
+        "TRAVELLER": 418
+      },
+      "ring_count": 19,
+      "scenario_counts": {
+        "ACCOUNT_FARM": 120,
+        "CARD_TESTING": 130,
+        "COLLUSIVE_RING": 120,
+        "IDENTITY_ROTATION": 115,
+        "NORMAL_TRAFFIC": 7015
+      },
+      "start_time": "2026-01-26T13:48:09.578234+00:00",
+      "supergroup_count": 19,
+      "transaction_count": 7500
+    },
+    "train": {
+      "abuse_prevalence": 0.07142857142857142,
+      "class_counts": {
+        "abuse": 2500,
+        "legitimate": 32500
+      },
+      "end_time": "2026-01-22T02:38:37+00:00",
+      "persona_counts": {
+        "CORPORATE_OR_CAMPUS_NETWORK": 4808,
+        "FAMILY_HOUSEHOLD": 5374,
+        "POWER_SHOPPER": 6116,
+        "STANDARD_RETAIL": 14331,
+        "TRAVELLER": 1871
+      },
+      "ring_count": 92,
+      "scenario_counts": {
+        "ACCOUNT_FARM": 600,
+        "CARD_TESTING": 700,
+        "COLLUSIVE_RING": 600,
+        "IDENTITY_ROTATION": 600,
+        "NORMAL_TRAFFIC": 32500
+      },
+      "start_time": "2026-01-01T00:00:39.836984+00:00",
+      "supergroup_count": 92,
+      "transaction_count": 35000
+    },
+    "validation": {
+      "abuse_prevalence": 0.06866666666666667,
+      "class_counts": {
+        "abuse": 515,
+        "legitimate": 6985
+      },
+      "end_time": "2026-01-26T13:46:30.223338+00:00",
+      "persona_counts": {
+        "CORPORATE_OR_CAMPUS_NETWORK": 1038,
+        "FAMILY_HOUSEHOLD": 1194,
+        "POWER_SHOPPER": 1478,
+        "STANDARD_RETAIL": 2850,
+        "TRAVELLER": 425
+      },
+      "ring_count": 19,
+      "scenario_counts": {
+        "ACCOUNT_FARM": 120,
+        "CARD_TESTING": 150,
+        "COLLUSIVE_RING": 120,
+        "IDENTITY_ROTATION": 125,
+        "NORMAL_TRAFFIC": 6985
+      },
+      "start_time": "2026-01-22T02:39:32+00:00",
+      "supergroup_count": 19,
+      "transaction_count": 7500
+    }
+  }
+}

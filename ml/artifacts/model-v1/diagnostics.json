@@ -1,0 +1,3796 @@
+{
+  "dataset_version": "synthetic-v1-seed-73129-5a7cfff311",
+  "distributions": {
+    "account_age_hours": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 12699.531111111111,
+        "mean": 2497.5099317460317,
+        "p50": 848.33375,
+        "p90": 8235.5455,
+        "p95": 10074.282291666666,
+        "p99": 12473.59330833333
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 36669.32913479972,
+        "mean": 16655.091554671286,
+        "p50": 16565.7471677675,
+        "p90": 32420.795085741218,
+        "p95": 34480.3026065825,
+        "p99": 35956.80376347653
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 36669.32913479972,
+        "mean": 17070.474920748802,
+        "p50": 17417.97663593972,
+        "p90": 32483.66675239642,
+        "p95": 34057.89724168889,
+        "p99": 36077.789053654305
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 36599.527884238334,
+        "mean": 16757.65642373748,
+        "p50": 17055.69493409722,
+        "p90": 31976.962899948056,
+        "p95": 34386.73306279257,
+        "p99": 35698.64213579809
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 36611.61235162361,
+        "mean": 16670.314003257685,
+        "p50": 16491.579502339304,
+        "p90": 32748.89376361375,
+        "p95": 34567.34319338458,
+        "p99": 35981.29627232993
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 36646.85973959528,
+        "mean": 16660.470753553444,
+        "p50": 16434.778356369443,
+        "p90": 32580.332250951942,
+        "p95": 34636.74306233972,
+        "p99": 35963.09849336278
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 36607.67834145111,
+        "mean": 15787.076580718795,
+        "p50": 15478.29755570639,
+        "p90": 31427.342620650223,
+        "p95": 33445.25403868822,
+        "p99": 35754.98180423276
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 2499.572222222222,
+        "mean": 820.0814781746031,
+        "p50": 620.7769444444444,
+        "p90": 2088.108944444444,
+        "p95": 2293.8405833333336,
+        "p99": 2458.42595
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 10302.469722222222,
+        "mean": 3050.734118480725,
+        "p50": 1071.3890277777778,
+        "p90": 9951.358194444445,
+        "p95": 10126.913958333334,
+        "p99": 10267.358569444445
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 12699.531111111111,
+        "mean": 3217.6814781746034,
+        "p50": 1073.2558333333332,
+        "p90": 12185.203416666667,
+        "p95": 12433.235152777777,
+        "p99": 12650.33486388889
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 8379.541388888889,
+        "mean": 2809.338621031746,
+        "p50": 925.9094444444445,
+        "p90": 8091.5455,
+        "p95": 8235.543444444444,
+        "p99": 8350.945102777778
+      }
+    },
+    "address_txn_count_1h": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 12.0,
+        "mean": 3.2814285714285716,
+        "p50": 3.0,
+        "p90": 7.0,
+        "p95": 8.0,
+        "p99": 10.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 2.0,
+        "mean": 0.015655913978494623,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 1.0,
+        "mean": 0.010955459770114943,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 2.0,
+        "mean": 0.0430563978168587,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.010762689343608823,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 2.0,
+        "mean": 0.010956649776969382,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 2.0,
+        "mean": 0.013175584834632966,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 4.078571428571428,
+        "p50": 4.0,
+        "p90": 9.0,
+        "p95": 10.0,
+        "p99": 12.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 8.0,
+        "mean": 3.663265306122449,
+        "p50": 4.0,
+        "p90": 7.0,
+        "p95": 7.0,
+        "p99": 8.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 10.0,
+        "mean": 2.7023809523809526,
+        "p50": 2.0,
+        "p90": 6.0,
+        "p95": 7.0,
+        "p99": 10.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 6.0,
+        "mean": 2.617857142857143,
+        "p50": 3.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 6.0
+      }
+    },
+    "component_new_edges_10m": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 72.0,
+        "mean": 33.89485714285714,
+        "p50": 34.0,
+        "p90": 66.0,
+        "p95": 72.0,
+        "p99": 72.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 5.0,
+        "mean": 0.005161290322580645,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 5.0,
+        "mean": 0.020474137931034482,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 5.0,
+        "mean": 0.007731958762886598,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 5.0,
+        "mean": 0.0034546904065904864,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 5.0,
+        "mean": 0.0013858213156641116,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 5.0,
+        "mean": 0.004571121269158376,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 68.0,
+        "mean": 27.979761904761904,
+        "p50": 25.0,
+        "p90": 60.200000000000045,
+        "p95": 64.0,
+        "p99": 68.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 65.0,
+        "mean": 39.83673469387755,
+        "p50": 45.0,
+        "p90": 62.0,
+        "p95": 64.0,
+        "p99": 65.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 54.0,
+        "mean": 19.377380952380953,
+        "p50": 15.0,
+        "p90": 49.0,
+        "p95": 52.09999999999991,
+        "p99": 54.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 72.0,
+        "mean": 47.39523809523809,
+        "p50": 54.0,
+        "p90": 72.0,
+        "p95": 72.0,
+        "p99": 72.0
+      }
+    },
+    "device_failed_txn_count_10m": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 8.0,
+        "mean": 1.4045714285714286,
+        "p50": 1.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 6.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 1.0,
+        "mean": 8.602150537634408e-05,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 1.0,
+        "mean": 0.00017959770114942528,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 0.0,
+        "mean": 0.0,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 0.0,
+        "mean": 0.0,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 1.0,
+        "mean": 4.330691611450349e-05,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.0005377789728421619,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 4.0,
+        "mean": 0.7119047619047619,
+        "p50": 1.0,
+        "p90": 2.0,
+        "p95": 2.0,
+        "p99": 3.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 8.0,
+        "mean": 2.3377551020408163,
+        "p50": 2.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 6.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 4.0,
+        "mean": 0.7023809523809523,
+        "p50": 0.0,
+        "p90": 2.0,
+        "p95": 2.0,
+        "p99": 3.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 6.0,
+        "mean": 1.7107142857142856,
+        "p50": 2.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 5.0
+      }
+    },
+    "device_txn_count_10m": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 8.0,
+        "mean": 3.8054285714285716,
+        "p50": 4.0,
+        "p90": 8.0,
+        "p95": 8.0,
+        "p99": 8.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 1.0,
+        "mean": 0.001053763440860215,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 1.0,
+        "mean": 0.001257183908045977,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 1.0,
+        "mean": 0.0016676773802304426,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.0005314908317831517,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 1.0,
+        "mean": 0.0010826729028625872,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.0005377789728421619,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 5.0,
+        "mean": 2.3797619047619047,
+        "p50": 2.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 5.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 8.0,
+        "mean": 5.09795918367347,
+        "p50": 6.0,
+        "p90": 8.0,
+        "p95": 8.0,
+        "p99": 8.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 6.0,
+        "mean": 2.441666666666667,
+        "p50": 2.0,
+        "p90": 5.0,
+        "p95": 6.0,
+        "p99": 6.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 8.0,
+        "mean": 5.086904761904762,
+        "p50": 6.0,
+        "p90": 8.0,
+        "p95": 8.0,
+        "p99": 8.0
+      }
+    },
+    "device_txn_count_1h": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 12.0,
+        "mean": 4.222285714285714,
+        "p50": 4.0,
+        "p90": 10.0,
+        "p95": 11.0,
+        "p99": 12.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 2.0,
+        "mean": 0.00632258064516129,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 1.0,
+        "mean": 0.008620689655172414,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 2.0,
+        "mean": 0.008338386901152213,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.0035875631145362743,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 2.0,
+        "mean": 0.005889740591572474,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.007528905619790266,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 8.0,
+        "mean": 2.5630952380952383,
+        "p50": 2.0,
+        "p90": 6.0,
+        "p95": 7.0,
+        "p99": 8.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 12.0,
+        "mean": 5.73469387755102,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 9.0,
+        "mean": 2.623809523809524,
+        "p50": 2.0,
+        "p90": 6.0,
+        "p95": 7.0,
+        "p99": 9.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 5.71547619047619,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      }
+    },
+    "device_unique_customers_1h": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 12.0,
+        "mean": 3.5222857142857142,
+        "p50": 4.0,
+        "p90": 7.0,
+        "p95": 9.0,
+        "p99": 11.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 2.0,
+        "mean": 0.006301075268817204,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 1.0,
+        "mean": 0.008620689655172414,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 2.0,
+        "mean": 0.008338386901152213,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.0035875631145362743,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 1.0,
+        "mean": 0.005846433675457971,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.007528905619790266,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 4.0,
+        "mean": 2.183333333333333,
+        "p50": 2.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 4.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 5.0,
+        "mean": 3.7846938775510206,
+        "p50": 5.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 5.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 5.0,
+        "mean": 2.361904761904762,
+        "p50": 2.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 5.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 5.71547619047619,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      }
+    },
+    "device_unique_instruments_1h": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 12.0,
+        "mean": 3.817142857142857,
+        "p50": 3.0,
+        "p90": 7.0,
+        "p95": 9.0,
+        "p99": 11.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 2.0,
+        "mean": 0.006301075268817204,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 1.0,
+        "mean": 0.008620689655172414,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 2.0,
+        "mean": 0.008338386901152213,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.0035875631145362743,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 1.0,
+        "mean": 0.005846433675457971,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.007528905619790266,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 8.0,
+        "mean": 2.5630952380952383,
+        "p50": 2.0,
+        "p90": 6.0,
+        "p95": 7.0,
+        "p99": 8.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 7.0,
+        "mean": 4.739795918367347,
+        "p50": 6.0,
+        "p90": 7.0,
+        "p95": 7.0,
+        "p99": 7.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 4.0,
+        "mean": 2.0964285714285715,
+        "p50": 2.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 4.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 5.71547619047619,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      }
+    },
+    "historical_customers_on_current_device": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 12.0,
+        "mean": 3.9594285714285715,
+        "p50": 4.0,
+        "p90": 7.0,
+        "p95": 9.0,
+        "p99": 11.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 2.0,
+        "mean": 0.7696989247311828,
+        "p50": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 2.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 1.0,
+        "mean": 0.8139367816091954,
+        "p50": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 2.0,
+        "mean": 0.9023650697392359,
+        "p50": 1.0,
+        "p90": 2.0,
+        "p95": 2.0,
+        "p99": 2.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.6599787403667287,
+        "p50": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 1.0,
+        "mean": 0.7593001602355897,
+        "p50": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.7547727883839742,
+        "p50": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 4.0,
+        "mean": 3.0,
+        "p50": 4.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 4.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 5.0,
+        "mean": 3.7846938775510206,
+        "p50": 5.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 5.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 5.0,
+        "mean": 3.3666666666666667,
+        "p50": 4.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 5.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 5.71547619047619,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      }
+    },
+    "historical_customers_on_current_ip": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 12.0,
+        "mean": 4.263428571428571,
+        "p50": 4.0,
+        "p90": 7.0,
+        "p95": 9.0,
+        "p99": 11.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 12.0,
+        "mean": 2.3836129032258064,
+        "p50": 1.0,
+        "p90": 9.0,
+        "p95": 12.0,
+        "p99": 12.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 12.0,
+        "mean": 10.476831896551724,
+        "p50": 12.0,
+        "p90": 12.0,
+        "p95": 12.0,
+        "p99": 12.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 4.0,
+        "mean": 3.519860521528199,
+        "p50": 4.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 4.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.8363008238107893,
+        "p50": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 1.0,
+        "mean": 0.8741501017712529,
+        "p50": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.7547727883839742,
+        "p50": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 6.0,
+        "mean": 4.6,
+        "p50": 6.0,
+        "p90": 6.0,
+        "p95": 6.0,
+        "p99": 6.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 5.0,
+        "mean": 3.7846938775510206,
+        "p50": 5.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 5.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 4.0,
+        "mean": 3.033333333333333,
+        "p50": 3.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 4.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 5.71547619047619,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      }
+    },
+    "historical_instruments_on_current_device": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 12.0,
+        "mean": 4.450857142857143,
+        "p50": 4.0,
+        "p90": 8.0,
+        "p95": 9.0,
+        "p99": 11.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 5.0,
+        "mean": 1.0579354838709678,
+        "p50": 1.0,
+        "p90": 2.0,
+        "p95": 2.0,
+        "p99": 3.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 2.0,
+        "mean": 1.0702227011494252,
+        "p50": 1.0,
+        "p90": 2.0,
+        "p95": 2.0,
+        "p99": 2.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 5.0,
+        "mean": 1.2731958762886597,
+        "p50": 1.0,
+        "p90": 2.0,
+        "p95": 3.0,
+        "p99": 4.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 5.0,
+        "mean": 1.142838161041722,
+        "p50": 1.0,
+        "p90": 3.0,
+        "p95": 3.0,
+        "p99": 4.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 2.0,
+        "mean": 0.9611103893291759,
+        "p50": 1.0,
+        "p90": 2.0,
+        "p95": 2.0,
+        "p99": 2.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 3.0,
+        "mean": 1.0871201936004302,
+        "p50": 1.0,
+        "p90": 2.0,
+        "p95": 3.0,
+        "p99": 3.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 8.0,
+        "mean": 4.4,
+        "p50": 4.5,
+        "p90": 8.0,
+        "p95": 8.0,
+        "p99": 8.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 7.0,
+        "mean": 4.739795918367347,
+        "p50": 6.0,
+        "p90": 7.0,
+        "p95": 7.0,
+        "p99": 7.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 4.0,
+        "mean": 2.9,
+        "p50": 4.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 4.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 5.71547619047619,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      }
+    },
+    "ip_failed_txn_count_10m": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 8.0,
+        "mean": 1.6294285714285714,
+        "p50": 1.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 6.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 1.0,
+        "mean": 0.00043010752688172043,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 1.0,
+        "mean": 0.0017959770114942528,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 1.0,
+        "mean": 0.0007580351728320194,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 0.0,
+        "mean": 0.0,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 1.0,
+        "mean": 0.00017322766445801395,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.00026888948642108095,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 5.0,
+        "mean": 1.1559523809523808,
+        "p50": 1.0,
+        "p90": 3.0,
+        "p95": 3.0,
+        "p99": 4.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 8.0,
+        "mean": 2.3377551020408163,
+        "p50": 2.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 6.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 6.0,
+        "mean": 1.1952380952380952,
+        "p50": 1.0,
+        "p90": 3.0,
+        "p95": 4.0,
+        "p99": 4.610000000000014
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 6.0,
+        "mean": 1.7107142857142856,
+        "p50": 2.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 5.0
+      }
+    },
+    "ip_txn_count_10m": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 9.0,
+        "mean": 4.502857142857143,
+        "p50": 5.0,
+        "p90": 8.0,
+        "p95": 8.0,
+        "p99": 9.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 2.0,
+        "mean": 0.005311827956989247,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 2.0,
+        "mean": 0.025682471264367818,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 1.0,
+        "mean": 0.00742874469375379,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.0010629816635663034,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 2.0,
+        "mean": 0.0019488112251526569,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.0005377789728421619,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 8.0,
+        "mean": 3.842857142857143,
+        "p50": 4.0,
+        "p90": 8.0,
+        "p95": 8.0,
+        "p99": 8.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 8.0,
+        "mean": 5.09795918367347,
+        "p50": 6.0,
+        "p90": 8.0,
+        "p95": 8.0,
+        "p99": 8.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 9.0,
+        "mean": 3.8845238095238095,
+        "p50": 4.0,
+        "p90": 8.0,
+        "p95": 9.0,
+        "p99": 9.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 8.0,
+        "mean": 5.086904761904762,
+        "p50": 6.0,
+        "p90": 8.0,
+        "p95": 8.0,
+        "p99": 8.0
+      }
+    },
+    "ip_txn_count_1h": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 13.0,
+        "mean": 4.951142857142857,
+        "p50": 5.0,
+        "p90": 10.0,
+        "p95": 11.0,
+        "p99": 12.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 3.0,
+        "mean": 0.02929032258064516,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 3.0,
+        "mean": 0.13254310344827586,
+        "p50": 0.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 2.0,
+        "mean": 0.0430563978168587,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.008769598724422003,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 2.0,
+        "mean": 0.010956649776969382,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.0056466792148427,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 4.078571428571428,
+        "p50": 4.0,
+        "p90": 9.0,
+        "p95": 10.0,
+        "p99": 12.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 12.0,
+        "mean": 5.73469387755102,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 13.0,
+        "mean": 4.145238095238096,
+        "p50": 4.0,
+        "p90": 9.0,
+        "p95": 10.0,
+        "p99": 13.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 5.71547619047619,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      }
+    },
+    "ip_unique_customers_1h": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 12.0,
+        "mean": 3.862285714285714,
+        "p50": 4.0,
+        "p90": 7.0,
+        "p95": 9.0,
+        "p99": 11.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 3.0,
+        "mean": 0.029161290322580646,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 3.0,
+        "mean": 0.13218390804597702,
+        "p50": 0.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 2.0,
+        "mean": 0.0429047907822923,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.008769598724422003,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 1.0,
+        "mean": 0.010826729028625871,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 1.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.0056466792148427,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "p99": 0.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 6.0,
+        "mean": 3.4357142857142855,
+        "p50": 4.0,
+        "p90": 6.0,
+        "p95": 6.0,
+        "p99": 6.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 5.0,
+        "mean": 3.7846938775510206,
+        "p50": 5.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 5.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 4.0,
+        "mean": 2.526190476190476,
+        "p50": 3.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 4.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 5.71547619047619,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      }
+    },
+    "ip_unique_customers_24h": {
+      "label:coordinated_abuse": {
+        "count": 3500,
+        "max": 12.0,
+        "mean": 4.263428571428571,
+        "p50": 4.0,
+        "p90": 7.0,
+        "p95": 9.0,
+        "p99": 11.0
+      },
+      "label:legitimate": {
+        "count": 46500,
+        "max": 9.0,
+        "mean": 0.6157204301075269,
+        "p50": 0.0,
+        "p90": 2.0,
+        "p95": 3.0,
+        "p99": 5.0
+      },
+      "persona:CORPORATE_OR_CAMPUS_NETWORK": {
+        "count": 5568,
+        "max": 9.0,
+        "mean": 2.7517959770114944,
+        "p50": 3.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 6.0
+      },
+      "persona:FAMILY_HOUSEHOLD": {
+        "count": 6596,
+        "max": 4.0,
+        "mean": 0.9226804123711341,
+        "p50": 1.0,
+        "p90": 2.0,
+        "p95": 2.0,
+        "p99": 3.0
+      },
+      "persona:POWER_SHOPPER": {
+        "count": 7526,
+        "max": 1.0,
+        "mean": 0.19253255381344672,
+        "p50": 0.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "persona:STANDARD_RETAIL": {
+        "count": 23091,
+        "max": 1.0,
+        "mean": 0.23008964531635703,
+        "p50": 0.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "persona:TRAVELLER": {
+        "count": 3719,
+        "max": 1.0,
+        "mean": 0.12395805324011831,
+        "p50": 0.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0
+      },
+      "scenario:ACCOUNT_FARM": {
+        "count": 840,
+        "max": 6.0,
+        "mean": 4.6,
+        "p50": 6.0,
+        "p90": 6.0,
+        "p95": 6.0,
+        "p99": 6.0
+      },
+      "scenario:CARD_TESTING": {
+        "count": 980,
+        "max": 5.0,
+        "mean": 3.7846938775510206,
+        "p50": 5.0,
+        "p90": 5.0,
+        "p95": 5.0,
+        "p99": 5.0
+      },
+      "scenario:COLLUSIVE_RING": {
+        "count": 840,
+        "max": 4.0,
+        "mean": 3.033333333333333,
+        "p50": 3.0,
+        "p90": 4.0,
+        "p95": 4.0,
+        "p99": 4.0
+      },
+      "scenario:IDENTITY_ROTATION": {
+        "count": 840,
+        "max": 12.0,
+        "mean": 5.71547619047619,
+        "p50": 6.0,
+        "p90": 11.0,
+        "p95": 11.0,
+        "p99": 12.0
+      }
+    }
+  },
+  "family_definitions": {
+    "address_behavior": [
+      "address_txn_count_1h",
+      "address_txn_count_24h",
+      "address_unique_customers_24h"
+    ],
+    "customer_behavior": [
+      "customer_txn_count_1h",
+      "customer_txn_count_24h",
+      "customer_txn_count_30d",
+      "customer_failed_txn_count_1h",
+      "customer_failed_txn_count_24h",
+      "customer_failure_rate_30d",
+      "customer_avg_amount_30d",
+      "customer_amount_std_30d",
+      "customer_unique_devices_24h",
+      "customer_unique_instruments_24h",
+      "customer_unique_ips_24h",
+      "customer_unique_addresses_30d",
+      "customer_merchant_txn_count_30d",
+      "is_new_device_for_customer",
+      "is_new_instrument_for_customer",
+      "is_new_ip_for_customer",
+      "is_new_address_for_customer",
+      "amount_vs_customer_mean",
+      "amount_zscore_customer"
+    ],
+    "device_velocity": [
+      "device_txn_count_1m",
+      "device_txn_count_10m",
+      "device_txn_count_1h",
+      "device_failed_txn_count_10m",
+      "device_failed_txn_count_1h",
+      "device_unique_customers_1h",
+      "device_unique_instruments_1h"
+    ],
+    "graph_v1": [
+      "device_customer_degree",
+      "device_instrument_degree",
+      "ip_customer_degree",
+      "ip_device_degree",
+      "address_customer_degree",
+      "instrument_device_degree",
+      "instrument_customer_degree",
+      "component_node_count",
+      "component_edge_count",
+      "component_customer_count",
+      "component_device_count",
+      "component_instrument_count",
+      "component_ip_count",
+      "component_address_count",
+      "component_multipartite_density",
+      "new_customer_device_edge",
+      "new_customer_instrument_edge",
+      "new_customer_ip_edge",
+      "new_customer_address_edge",
+      "new_instrument_device_edge",
+      "preexisting_component_count",
+      "components_bridged_by_transaction",
+      "customer_two_hop_customer_count_via_device_or_ip",
+      "component_new_edges_10m",
+      "device_new_identities_10m"
+    ],
+    "historical_relationships": [
+      "historical_customers_on_current_device",
+      "historical_instruments_on_current_device",
+      "historical_customers_on_current_ip",
+      "historical_devices_on_current_ip",
+      "historical_customers_on_current_address",
+      "historical_devices_for_current_instrument"
+    ],
+    "instrument_velocity": [
+      "instrument_txn_count_10m",
+      "instrument_txn_count_1h",
+      "instrument_txn_count_24h",
+      "instrument_failed_txn_count_1h",
+      "instrument_unique_devices_24h"
+    ],
+    "ip_network_velocity": [
+      "ip_txn_count_10m",
+      "ip_txn_count_1h",
+      "ip_failed_txn_count_10m",
+      "ip_failed_txn_count_1h",
+      "ip_unique_customers_1h",
+      "ip_unique_customers_24h"
+    ],
+    "transaction_context": [
+      "amount_paise",
+      "log_amount",
+      "account_age_hours",
+      "hour_of_day",
+      "day_of_week",
+      "is_weekend"
+    ]
+  },
+  "feature_importance": {
+    "combined_77": [
+      {
+        "feature": "ip_txn_count_10m",
+        "gain": 379399.3105817735
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 32631.04372696858
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 22928.119966745377
+      },
+      {
+        "feature": "historical_customers_on_current_device",
+        "gain": 21228.921049296856
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 14227.550608056015
+      },
+      {
+        "feature": "component_new_edges_10m",
+        "gain": 12860.254737734795
+      },
+      {
+        "feature": "component_ip_count",
+        "gain": 7028.445941396058
+      },
+      {
+        "feature": "component_node_count",
+        "gain": 3419.0020512342453
+      },
+      {
+        "feature": "customer_two_hop_customer_count_via_device_or_ip",
+        "gain": 661.7491051387042
+      },
+      {
+        "feature": "component_address_count",
+        "gain": 547.6573090553284
+      },
+      {
+        "feature": "customer_txn_count_30d",
+        "gain": 391.68406200408936
+      },
+      {
+        "feature": "ip_unique_customers_24h",
+        "gain": 247.77579879760742
+      },
+      {
+        "feature": "historical_devices_on_current_ip",
+        "gain": 225.89383709430695
+      },
+      {
+        "feature": "historical_customers_on_current_ip",
+        "gain": 177.54394924640656
+      },
+      {
+        "feature": "component_edge_count",
+        "gain": 96.68949548900127
+      },
+      {
+        "feature": "component_multipartite_density",
+        "gain": 89.557568192482
+      },
+      {
+        "feature": "historical_customers_on_current_address",
+        "gain": 48.505120277404785
+      },
+      {
+        "feature": "address_unique_customers_24h",
+        "gain": 39.64581936597824
+      },
+      {
+        "feature": "address_txn_count_24h",
+        "gain": 15.010576903820038
+      },
+      {
+        "feature": "hour_of_day",
+        "gain": 5.194668345153332
+      }
+    ],
+    "combined_without_address_behavior": [
+      {
+        "feature": "ip_txn_count_10m",
+        "gain": 382704.0021315813
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 32904.2397053818
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 23006.50519299507
+      },
+      {
+        "feature": "historical_customers_on_current_device",
+        "gain": 20858.835634976625
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 13746.761399102863
+      },
+      {
+        "feature": "component_new_edges_10m",
+        "gain": 9800.609420128167
+      },
+      {
+        "feature": "component_ip_count",
+        "gain": 7339.600342571735
+      },
+      {
+        "feature": "component_node_count",
+        "gain": 3345.4615455269814
+      },
+      {
+        "feature": "customer_two_hop_customer_count_via_device_or_ip",
+        "gain": 659.1943885143846
+      },
+      {
+        "feature": "component_address_count",
+        "gain": 508.2848629951477
+      },
+      {
+        "feature": "historical_customers_on_current_ip",
+        "gain": 398.4904956817627
+      },
+      {
+        "feature": "customer_txn_count_30d",
+        "gain": 277.4087209701538
+      },
+      {
+        "feature": "ip_unique_customers_24h",
+        "gain": 249.10466885566711
+      },
+      {
+        "feature": "component_edge_count",
+        "gain": 159.8259837627411
+      },
+      {
+        "feature": "historical_devices_on_current_ip",
+        "gain": 148.16747456789017
+      },
+      {
+        "feature": "component_multipartite_density",
+        "gain": 110.64696842432022
+      },
+      {
+        "feature": "historical_customers_on_current_address",
+        "gain": 77.76620855927467
+      },
+      {
+        "feature": "hour_of_day",
+        "gain": 5.006098568439484
+      },
+      {
+        "feature": "day_of_week",
+        "gain": 2.688273012638092
+      },
+      {
+        "feature": "component_customer_count",
+        "gain": 0.9476739764213562
+      }
+    ],
+    "combined_without_customer_behavior": [
+      {
+        "feature": "ip_txn_count_10m",
+        "gain": 379399.3105817735
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 32631.04372696858
+      },
+      {
+        "feature": "new_customer_address_edge",
+        "gain": 23319.804028749466
+      },
+      {
+        "feature": "historical_customers_on_current_device",
+        "gain": 21228.921049296856
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 14227.550608056015
+      },
+      {
+        "feature": "component_new_edges_10m",
+        "gain": 12860.254737734795
+      },
+      {
+        "feature": "component_ip_count",
+        "gain": 7028.445941396058
+      },
+      {
+        "feature": "component_node_count",
+        "gain": 3419.0020512342453
+      },
+      {
+        "feature": "customer_two_hop_customer_count_via_device_or_ip",
+        "gain": 661.7491051387042
+      },
+      {
+        "feature": "component_address_count",
+        "gain": 547.6573090553284
+      },
+      {
+        "feature": "ip_unique_customers_24h",
+        "gain": 247.77579879760742
+      },
+      {
+        "feature": "historical_devices_on_current_ip",
+        "gain": 225.89383709430695
+      },
+      {
+        "feature": "historical_customers_on_current_ip",
+        "gain": 177.54394924640656
+      },
+      {
+        "feature": "component_edge_count",
+        "gain": 96.68949548900127
+      },
+      {
+        "feature": "component_multipartite_density",
+        "gain": 89.557568192482
+      },
+      {
+        "feature": "historical_customers_on_current_address",
+        "gain": 48.505120277404785
+      },
+      {
+        "feature": "address_unique_customers_24h",
+        "gain": 39.64581936597824
+      },
+      {
+        "feature": "address_txn_count_24h",
+        "gain": 15.010576903820038
+      },
+      {
+        "feature": "hour_of_day",
+        "gain": 5.194668345153332
+      },
+      {
+        "feature": "day_of_week",
+        "gain": 1.88663799315691
+      }
+    ],
+    "combined_without_device_velocity": [
+      {
+        "feature": "ip_txn_count_10m",
+        "gain": 379399.3105817735
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 32631.04372696858
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 22928.119966745377
+      },
+      {
+        "feature": "historical_customers_on_current_device",
+        "gain": 21228.921049296856
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 14227.550608056015
+      },
+      {
+        "feature": "component_new_edges_10m",
+        "gain": 12860.254737734795
+      },
+      {
+        "feature": "component_ip_count",
+        "gain": 7028.445941396058
+      },
+      {
+        "feature": "component_node_count",
+        "gain": 3419.0020512342453
+      },
+      {
+        "feature": "customer_two_hop_customer_count_via_device_or_ip",
+        "gain": 661.7491051387042
+      },
+      {
+        "feature": "component_address_count",
+        "gain": 547.6573090553284
+      },
+      {
+        "feature": "customer_txn_count_30d",
+        "gain": 391.68406200408936
+      },
+      {
+        "feature": "ip_unique_customers_24h",
+        "gain": 247.77579879760742
+      },
+      {
+        "feature": "historical_devices_on_current_ip",
+        "gain": 225.89383709430695
+      },
+      {
+        "feature": "historical_customers_on_current_ip",
+        "gain": 177.54394924640656
+      },
+      {
+        "feature": "component_edge_count",
+        "gain": 96.68949548900127
+      },
+      {
+        "feature": "component_multipartite_density",
+        "gain": 89.557568192482
+      },
+      {
+        "feature": "historical_customers_on_current_address",
+        "gain": 48.505120277404785
+      },
+      {
+        "feature": "address_unique_customers_24h",
+        "gain": 39.64581936597824
+      },
+      {
+        "feature": "address_txn_count_24h",
+        "gain": 15.010576903820038
+      },
+      {
+        "feature": "hour_of_day",
+        "gain": 5.194668345153332
+      }
+    ],
+    "combined_without_graph_v1": [
+      {
+        "feature": "ip_txn_count_10m",
+        "gain": 386037.6348439269
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 33805.78669916699
+      },
+      {
+        "feature": "historical_customers_on_current_device",
+        "gain": 30411.824652284384
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 24651.90249556303
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 12584.363062785473
+      },
+      {
+        "feature": "device_txn_count_10m",
+        "gain": 1821.840354219079
+      },
+      {
+        "feature": "historical_devices_on_current_ip",
+        "gain": 1615.280838944018
+      },
+      {
+        "feature": "ip_unique_customers_24h",
+        "gain": 1417.219791278243
+      },
+      {
+        "feature": "historical_customers_on_current_address",
+        "gain": 1304.797795534134
+      },
+      {
+        "feature": "customer_txn_count_30d",
+        "gain": 777.428683385253
+      },
+      {
+        "feature": "address_txn_count_24h",
+        "gain": 599.0054860711098
+      },
+      {
+        "feature": "historical_customers_on_current_ip",
+        "gain": 586.4227423369884
+      },
+      {
+        "feature": "address_txn_count_1h",
+        "gain": 351.0547223687172
+      },
+      {
+        "feature": "address_unique_customers_24h",
+        "gain": 307.57728561013937
+      },
+      {
+        "feature": "customer_avg_amount_30d",
+        "gain": 175.17151371389627
+      },
+      {
+        "feature": "is_new_instrument_for_customer",
+        "gain": 109.40293169021606
+      },
+      {
+        "feature": "ip_failed_txn_count_10m",
+        "gain": 77.41478204727173
+      },
+      {
+        "feature": "is_new_device_for_customer",
+        "gain": 24.961399167776108
+      },
+      {
+        "feature": "historical_instruments_on_current_device",
+        "gain": 24.692999839782715
+      },
+      {
+        "feature": "historical_devices_for_current_instrument",
+        "gain": 13.617969989776611
+      }
+    ],
+    "combined_without_historical_relationships": [
+      {
+        "feature": "ip_txn_count_10m",
+        "gain": 103134.46273803711
+      },
+      {
+        "feature": "component_new_edges_10m",
+        "gain": 45554.71442592144
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 9904.007086465834
+      },
+      {
+        "feature": "device_customer_degree",
+        "gain": 4962.8877782821655
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 3820.9683570712805
+      },
+      {
+        "feature": "address_txn_count_24h",
+        "gain": 2908.3302516937256
+      },
+      {
+        "feature": "device_txn_count_10m",
+        "gain": 1837.4430255889893
+      },
+      {
+        "feature": "component_ip_count",
+        "gain": 1808.4390202760696
+      },
+      {
+        "feature": "ip_device_degree",
+        "gain": 1487.3536467552185
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 1466.8858003616333
+      },
+      {
+        "feature": "component_node_count",
+        "gain": 1126.2485336065292
+      },
+      {
+        "feature": "log_amount",
+        "gain": 622.4174542725086
+      },
+      {
+        "feature": "customer_two_hop_customer_count_via_device_or_ip",
+        "gain": 312.3132232967764
+      },
+      {
+        "feature": "customer_txn_count_30d",
+        "gain": 306.7718378305435
+      },
+      {
+        "feature": "instrument_txn_count_10m",
+        "gain": 265.2009963989258
+      },
+      {
+        "feature": "component_multipartite_density",
+        "gain": 228.60765075683594
+      },
+      {
+        "feature": "component_customer_count",
+        "gain": 227.4579604268074
+      },
+      {
+        "feature": "customer_avg_amount_30d",
+        "gain": 191.8100414276123
+      },
+      {
+        "feature": "component_edge_count",
+        "gain": 168.31095910072327
+      },
+      {
+        "feature": "component_address_count",
+        "gain": 149.38707029819489
+      }
+    ],
+    "combined_without_instrument_velocity": [
+      {
+        "feature": "ip_txn_count_10m",
+        "gain": 379399.3105817735
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 32631.04372696858
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 22928.119966745377
+      },
+      {
+        "feature": "historical_customers_on_current_device",
+        "gain": 21228.921049296856
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 14227.550608056015
+      },
+      {
+        "feature": "component_new_edges_10m",
+        "gain": 12860.254737734795
+      },
+      {
+        "feature": "component_ip_count",
+        "gain": 7028.445941396058
+      },
+      {
+        "feature": "component_node_count",
+        "gain": 3419.0020512342453
+      },
+      {
+        "feature": "customer_two_hop_customer_count_via_device_or_ip",
+        "gain": 661.7491051387042
+      },
+      {
+        "feature": "component_address_count",
+        "gain": 547.6573090553284
+      },
+      {
+        "feature": "customer_txn_count_30d",
+        "gain": 391.68406200408936
+      },
+      {
+        "feature": "ip_unique_customers_24h",
+        "gain": 247.77579879760742
+      },
+      {
+        "feature": "historical_devices_on_current_ip",
+        "gain": 225.89383709430695
+      },
+      {
+        "feature": "historical_customers_on_current_ip",
+        "gain": 177.54394924640656
+      },
+      {
+        "feature": "component_edge_count",
+        "gain": 96.68949548900127
+      },
+      {
+        "feature": "component_multipartite_density",
+        "gain": 89.557568192482
+      },
+      {
+        "feature": "historical_customers_on_current_address",
+        "gain": 48.505120277404785
+      },
+      {
+        "feature": "address_unique_customers_24h",
+        "gain": 39.64581936597824
+      },
+      {
+        "feature": "address_txn_count_24h",
+        "gain": 15.010576903820038
+      },
+      {
+        "feature": "hour_of_day",
+        "gain": 5.194668345153332
+      }
+    ],
+    "combined_without_ip_network_velocity": [
+      {
+        "feature": "component_new_edges_10m",
+        "gain": 344776.2316224575
+      },
+      {
+        "feature": "historical_customers_on_current_device",
+        "gain": 49162.85021150112
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 39908.93140886724
+      },
+      {
+        "feature": "device_txn_count_10m",
+        "gain": 29935.427856445312
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 9446.31161890179
+      },
+      {
+        "feature": "component_node_count",
+        "gain": 6761.771414041519
+      },
+      {
+        "feature": "component_ip_count",
+        "gain": 6392.1490423083305
+      },
+      {
+        "feature": "customer_txn_count_30d",
+        "gain": 3776.003583908081
+      },
+      {
+        "feature": "customer_avg_amount_30d",
+        "gain": 1899.5612087249756
+      },
+      {
+        "feature": "component_address_count",
+        "gain": 774.4622011184692
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 602.4868488311768
+      },
+      {
+        "feature": "component_customer_count",
+        "gain": 559.5437717437744
+      },
+      {
+        "feature": "address_unique_customers_24h",
+        "gain": 363.7657300233841
+      },
+      {
+        "feature": "address_txn_count_24h",
+        "gain": 252.15670490264893
+      },
+      {
+        "feature": "component_multipartite_density",
+        "gain": 100.72679537534714
+      },
+      {
+        "feature": "historical_devices_on_current_ip",
+        "gain": 78.51071882247925
+      },
+      {
+        "feature": "historical_devices_for_current_instrument",
+        "gain": 38.220280170440674
+      },
+      {
+        "feature": "address_txn_count_1h",
+        "gain": 21.29212999343872
+      },
+      {
+        "feature": "historical_customers_on_current_address",
+        "gain": 16.737600326538086
+      },
+      {
+        "feature": "component_edge_count",
+        "gain": 10.083353966474533
+      }
+    ],
+    "combined_without_transaction_context": [
+      {
+        "feature": "ip_txn_count_10m",
+        "gain": 97584.29206848145
+      },
+      {
+        "feature": "component_new_edges_10m",
+        "gain": 35053.519874572754
+      },
+      {
+        "feature": "device_txn_count_10m",
+        "gain": 16169.152212785557
+      },
+      {
+        "feature": "historical_customers_on_current_device",
+        "gain": 5266.4933270812035
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 3077.496292114258
+      },
+      {
+        "feature": "address_txn_count_24h",
+        "gain": 2134.180075645447
+      },
+      {
+        "feature": "component_ip_count",
+        "gain": 1519.391214735806
+      },
+      {
+        "feature": "component_node_count",
+        "gain": 1103.0264172255993
+      },
+      {
+        "feature": "ip_device_degree",
+        "gain": 671.9899920225143
+      },
+      {
+        "feature": "historical_customers_on_current_ip",
+        "gain": 620.7371002435684
+      },
+      {
+        "feature": "customer_two_hop_customer_count_via_device_or_ip",
+        "gain": 536.5567727088928
+      },
+      {
+        "feature": "customer_avg_amount_30d",
+        "gain": 480.39929962158203
+      },
+      {
+        "feature": "new_customer_address_edge",
+        "gain": 370.87249755859375
+      },
+      {
+        "feature": "instrument_txn_count_24h",
+        "gain": 318.1879904270172
+      },
+      {
+        "feature": "instrument_txn_count_10m",
+        "gain": 290.36000061035156
+      },
+      {
+        "feature": "component_multipartite_density",
+        "gain": 257.9075301885605
+      },
+      {
+        "feature": "historical_devices_on_current_ip",
+        "gain": 234.75636970996857
+      },
+      {
+        "feature": "historical_devices_for_current_instrument",
+        "gain": 207.32450103759766
+      },
+      {
+        "feature": "component_device_count",
+        "gain": 143.9720001220703
+      },
+      {
+        "feature": "component_edge_count",
+        "gain": 125.19418048858643
+      }
+    ],
+    "full_features_v1": [
+      {
+        "feature": "ip_txn_count_10m",
+        "gain": 386037.6348439269
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 33805.78669916699
+      },
+      {
+        "feature": "historical_customers_on_current_device",
+        "gain": 30411.824652284384
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 24651.90249556303
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 12584.363062785473
+      },
+      {
+        "feature": "device_txn_count_10m",
+        "gain": 1821.840354219079
+      },
+      {
+        "feature": "historical_devices_on_current_ip",
+        "gain": 1615.280838944018
+      },
+      {
+        "feature": "ip_unique_customers_24h",
+        "gain": 1417.219791278243
+      },
+      {
+        "feature": "historical_customers_on_current_address",
+        "gain": 1304.797795534134
+      },
+      {
+        "feature": "customer_txn_count_30d",
+        "gain": 777.428683385253
+      },
+      {
+        "feature": "address_txn_count_24h",
+        "gain": 599.0054860711098
+      },
+      {
+        "feature": "historical_customers_on_current_ip",
+        "gain": 586.4227423369884
+      },
+      {
+        "feature": "address_txn_count_1h",
+        "gain": 351.0547223687172
+      },
+      {
+        "feature": "address_unique_customers_24h",
+        "gain": 307.57728561013937
+      },
+      {
+        "feature": "customer_avg_amount_30d",
+        "gain": 175.17151371389627
+      },
+      {
+        "feature": "is_new_instrument_for_customer",
+        "gain": 109.40293169021606
+      },
+      {
+        "feature": "ip_failed_txn_count_10m",
+        "gain": 77.41478204727173
+      },
+      {
+        "feature": "is_new_device_for_customer",
+        "gain": 24.961399167776108
+      },
+      {
+        "feature": "historical_instruments_on_current_device",
+        "gain": 24.692999839782715
+      },
+      {
+        "feature": "historical_devices_for_current_instrument",
+        "gain": 13.617969989776611
+      }
+    ],
+    "graph_v1": [
+      {
+        "feature": "component_new_edges_10m",
+        "gain": 113716.43162423372
+      },
+      {
+        "feature": "device_new_identities_10m",
+        "gain": 29095.24072265625
+      },
+      {
+        "feature": "device_customer_degree",
+        "gain": 12981.80559244752
+      },
+      {
+        "feature": "component_node_count",
+        "gain": 3247.600569009781
+      },
+      {
+        "feature": "component_ip_count",
+        "gain": 2044.280181646347
+      },
+      {
+        "feature": "component_multipartite_density",
+        "gain": 1097.5304516553879
+      },
+      {
+        "feature": "device_instrument_degree",
+        "gain": 982.975112080574
+      },
+      {
+        "feature": "new_customer_address_edge",
+        "gain": 491.5599793866277
+      },
+      {
+        "feature": "ip_device_degree",
+        "gain": 444.4291458129883
+      },
+      {
+        "feature": "component_edge_count",
+        "gain": 323.0259952545166
+      },
+      {
+        "feature": "ip_customer_degree",
+        "gain": 309.93191680312157
+      },
+      {
+        "feature": "component_address_count",
+        "gain": 248.02527621388435
+      },
+      {
+        "feature": "instrument_device_degree",
+        "gain": 165.41600036621094
+      },
+      {
+        "feature": "address_customer_degree",
+        "gain": 155.92534460127354
+      },
+      {
+        "feature": "new_customer_ip_edge",
+        "gain": 152.43307630717754
+      },
+      {
+        "feature": "component_customer_count",
+        "gain": 71.40016078948975
+      },
+      {
+        "feature": "customer_two_hop_customer_count_via_device_or_ip",
+        "gain": 49.217742413282394
+      },
+      {
+        "feature": "new_customer_instrument_edge",
+        "gain": 4.638589859008789
+      },
+      {
+        "feature": "component_device_count",
+        "gain": 0.0
+      },
+      {
+        "feature": "component_instrument_count",
+        "gain": 0.0
+      }
+    ],
+    "non_relationship_features_v1": [
+      {
+        "feature": "ip_txn_count_10m",
+        "gain": 376195.7585929632
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 37224.958306372166
+      },
+      {
+        "feature": "address_txn_count_24h",
+        "gain": 22087.969507187605
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 19330.788254916668
+      },
+      {
+        "feature": "device_txn_count_10m",
+        "gain": 14781.773724526167
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 13551.827954500914
+      },
+      {
+        "feature": "customer_avg_amount_30d",
+        "gain": 3775.2466816306114
+      },
+      {
+        "feature": "ip_unique_customers_24h",
+        "gain": 2143.455119162798
+      },
+      {
+        "feature": "customer_txn_count_30d",
+        "gain": 1356.6319445371628
+      },
+      {
+        "feature": "instrument_txn_count_24h",
+        "gain": 1291.990178823471
+      },
+      {
+        "feature": "address_unique_customers_24h",
+        "gain": 984.6047832369804
+      },
+      {
+        "feature": "instrument_unique_devices_24h",
+        "gain": 843.9950412511826
+      },
+      {
+        "feature": "address_txn_count_1h",
+        "gain": 695.2267955541611
+      },
+      {
+        "feature": "ip_failed_txn_count_10m",
+        "gain": 552.3445858955383
+      },
+      {
+        "feature": "customer_unique_instruments_24h",
+        "gain": 480.71834659576416
+      },
+      {
+        "feature": "is_new_instrument_for_customer",
+        "gain": 391.9519499540329
+      },
+      {
+        "feature": "ip_failed_txn_count_1h",
+        "gain": 148.27172946929932
+      },
+      {
+        "feature": "is_new_device_for_customer",
+        "gain": 131.58047795295715
+      },
+      {
+        "feature": "ip_txn_count_1h",
+        "gain": 83.90640068054199
+      },
+      {
+        "feature": "customer_unique_addresses_30d",
+        "gain": 66.86800193786621
+      }
+    ],
+    "transaction_context_only": [
+      {
+        "feature": "account_age_hours",
+        "gain": 258933.2720565796
+      },
+      {
+        "feature": "hour_of_day",
+        "gain": 17258.34760284424
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 8396.058029174805
+      },
+      {
+        "feature": "day_of_week",
+        "gain": 3726.684410095215
+      },
+      {
+        "feature": "is_weekend",
+        "gain": 0.0
+      },
+      {
+        "feature": "log_amount",
+        "gain": 0.0
+      }
+    ],
+    "transaction_plus_customer": [
+      {
+        "feature": "customer_txn_count_1h",
+        "gain": 76186.76958990097
+      },
+      {
+        "feature": "account_age_hours",
+        "gain": 58551.91646575928
+      },
+      {
+        "feature": "customer_avg_amount_30d",
+        "gain": 14429.914374113083
+      },
+      {
+        "feature": "customer_unique_instruments_24h",
+        "gain": 11153.375701189041
+      },
+      {
+        "feature": "hour_of_day",
+        "gain": 8689.683460712433
+      },
+      {
+        "feature": "customer_txn_count_30d",
+        "gain": 8405.680385351181
+      },
+      {
+        "feature": "is_new_instrument_for_customer",
+        "gain": 8273.6763753891
+      },
+      {
+        "feature": "customer_txn_count_24h",
+        "gain": 6231.057054042816
+      },
+      {
+        "feature": "amount_paise",
+        "gain": 4229.521329402924
+      },
+      {
+        "feature": "day_of_week",
+        "gain": 2712.887082338333
+      },
+      {
+        "feature": "customer_failed_txn_count_24h",
+        "gain": 1982.1196358203888
+      },
+      {
+        "feature": "is_new_address_for_customer",
+        "gain": 1600.1004476547241
+      },
+      {
+        "feature": "customer_failed_txn_count_1h",
+        "gain": 1053.5249938964844
+      },
+      {
+        "feature": "customer_unique_devices_24h",
+        "gain": 655.6615800857544
+      },
+      {
+        "feature": "customer_amount_std_30d",
+        "gain": 470.89105772972107
+      },
+      {
+        "feature": "log_amount",
+        "gain": 420.1755199432373
+      },
+      {
+        "feature": "customer_failure_rate_30d",
+        "gain": 174.88348293304443
+      },
+      {
+        "feature": "is_new_ip_for_customer",
+        "gain": 128.0485303401947
+      },
+      {
+        "feature": "is_new_device_for_customer",
+        "gain": 121.53748059272766
+      },
+      {
+        "feature": "amount_vs_customer_mean",
+        "gain": 107.4068284034729
+      }
+    ]
+  },
+  "models": {
+    "combined_77": {
+      "feature_count": 77,
+      "selected_candidate": {
+        "best_iteration": 130,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 1.0
+      },
+      "selected_threshold": 0.05512305636438921,
+      "test": {
+        "accuracy": 0.9998550514567328,
+        "f1": 0.9986684420772304,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 1,
+        "false_positive_rate": 0.00015328019619865113,
+        "pr_auc": 1.0,
+        "precision": 0.9973404255319149,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.05512305636438921,
+        "true_negative": 6523,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 0.9999999999999999,
+        "threshold": 0.05512305636438921,
+        "true_negative": 7476,
+        "true_positive": 625
+      }
+    },
+    "combined_without_address_behavior": {
+      "feature_count": 74,
+      "selected_candidate": {
+        "best_iteration": 131,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 1.0
+      },
+      "selected_threshold": 0.04906562419489275,
+      "test": {
+        "accuracy": 0.9998550514567328,
+        "f1": 0.9986684420772304,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 1,
+        "false_positive_rate": 0.00015328019619865113,
+        "pr_auc": 1.0,
+        "precision": 0.9973404255319149,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.04906562419489275,
+        "true_negative": 6523,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 0.9999999999999999,
+        "threshold": 0.04906562419489275,
+        "true_negative": 7476,
+        "true_positive": 625
+      }
+    },
+    "combined_without_customer_behavior": {
+      "feature_count": 58,
+      "selected_candidate": {
+        "best_iteration": 130,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 1.0
+      },
+      "selected_threshold": 0.05512305636438921,
+      "test": {
+        "accuracy": 0.9998550514567328,
+        "f1": 0.9986684420772304,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 1,
+        "false_positive_rate": 0.00015328019619865113,
+        "pr_auc": 1.0,
+        "precision": 0.9973404255319149,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.05512305636438921,
+        "true_negative": 6523,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 0.9999999999999999,
+        "threshold": 0.05512305636438921,
+        "true_negative": 7476,
+        "true_positive": 625
+      }
+    },
+    "combined_without_device_velocity": {
+      "feature_count": 70,
+      "selected_candidate": {
+        "best_iteration": 130,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 1.0
+      },
+      "selected_threshold": 0.05512305636438921,
+      "test": {
+        "accuracy": 0.9998550514567328,
+        "f1": 0.9986684420772304,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 1,
+        "false_positive_rate": 0.00015328019619865113,
+        "pr_auc": 1.0,
+        "precision": 0.9973404255319149,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.05512305636438921,
+        "true_negative": 6523,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 0.9999999999999999,
+        "threshold": 0.05512305636438921,
+        "true_negative": 7476,
+        "true_positive": 625
+      }
+    },
+    "combined_without_graph_v1": {
+      "feature_count": 52,
+      "selected_candidate": {
+        "best_iteration": 158,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 1.0
+      },
+      "selected_threshold": 0.1804214831228382,
+      "test": {
+        "accuracy": 0.9998550514567328,
+        "f1": 0.9986684420772304,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 1,
+        "false_positive_rate": 0.00015328019619865113,
+        "pr_auc": 1.0,
+        "precision": 0.9973404255319149,
+        "recall": 1.0,
+        "roc_auc": 0.9999999999999999,
+        "threshold": 0.1804214831228382,
+        "true_negative": 6523,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.1804214831228382,
+        "true_negative": 7476,
+        "true_positive": 625
+      }
+    },
+    "combined_without_historical_relationships": {
+      "feature_count": 71,
+      "selected_candidate": {
+        "best_iteration": 68,
+        "name": "balanced-small",
+        "parameters": {
+          "colsample_bytree": 0.9,
+          "learning_rate": 0.05,
+          "min_child_samples": 30,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 1.0
+        },
+        "validation_pr_auc": 1.0000000000000002
+      },
+      "selected_threshold": 0.03218083854440476,
+      "test": {
+        "accuracy": 0.9997101029134657,
+        "f1": 0.9973404255319148,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 2,
+        "false_positive_rate": 0.00030656039239730225,
+        "pr_auc": 1.0,
+        "precision": 0.9946949602122016,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.03218083854440476,
+        "true_negative": 6522,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 1.0000000000000002,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.03218083854440476,
+        "true_negative": 7476,
+        "true_positive": 625
+      }
+    },
+    "combined_without_instrument_velocity": {
+      "feature_count": 72,
+      "selected_candidate": {
+        "best_iteration": 130,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 1.0
+      },
+      "selected_threshold": 0.05512305636438921,
+      "test": {
+        "accuracy": 0.9998550514567328,
+        "f1": 0.9986684420772304,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 1,
+        "false_positive_rate": 0.00015328019619865113,
+        "pr_auc": 1.0,
+        "precision": 0.9973404255319149,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.05512305636438921,
+        "true_negative": 6523,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 0.9999999999999999,
+        "threshold": 0.05512305636438921,
+        "true_negative": 7476,
+        "true_positive": 625
+      }
+    },
+    "combined_without_ip_network_velocity": {
+      "feature_count": 71,
+      "selected_candidate": {
+        "best_iteration": 107,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 1.0
+      },
+      "selected_threshold": 0.25081789426369433,
+      "test": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.25081789426369433,
+        "true_negative": 6524,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 0.9999999999999999,
+        "threshold": 0.25081789426369433,
+        "true_negative": 7476,
+        "true_positive": 625
+      }
+    },
+    "combined_without_transaction_context": {
+      "feature_count": 71,
+      "selected_candidate": {
+        "best_iteration": 65,
+        "name": "balanced-small",
+        "parameters": {
+          "colsample_bytree": 0.9,
+          "learning_rate": 0.05,
+          "min_child_samples": 30,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 1.0
+        },
+        "validation_pr_auc": 0.9988930817610064
+      },
+      "selected_threshold": 0.03533066879951741,
+      "test": {
+        "accuracy": 0.9994202058269315,
+        "f1": 0.9946949602122016,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 4,
+        "false_positive_rate": 0.0006131207847946045,
+        "pr_auc": 0.9992682497801231,
+        "precision": 0.9894459102902374,
+        "recall": 1.0,
+        "roc_auc": 0.9999734314326589,
+        "threshold": 0.03533066879951741,
+        "true_negative": 6520,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 0.9986421429453154,
+        "f1": 0.9912767644726407,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 11,
+        "false_positive_rate": 0.0014713750668806848,
+        "pr_auc": 0.9988930817610064,
+        "precision": 0.9827044025157232,
+        "recall": 1.0,
+        "roc_auc": 0.9999529159978597,
+        "threshold": 0.03533066879951741,
+        "true_negative": 7465,
+        "true_positive": 625
+      }
+    },
+    "full_features_v1": {
+      "feature_count": 52,
+      "selected_candidate": {
+        "best_iteration": 158,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 1.0
+      },
+      "selected_threshold": 0.1804214831228382,
+      "test": {
+        "accuracy": 0.9998550514567328,
+        "f1": 0.9986684420772304,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 1,
+        "false_positive_rate": 0.00015328019619865113,
+        "pr_auc": 1.0,
+        "precision": 0.9973404255319149,
+        "recall": 1.0,
+        "roc_auc": 0.9999999999999999,
+        "threshold": 0.1804214831228382,
+        "true_negative": 6523,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 0,
+        "false_positive_rate": 0.0,
+        "pr_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.1804214831228382,
+        "true_negative": 7476,
+        "true_positive": 625
+      }
+    },
+    "graph_v1": {
+      "feature_count": 25,
+      "selected_candidate": {
+        "best_iteration": 60,
+        "name": "balanced-small",
+        "parameters": {
+          "colsample_bytree": 0.9,
+          "learning_rate": 0.05,
+          "min_child_samples": 30,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 1.0
+        },
+        "validation_pr_auc": 0.9988930817610062
+      },
+      "selected_threshold": 0.0356918826885804,
+      "test": {
+        "accuracy": 0.9995651543701985,
+        "f1": 0.9960159362549801,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 3,
+        "false_positive_rate": 0.0004598405885959534,
+        "pr_auc": 0.9994497354497355,
+        "precision": 0.9920634920634921,
+        "recall": 1.0,
+        "roc_auc": 0.9999840588595954,
+        "threshold": 0.0356918826885804,
+        "true_negative": 6521,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 0.9986421429453154,
+        "f1": 0.9912767644726407,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 11,
+        "false_positive_rate": 0.0014713750668806848,
+        "pr_auc": 0.9988930817610062,
+        "precision": 0.9827044025157232,
+        "recall": 1.0,
+        "roc_auc": 0.9999529159978597,
+        "threshold": 0.0356918826885804,
+        "true_negative": 7465,
+        "true_positive": 625
+      }
+    },
+    "non_relationship_features_v1": {
+      "feature_count": 46,
+      "selected_candidate": {
+        "best_iteration": 156,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 0.9999847415873016
+      },
+      "selected_threshold": 0.3231233434992739,
+      "test": {
+        "accuracy": 0.9995651543701985,
+        "f1": 0.9960159362549801,
+        "false_negative": 0,
+        "false_negative_rate": 0.0,
+        "false_positive": 3,
+        "false_positive_rate": 0.0004598405885959534,
+        "pr_auc": 1.0,
+        "precision": 0.9920634920634921,
+        "recall": 1.0,
+        "roc_auc": 1.0,
+        "threshold": 0.3231233434992739,
+        "true_negative": 6521,
+        "true_positive": 375
+      },
+      "validation": {
+        "accuracy": 0.9997531168991483,
+        "f1": 0.9984,
+        "false_negative": 1,
+        "false_negative_rate": 0.0016,
+        "false_positive": 1,
+        "false_positive_rate": 0.00013376136971642589,
+        "pr_auc": 0.9999847415873016,
+        "precision": 0.9984,
+        "recall": 0.9984,
+        "roc_auc": 0.9999987158908508,
+        "threshold": 0.3231233434992739,
+        "true_negative": 7475,
+        "true_positive": 624
+      }
+    },
+    "transaction_context_only": {
+      "feature_count": 6,
+      "selected_candidate": {
+        "best_iteration": 41,
+        "name": "weighted-small",
+        "parameters": {
+          "class_weight": "balanced",
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.05,
+          "min_child_samples": 40,
+          "n_estimators": 500,
+          "num_leaves": 15,
+          "reg_lambda": 2.0
+        },
+        "validation_pr_auc": 0.4844499152402095
+      },
+      "selected_threshold": 0.807450015668029,
+      "test": {
+        "accuracy": 0.928685316712567,
+        "f1": 0.4072289156626506,
+        "false_negative": 206,
+        "false_negative_rate": 0.5493333333333333,
+        "false_positive": 286,
+        "false_positive_rate": 0.04383813611281422,
+        "pr_auc": 0.3056026058819531,
+        "precision": 0.37142857142857144,
+        "recall": 0.45066666666666666,
+        "roc_auc": 0.8807794808910688,
+        "threshold": 0.807450015668029,
+        "true_negative": 6238,
+        "true_positive": 169
+      },
+      "validation": {
+        "accuracy": 0.9276632514504383,
+        "f1": 0.5258899676375405,
+        "false_negative": 300,
+        "false_negative_rate": 0.48,
+        "false_positive": 286,
+        "false_positive_rate": 0.03825575173889781,
+        "pr_auc": 0.4844499152402095,
+        "precision": 0.5319148936170213,
+        "recall": 0.52,
+        "roc_auc": 0.9046848582129482,
+        "threshold": 0.807450015668029,
+        "true_negative": 7190,
+        "true_positive": 325
+      }
+    },
+    "transaction_plus_customer": {
+      "feature_count": 25,
+      "selected_candidate": {
+        "best_iteration": 84,
+        "name": "balanced-medium",
+        "parameters": {
+          "colsample_bytree": 0.9,
+          "learning_rate": 0.04,
+          "min_child_samples": 40,
+          "n_estimators": 600,
+          "num_leaves": 31,
+          "reg_lambda": 1.0
+        },
+        "validation_pr_auc": 0.9921274930904981
+      },
+      "selected_threshold": 0.07303319442151375,
+      "test": {
+        "accuracy": 0.9934773155529787,
+        "f1": 0.9387755102040817,
+        "false_negative": 30,
+        "false_negative_rate": 0.08,
+        "false_positive": 15,
+        "false_positive_rate": 0.002299202942979767,
+        "pr_auc": 0.9860519753619437,
+        "precision": 0.9583333333333334,
+        "recall": 0.92,
+        "roc_auc": 0.9990872675250357,
+        "threshold": 0.07303319442151375,
+        "true_negative": 6509,
+        "true_positive": 345
+      },
+      "validation": {
+        "accuracy": 0.9951857795333909,
+        "f1": 0.9683698296836984,
+        "false_negative": 28,
+        "false_negative_rate": 0.0448,
+        "false_positive": 11,
+        "false_positive_rate": 0.0014713750668806848,
+        "pr_auc": 0.9921274930904981,
+        "precision": 0.9819078947368421,
+        "recall": 0.9552,
+        "roc_auc": 0.9992615302300695,
+        "threshold": 0.07303319442151375,
+        "true_negative": 7465,
+        "true_positive": 597
+      }
+    }
+  },
+  "purpose": "retrospective development diagnostic; not a new sealed benchmark",
+  "runtimes": {
+    "feature_generation_seconds": 4.715090749999945,
+    "graph_generation_seconds": 331.80206670799816,
+    "synthetic_generation_seconds": 2.0453950830014946
+  },
+  "univariate": [
+    {
+      "directional_roc_auc": 0.9462927834101382,
+      "feature": "ip_txn_count_10m"
+    },
+    {
+      "directional_roc_auc": 0.9437597542242703,
+      "feature": "ip_unique_customers_1h"
+    },
+    {
+      "directional_roc_auc": 0.9437479569892473,
+      "feature": "ip_txn_count_1h"
+    },
+    {
+      "directional_roc_auc": 0.9330040675883257,
+      "feature": "component_new_edges_10m"
+    },
+    {
+      "directional_roc_auc": 0.9307156374807988,
+      "feature": "device_txn_count_10m"
+    },
+    {
+      "directional_roc_auc": 0.9300112012288786,
+      "feature": "device_unique_customers_1h"
+    },
+    {
+      "directional_roc_auc": 0.9300085161290321,
+      "feature": "device_txn_count_1h"
+    },
+    {
+      "directional_roc_auc": 0.9299904669738862,
+      "feature": "device_unique_instruments_1h"
+    },
+    {
+      "directional_roc_auc": 0.9210591213517665,
+      "feature": "address_txn_count_1h"
+    },
+    {
+      "directional_roc_auc": 0.9096232657450076,
+      "feature": "ip_unique_customers_24h"
+    },
+    {
+      "directional_roc_auc": 0.9082264086021506,
+      "feature": "device_new_identities_10m"
+    },
+    {
+      "directional_roc_auc": 0.9045801843317973,
+      "feature": "address_unique_customers_24h"
+    },
+    {
+      "directional_roc_auc": 0.9015036159754225,
+      "feature": "address_txn_count_24h"
+    },
+    {
+      "directional_roc_auc": 0.8859267956989246,
+      "feature": "component_ip_count"
+    },
+    {
+      "directional_roc_auc": 0.8853666205837174,
+      "feature": "device_customer_degree"
+    },
+    {
+      "directional_roc_auc": 0.8853666205837174,
+      "feature": "historical_customers_on_current_device"
+    },
+    {
+      "directional_roc_auc": 0.868776356374808,
+      "feature": "account_age_hours"
+    },
+    {
+      "directional_roc_auc": 0.8663127987711213,
+      "feature": "ip_failed_txn_count_1h"
+    },
+    {
+      "directional_roc_auc": 0.8623126267281105,
+      "feature": "ip_failed_txn_count_10m"
+    },
+    {
+      "directional_roc_auc": 0.854945198156682,
+      "feature": "device_instrument_degree"
+    },
+    {
+      "directional_roc_auc": 0.854945198156682,
+      "feature": "historical_instruments_on_current_device"
+    },
+    {
+      "directional_roc_auc": 0.8371591397849462,
+      "feature": "device_failed_txn_count_1h"
+    },
+    {
+      "directional_roc_auc": 0.8361129093701996,
+      "feature": "customer_two_hop_customer_count_via_device_or_ip"
+    },
+    {
+      "directional_roc_auc": 0.8321162519201227,
+      "feature": "device_failed_txn_count_10m"
+    },
+    {
+      "directional_roc_auc": 0.8204074347158218,
+      "feature": "component_customer_count"
+    },
+    {
+      "directional_roc_auc": 0.8199853824884793,
+      "feature": "component_address_count"
+    },
+    {
+      "directional_roc_auc": 0.8168821505376345,
+      "feature": "component_edge_count"
+    },
+    {
+      "directional_roc_auc": 0.7932110967741934,
+      "feature": "component_node_count"
+    },
+    {
+      "directional_roc_auc": 0.7861005407066054,
+      "feature": "address_customer_degree"
+    },
+    {
+      "directional_roc_auc": 0.7861005407066054,
+      "feature": "historical_customers_on_current_address"
+    },
+    {
+      "directional_roc_auc": 0.7812028294930875,
+      "feature": "customer_txn_count_30d"
+    },
+    {
+      "directional_roc_auc": 0.7787759539170507,
+      "feature": "component_instrument_count"
+    },
+    {
+      "directional_roc_auc": 0.7699793425499232,
+      "feature": "customer_txn_count_1h"
+    },
+    {
+      "directional_roc_auc": 0.7600332903225807,
+      "feature": "historical_customers_on_current_ip"
+    },
+    {
+      "directional_roc_auc": 0.7600332903225807,
+      "feature": "ip_customer_degree"
+    },
+    {
+      "directional_roc_auc": 0.7598301843317973,
+      "feature": "customer_amount_std_30d"
+    },
+    {
+      "directional_roc_auc": 0.7548212135176652,
+      "feature": "customer_unique_instruments_24h"
+    },
+    {
+      "directional_roc_auc": 0.7505784608294931,
+      "feature": "customer_txn_count_24h"
+    },
+    {
+      "directional_roc_auc": 0.7479157450076805,
+      "feature": "customer_unique_devices_24h"
+    },
+    {
+      "directional_roc_auc": 0.746117158218126,
+      "feature": "instrument_txn_count_10m"
+    },
+    {
+      "directional_roc_auc": 0.7432644700460829,
+      "feature": "instrument_txn_count_1h"
+    },
+    {
+      "directional_roc_auc": 0.737837173579109,
+      "feature": "is_new_instrument_for_customer"
+    },
+    {
+      "directional_roc_auc": 0.737837173579109,
+      "feature": "new_customer_instrument_edge"
+    },
+    {
+      "directional_roc_auc": 0.7367417142857143,
+      "feature": "customer_unique_ips_24h"
+    },
+    {
+      "directional_roc_auc": 0.7363178494623657,
+      "feature": "instrument_txn_count_24h"
+    },
+    {
+      "directional_roc_auc": 0.7352262119815669,
+      "feature": "instrument_unique_devices_24h"
+    },
+    {
+      "directional_roc_auc": 0.7194627649769585,
+      "feature": "customer_avg_amount_30d"
+    },
+    {
+      "directional_roc_auc": 0.7177910906298003,
+      "feature": "is_new_address_for_customer"
+    },
+    {
+      "directional_roc_auc": 0.7177910906298003,
+      "feature": "new_customer_address_edge"
+    },
+    {
+      "directional_roc_auc": 0.6835013210445469,
+      "feature": "component_multipartite_density"
+    },
+    {
+      "directional_roc_auc": 0.6818801843317972,
+      "feature": "is_new_ip_for_customer"
+    },
+    {
+      "directional_roc_auc": 0.6818801843317972,
+      "feature": "new_customer_ip_edge"
+    },
+    {
+      "directional_roc_auc": 0.6709747035330261,
+      "feature": "customer_failed_txn_count_24h"
+    },
+    {
+      "directional_roc_auc": 0.6552565284178188,
+      "feature": "is_new_device_for_customer"
+    },
+    {
+      "directional_roc_auc": 0.6552565284178188,
+      "feature": "new_customer_device_edge"
+    },
+    {
+      "directional_roc_auc": 0.6466712749615976,
+      "feature": "new_instrument_device_edge"
+    },
+    {
+      "directional_roc_auc": 0.6416045468509985,
+      "feature": "customer_failed_txn_count_1h"
+    },
+    {
+      "directional_roc_auc": 0.6049671889400922,
+      "feature": "historical_devices_for_current_instrument"
+    },
+    {
+      "directional_roc_auc": 0.6049671889400922,
+      "feature": "instrument_device_degree"
+    },
+    {
+      "directional_roc_auc": 0.5992845898617511,
+      "feature": "instrument_failed_txn_count_1h"
+    },
+    {
+      "directional_roc_auc": 0.5836511152073733,
+      "feature": "customer_failure_rate_30d"
+    },
+    {
+      "directional_roc_auc": 0.5754506820276497,
+      "feature": "amount_paise"
+    },
+    {
+      "directional_roc_auc": 0.5754506820276497,
+      "feature": "log_amount"
+    },
+    {
+      "directional_roc_auc": 0.5746827158218126,
+      "feature": "amount_vs_customer_mean"
+    },
+    {
+      "directional_roc_auc": 0.5739959324116743,
+      "feature": "historical_devices_on_current_ip"
+    },
+    {
+      "directional_roc_auc": 0.5619215422427035,
+      "feature": "amount_zscore_customer"
+    },
+    {
+      "directional_roc_auc": 0.5583763440860214,
+      "feature": "customer_merchant_txn_count_30d"
+    },
+    {
+      "directional_roc_auc": 0.553047416282642,
+      "feature": "component_device_count"
+    },
+    {
+      "directional_roc_auc": 0.5464178187403994,
+      "feature": "device_txn_count_1m"
+    },
+    {
+      "directional_roc_auc": 0.5330565683563748,
+      "feature": "hour_of_day"
+    },
+    {
+      "directional_roc_auc": 0.5313794777265746,
+      "feature": "customer_unique_addresses_30d"
+    },
+    {
+      "directional_roc_auc": 0.5306440122887864,
+      "feature": "ip_device_degree"
+    },
+    {
+      "directional_roc_auc": 0.5291577757296467,
+      "feature": "preexisting_component_count"
+    },
+    {
+      "directional_roc_auc": 0.5137142857142857,
+      "feature": "components_bridged_by_transaction"
+    },
+    {
+      "directional_roc_auc": 0.5080411674347158,
+      "feature": "day_of_week"
+    },
+    {
+      "directional_roc_auc": 0.5056122519201229,
+      "feature": "instrument_customer_degree"
+    },
+    {
+      "directional_roc_auc": 0.5043072196620584,
+      "feature": "is_weekend"
+    }
+  ]
+}

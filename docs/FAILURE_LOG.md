@@ -1,5 +1,55 @@
 # Failure Log
 
+## Phase 5: the first synthetic benchmark was too separable
+
+- **Observed:** `risk-lgbm-v1` produced effectively perfect tabular and combined held-out results,
+  so it could not credibly demonstrate incremental graph value.
+- **Diagnosis:** no truth field, exact label alias, temporal leak, or group split leak was found.
+  However, `ip_txn_count_10m` alone reached training ROC-AUC 0.946293; its legitimate p99 was 0
+  while abuse median was 5. Transaction-only test PR-AUC was 0.305603, transaction plus customer
+  history was 0.986052, and all 46 non-graph features reached 1.0. The generator's marginal
+  velocity and relationship distributions were insufficiently overlapping.
+- **Fix:** retained v1 for reproducibility and introduced versioned `synthetic-v2` with explicit
+  legitimate hard-negative bursts/shared infrastructure and varied abuse strategies. Development
+  used seed 24681. Implementation/configuration hashes were frozen before final seed 88421 was
+  generated and evaluated once.
+- **Result:** final tabular test PR-AUC was 0.974894; combined PR-AUC was 0.998365, with 83 versus
+  4 false positives. The benchmark remains synthetic and is not evidence of production realism.
+
+## Phase 5: synthetic-v2 development validation found a cross-ring index collision
+
+- **Observed:** the first 20,000-event v2 development split contained 45 training abuse rings but
+  only 44 infrastructure supergroups.
+- **Cause:** identity-rotation's shared and per-event device/IP numeric index ranges overlapped for
+  different ring numbers, unintentionally reusing an entity across two truth rings.
+- **Fix:** identity-rotation now uses disjoint 10,000-wide per-ring index namespaces, and hardened
+  validation rejects any cross-ring customer, device, instrument, IP, or address reuse.
+- **Result:** the affected development run was invalidated before freeze and before final seed
+  88421 was generated.
+
+## Phase 5: initial family diagnostic omitted two customer-normalization features
+
+- **Observed:** the first retrospective family-ablation run completed the 50,000-event feature and
+  graph reconstruction, then failed before training because two registered features were not
+  assigned to a diagnostic family.
+- **Cause:** `amount_vs_customer_mean` and `amount_zscore_customer` are customer-history features,
+  but do not begin with the `customer_` prefix used by the initial family mapper.
+- **Fix:** the diagnostic family definition now assigns both names explicitly and asserts that all
+  52 registered features are assigned. Model inputs and frozen features-v1 semantics were unchanged.
+
+## Phase 5: small smoke worlds could not support the production split invariant
+
+- **Observed:** 1,000- and 5,000-event smoke worlds could not form three strictly chronological
+  partitions while keeping complete abuse groups isolated and retaining abuse in every partition.
+- **Cause:** at those sizes, the small number of long-lived ring waves overlap the desired temporal
+  cuts; splitting individual ring transactions would have made the smoke pass by weakening the
+  leakage control.
+- **Fix:** the splitter continues to fail loudly when no valid grouped temporal partition exists.
+  Unit tests use a purpose-built small temporal fixture, while the fixed 50,000-event benchmark is
+  used for the real split and has all four subtypes in every partition.
+- **Result:** the final world splits into 92/23/15 isolated abuse rings across train/validation/test
+  with strict temporal boundaries and no shared cross-ring infrastructure.
+
 ## Phase 4: evolving core infrastructure could change a cluster fingerprint
 
 - **Observed:** a cluster fingerprint anchored to the current primary qualifying device is stable

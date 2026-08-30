@@ -2,9 +2,13 @@
 
 Aegis is a graph-assisted system intended to detect coordinated payment abuse such as card-testing rings, account farms, identity rotation, and collusive payment clusters.
 
-This repository implements the Phase 1 backend/data foundation, Phase 2 deterministic synthetic payment world, Phase 3 point-in-time feature engineering, and Phase 4 point-in-time graph intelligence with deterministic structural cluster discovery.
+This repository implements the Phase 1 backend/data foundation, Phase 2 deterministic synthetic
+payment world, Phase 3 point-in-time feature engineering, Phase 4 point-in-time graph intelligence,
+and Phase 5 leakage-controlled LightGBM training and held-out synthetic evaluation.
 
-**Model training or prediction, LightGBM, SHAP, final risk fusion, policy decisions, LLM investigation, frontend, and realtime streaming are not implemented.** The graph structural score is interpretable graph evidence, not fraud probability.
+**Final risk fusion, policy decisions, calibrated probabilities, SHAP explanations, LLM
+investigation, frontend, and realtime streaming are not implemented.** `risk-lgbm-v2` produces an
+uncalibrated model score, not a fraud probability or payment decision.
 
 ## Architecture boundaries
 
@@ -12,13 +16,17 @@ This repository implements the Phase 1 backend/data foundation, Phase 2 determin
 - `packages/risk_engine/features` owns the shared online/offline point-in-time feature boundary.
 - `packages/graph_engine` owns typed identity-graph state, graph-v1 assessments, and structural cluster discovery.
 - `packages/synthetic` owns reproducible population, behavior, scenarios, manifests, and sanity validation.
-- `packages/graph_engine`, `packages/policy_engine`, and `packages/investigator` remain unimplemented boundaries.
-- `ml` and `configs` hold future offline artifacts and versioned configuration.
+- `ml/training` and `ml/evaluation` own offline assembly, grouped temporal splitting, training,
+  diagnostics, and reproducible artifacts.
+- `packages/policy_engine` and `packages/investigator` remain unimplemented boundaries.
+- `ml` and `configs` hold versioned offline artifacts and experiment configuration.
 - PostgreSQL is the system of record. Each valid incoming event is committed to `raw_events` before normalization starts.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the detailed design.
 See [docs/FEATURES.md](docs/FEATURES.md) for scoring-moment, window, registry, and leakage semantics.
 See [docs/GRAPH_INTELLIGENCE.md](docs/GRAPH_INTELLIGENCE.md) for graph and cluster semantics.
+See [docs/ML_EVALUATION.md](docs/ML_EVALUATION.md) and [docs/MODEL_CARD.md](docs/MODEL_CARD.md)
+for the Phase 5 methodology, actual metrics, and limitations.
 
 ## Local development
 
@@ -46,6 +54,7 @@ uvicorn apps.api.app.main:app --reload
 ```bash
 make test
 make lint
+make ml-smoke
 ```
 
 Integration tests require `AEGIS_TEST_DATABASE_URL` pointing to a disposable PostgreSQL database. They skip explicitly when it is absent.
@@ -84,6 +93,22 @@ python scripts/build_graph.py --graph-version graph-v1
 The graph uses customer, payment-instrument, device, IP, and address nodes. Merchants are excluded
 from connectivity. PostgreSQL and offline processing both reconstruct only relationships created
 strictly before each transaction; final accumulated edge state is never used for backfill.
+
+## Leakage-controlled model benchmark
+
+The normal training path tunes only on train/validation. Test evaluation requires an explicit flag:
+
+```bash
+python scripts/train_model.py --config configs/ml/model-v1.yaml
+python scripts/train_model.py --config configs/ml/model-v2.yaml --evaluate-test
+```
+
+The submission artifact is `risk-lgbm-v2`, evaluated once on the frozen 50,000-event
+`synthetic-v2` benchmark (seed 88421). On its held-out test partition, tabular-only PR-AUC was
+0.974894 and combined PR-AUC was 0.998365; false positives fell from 83 to 4 while recall changed
+from 0.967010 to 0.964948. These designed synthetic results do not estimate performance on
+Razorpay or other production traffic. The easier `risk-lgbm-v1` benchmark remains available only
+as a retrospective diagnostic baseline.
 
 ## Implemented API
 

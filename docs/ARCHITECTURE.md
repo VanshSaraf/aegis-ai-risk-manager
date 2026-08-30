@@ -2,11 +2,17 @@
 
 ## Problem and current scope
 
-Aegis targets coordinated payment abuse: behavior that becomes meaningful across transactions and linked entities rather than from one payment in isolation. Phase 1 established durable ingestion and normalized entities. Phase 2 added a deterministic synthetic payment world. Phase 3 adds reusable point-in-time feature vectors without training or scoring a model.
+Aegis targets coordinated payment abuse: behavior that becomes meaningful across transactions and
+linked entities rather than from one payment in isolation. Phase 1 established durable ingestion
+and normalized entities. Phase 2 added a deterministic synthetic payment world. Phase 3 added
+point-in-time features, Phase 4 added graph intelligence, and Phase 5 adds offline
+leakage-controlled training and a portable score-only model boundary.
 
 ## Non-goals
 
-This phase does not implement model training or prediction, final risk fusion, policy decisions, investigator prompts or LLM calls, a dashboard, realtime streaming, or production deployment claims. Kafka, Redis, Celery, Neo4j, and microservice boundaries are deliberately absent.
+This phase does not implement final risk fusion, policy decisions, investigator prompts or LLM
+calls, a dashboard, realtime streaming, or production deployment claims. Kafka, Redis, Celery,
+Neo4j, and microservice boundaries are deliberately absent.
 
 ## Synthetic-world data flow
 
@@ -94,6 +100,11 @@ immutable by `(transaction_id, graph_version)`. See
 
 Ground-truth label, scenario, and ring identifiers exist on synthetic transaction records for training and evaluation only. Public `RawPaymentEvent` facts cannot carry them. An internal trusted context attaches them during synthetic ingestion. The runtime-safe `NormalizedTransaction`, `ScoringTransaction`, `FeatureVector`, and prediction contracts contain no ground-truth fields. Future feature assembly must preserve that separation and enforce point-in-time correctness.
 
-## Planned intelligence pipeline
+## Offline model boundary
 
-Later, and only after approval, `features-v1` and `graph-v1` may feed a versioned model; a deterministic policy layer may choose allowed actions; and an investigator may explain evidence already assembled by the system. None of those later components performs computation yet.
+`risk-lgbm-v2` consumes exactly the registered 52 features-v1 and 25 graph-v1 raw metrics. Offline
+assembly keeps evaluation truth separate, computes point-in-time history before chronological
+group splitting, and serializes a schema-validated LightGBM model. Runtime inference returns only
+an uncalibrated `model_score`. Later, and only after approval, a deterministic policy layer may
+combine that score with graph evidence and business constraints; an investigator may explain
+already assembled evidence. Neither later component performs computation yet.
