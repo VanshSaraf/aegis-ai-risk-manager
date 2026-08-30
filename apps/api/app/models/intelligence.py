@@ -4,6 +4,7 @@ from typing import Any
 
 from sqlalchemy import (
     BigInteger,
+    Boolean,
     DateTime,
     Float,
     ForeignKey,
@@ -37,6 +38,32 @@ class TransactionFeature(UUIDPrimaryKeyMixin, Base):
         String(100), ForeignKey("feature_versions.version"), nullable=False
     )
     features: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+    computed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    max_source_event_time: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+
+
+class GraphAssessmentSnapshot(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "graph_assessment_snapshots"
+    __table_args__ = (
+        UniqueConstraint(
+            "transaction_id",
+            "graph_version",
+            name="uq_graph_assessments_transaction_version",
+        ),
+        Index("ix_graph_assessments_version_transaction", "graph_version", "transaction_id"),
+    )
+
+    transaction_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("transactions.id"), nullable=False
+    )
+    graph_version: Mapped[str] = mapped_column(String(100), nullable=False)
+    metrics: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+    signals: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, nullable=False)
+    structural_score: Mapped[float] = mapped_column(Float, nullable=False)
+    component_fingerprints: Mapped[list[str]] = mapped_column(JSONB, nullable=False)
+    candidate_cluster: Mapped[bool] = mapped_column(Boolean, nullable=False)
     computed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     max_source_event_time: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
@@ -80,6 +107,7 @@ class AbuseCluster(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __tablename__ = "abuse_clusters"
 
     public_id: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
+    fingerprint: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
     status: Mapped[ClusterStatus] = mapped_column(String(32), nullable=False)
     cluster_score: Mapped[float] = mapped_column(Float, nullable=False)
     account_count: Mapped[int] = mapped_column(Integer, nullable=False)
@@ -95,7 +123,15 @@ class AbuseCluster(UUIDPrimaryKeyMixin, TimestampMixin, Base):
 
 class ClusterMember(UUIDPrimaryKeyMixin, CreatedAtMixin, Base):
     __tablename__ = "cluster_members"
-    __table_args__ = (Index("ix_cluster_members_cluster_id", "cluster_id"),)
+    __table_args__ = (
+        Index("ix_cluster_members_cluster_id", "cluster_id"),
+        UniqueConstraint(
+            "cluster_id",
+            "entity_type",
+            "entity_public_id",
+            name="uq_cluster_members_cluster_entity",
+        ),
+    )
 
     cluster_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("abuse_clusters.id"), nullable=False

@@ -1,0 +1,203 @@
+{
+  "graph_version": "graph-v1",
+  "description": "Point-in-time heterogeneous identity graph assessment.",
+  "metrics": [
+    {
+      "name": "device_customer_degree",
+      "family": "LOCAL_ENTITY",
+      "value_type": "int",
+      "description": "Historical customers adjacent to current device.",
+      "window": null
+    },
+    {
+      "name": "device_instrument_degree",
+      "family": "LOCAL_ENTITY",
+      "value_type": "int",
+      "description": "Historical instruments adjacent to current device.",
+      "window": null
+    },
+    {
+      "name": "ip_customer_degree",
+      "family": "LOCAL_ENTITY",
+      "value_type": "int",
+      "description": "Historical customers adjacent to current IP.",
+      "window": null
+    },
+    {
+      "name": "ip_device_degree",
+      "family": "LOCAL_ENTITY",
+      "value_type": "int",
+      "description": "Historical devices two hops from current IP through customers.",
+      "window": null
+    },
+    {
+      "name": "address_customer_degree",
+      "family": "LOCAL_ENTITY",
+      "value_type": "int",
+      "description": "Historical customers adjacent to current address.",
+      "window": null
+    },
+    {
+      "name": "instrument_device_degree",
+      "family": "LOCAL_ENTITY",
+      "value_type": "int",
+      "description": "Historical devices adjacent to current instrument.",
+      "window": null
+    },
+    {
+      "name": "instrument_customer_degree",
+      "family": "LOCAL_ENTITY",
+      "value_type": "int",
+      "description": "Historical customers adjacent to current instrument.",
+      "window": null
+    },
+    {
+      "name": "component_node_count",
+      "family": "COMPONENT",
+      "value_type": "int",
+      "description": "Nodes in historical components touched by current entities.",
+      "window": null
+    },
+    {
+      "name": "component_edge_count",
+      "family": "COMPONENT",
+      "value_type": "int",
+      "description": "Edges in touched historical components.",
+      "window": null
+    },
+    {
+      "name": "component_customer_count",
+      "family": "COMPONENT",
+      "value_type": "int",
+      "description": "Customer nodes in touched components.",
+      "window": null
+    },
+    {
+      "name": "component_device_count",
+      "family": "COMPONENT",
+      "value_type": "int",
+      "description": "Device nodes in touched components.",
+      "window": null
+    },
+    {
+      "name": "component_instrument_count",
+      "family": "COMPONENT",
+      "value_type": "int",
+      "description": "Instrument nodes in touched components.",
+      "window": null
+    },
+    {
+      "name": "component_ip_count",
+      "family": "COMPONENT",
+      "value_type": "int",
+      "description": "IP nodes in touched components.",
+      "window": null
+    },
+    {
+      "name": "component_address_count",
+      "family": "COMPONENT",
+      "value_type": "int",
+      "description": "Address nodes in touched components.",
+      "window": null
+    },
+    {
+      "name": "component_multipartite_density",
+      "family": "COMPONENT",
+      "value_type": "float",
+      "description": "Observed edges divided by capacity across allowed type pairs.",
+      "window": null
+    },
+    {
+      "name": "new_customer_device_edge",
+      "family": "NOVELTY",
+      "value_type": "bool",
+      "description": "Current customer-device relation is historically unseen.",
+      "window": null
+    },
+    {
+      "name": "new_customer_instrument_edge",
+      "family": "NOVELTY",
+      "value_type": "bool",
+      "description": "Current customer-instrument relation is historically unseen.",
+      "window": null
+    },
+    {
+      "name": "new_customer_ip_edge",
+      "family": "NOVELTY",
+      "value_type": "bool",
+      "description": "Current customer-IP relation is historically unseen.",
+      "window": null
+    },
+    {
+      "name": "new_customer_address_edge",
+      "family": "NOVELTY",
+      "value_type": "bool",
+      "description": "Current customer-address relation is historically unseen.",
+      "window": null
+    },
+    {
+      "name": "new_instrument_device_edge",
+      "family": "NOVELTY",
+      "value_type": "bool",
+      "description": "Current instrument-device relation is historically unseen.",
+      "window": null
+    },
+    {
+      "name": "preexisting_component_count",
+      "family": "NOVELTY",
+      "value_type": "int",
+      "description": "Distinct historical components touched by current entities.",
+      "window": null
+    },
+    {
+      "name": "components_bridged_by_transaction",
+      "family": "NOVELTY",
+      "value_type": "int",
+      "description": "Historical components the current relations would bridge.",
+      "window": null
+    },
+    {
+      "name": "customer_two_hop_customer_count_via_device_or_ip",
+      "family": "CONNECTIVITY",
+      "value_type": "int",
+      "description": "Other customers reachable in two hops through current device or IP.",
+      "window": null
+    },
+    {
+      "name": "component_new_edges_10m",
+      "family": "TEMPORAL_STRUCTURE",
+      "value_type": "int",
+      "description": "Touched-component edges first observed recently.",
+      "window": "10m"
+    },
+    {
+      "name": "device_new_identities_10m",
+      "family": "TEMPORAL_STRUCTURE",
+      "value_type": "int",
+      "description": "Customer or instrument identities newly linked to current device.",
+      "window": "10m"
+    }
+  ],
+  "signals": [
+    {
+      "code": "DEVICE_MULTI_CUSTOMER_CONCENTRATION",
+      "description": "At least three customers historically share the current device."
+    },
+    {
+      "code": "DEVICE_MULTI_INSTRUMENT_CONCENTRATION",
+      "description": "At least four instruments historically share the current device."
+    },
+    {
+      "code": "RAPID_RELATIONSHIP_EXPANSION",
+      "description": "The local component formed many relationships within ten minutes."
+    },
+    {
+      "code": "MULTI_COMPONENT_BRIDGE",
+      "description": "The current transaction would join separate historical components."
+    },
+    {
+      "code": "DENSE_MULTI_ENTITY_STRUCTURE",
+      "description": "Multiple customers and instruments form corroborating allowed relationships."
+    }
+  ]
+}

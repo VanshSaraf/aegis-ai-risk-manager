@@ -2,7 +2,7 @@
 
 ## Scope
 
-Aegis is a defensive system intended to identify and investigate coordinated payment abuse. Phase 1 only establishes validated ingestion, storage, entity relationships, audit records, and contracts. Actual AI, risk scoring, graph detection, and investigator functionality are not implemented.
+Aegis is a defensive system intended to identify coordinated payment abuse. It currently implements validated ingestion, synthetic data, point-in-time tabular features, point-in-time graph assessment, and deterministic structural cluster discovery. No trained AI model, final fraud prediction, policy automation, or investigator functionality is implemented.
 
 ## Data handling boundaries
 
@@ -13,8 +13,8 @@ Aegis is a defensive system intended to identify and investigate coordinated pay
 
 ## Capability boundaries
 
-Aegis has no offensive capability. It does not generate attack instructions, probe payment systems, acquire credentials, or automate abuse. Future graph and model components are intended only to analyze evidence already available to the defensive system.
+Aegis has no offensive capability. It does not generate attack instructions, probe payment systems, acquire credentials, or automate abuse. Current graph analysis and any future model components are intended only to analyze evidence already available to the defensive system.
 
 The planned LLM investigator will be read-only, evidence-grounded, and outside the transaction decision path. It must not execute payment actions or override deterministic policy. No LLM integration currently exists.
 
-This document will be expanded when real intelligence components, deployment boundaries, authentication, and operational controls are designed.
+This document will be expanded when model intelligence, deployment boundaries, authentication, and operational controls are designed.

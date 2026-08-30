@@ -14,5 +14,8 @@ ml/artifacts/*
 !ml/artifacts/features-v1/
 ml/artifacts/features-v1/*
 !ml/artifacts/features-v1/schema.json
+!ml/artifacts/graph-v1/
+ml/artifacts/graph-v1/*
+!ml/artifacts/graph-v1/schema.json
 ml/datasets/generated/*
 !ml/datasets/generated/.gitkeep

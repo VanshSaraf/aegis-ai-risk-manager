@@ -2,14 +2,15 @@
 
 Aegis is a graph-assisted system intended to detect coordinated payment abuse such as card-testing rings, account farms, identity rotation, and collusive payment clusters.
 
-This repository implements the Phase 1 backend/data foundation, Phase 2 deterministic synthetic payment world, and Phase 3 point-in-time feature engineering. Synthetic legitimate personas and coordinated-abuse rings flow through the real ingestion pipeline; the shared feature engine then produces immutable `features-v1` snapshots without temporal or ground-truth leakage.
+This repository implements the Phase 1 backend/data foundation, Phase 2 deterministic synthetic payment world, Phase 3 point-in-time feature engineering, and Phase 4 point-in-time graph intelligence with deterministic structural cluster discovery.
 
-**Model training or prediction, graph abuse detection or scoring, risk fusion, policy decisions, LLM investigation, frontend, and realtime streaming are not implemented.** No endpoint returns placeholder scores or fake AI output.
+**Model training or prediction, LightGBM, SHAP, final risk fusion, policy decisions, LLM investigation, frontend, and realtime streaming are not implemented.** The graph structural score is interpretable graph evidence, not fraud probability.
 
 ## Architecture boundaries
 
 - `apps/api` owns HTTP transport, orchestration, and persistence models.
 - `packages/risk_engine/features` owns the shared online/offline point-in-time feature boundary.
+- `packages/graph_engine` owns typed identity-graph state, graph-v1 assessments, and structural cluster discovery.
 - `packages/synthetic` owns reproducible population, behavior, scenarios, manifests, and sanity validation.
 - `packages/graph_engine`, `packages/policy_engine`, and `packages/investigator` remain unimplemented boundaries.
 - `ml` and `configs` hold future offline artifacts and versioned configuration.
@@ -17,6 +18,7 @@ This repository implements the Phase 1 backend/data foundation, Phase 2 determin
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the detailed design.
 See [docs/FEATURES.md](docs/FEATURES.md) for scoring-moment, window, registry, and leakage semantics.
+See [docs/GRAPH_INTELLIGENCE.md](docs/GRAPH_INTELLIGENCE.md) for graph and cluster semantics.
 
 ## Local development
 
@@ -70,6 +72,18 @@ python scripts/build_features.py --feature-version features-v1
 The engine computes each vector before allowing the current transaction into history. Current
 payment outcomes and synthetic truth are excluded. PostgreSQL and indexed in-memory providers
 share the same `FeatureEngine` semantics and are covered by an exact parity test.
+
+## Point-in-time graph assessments
+
+After ingestion, build immutable `graph-v1` assessments and deduplicated structural clusters:
+
+```bash
+python scripts/build_graph.py --graph-version graph-v1
+```
+
+The graph uses customer, payment-instrument, device, IP, and address nodes. Merchants are excluded
+from connectivity. PostgreSQL and offline processing both reconstruct only relationships created
+strictly before each transaction; final accumulated edge state is never used for backfill.
 
 ## Implemented API
 

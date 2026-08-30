@@ -6,7 +6,7 @@ Aegis targets coordinated payment abuse: behavior that becomes meaningful across
 
 ## Non-goals
 
-This phase does not implement model training, predictions, graph detection or scoring, risk fusion, policy decisions, investigator prompts or LLM calls, a dashboard, realtime streaming, or production deployment claims. Kafka, Redis, Celery, Neo4j, and microservice boundaries are deliberately absent.
+This phase does not implement model training or prediction, final risk fusion, policy decisions, investigator prompts or LLM calls, a dashboard, realtime streaming, or production deployment claims. Kafka, Redis, Celery, Neo4j, and microservice boundaries are deliberately absent.
 
 ## Synthetic-world data flow
 
@@ -65,10 +65,35 @@ Feature snapshots are immutable and unique by `(transaction_id, feature_version)
 `max_source_event_time` is null without relevant history and otherwise strictly earlier than the
 current transaction. See [FEATURES.md](FEATURES.md) for the complete registry and semantics.
 
+## Point-in-time graph boundary
+
+Graph intelligence is independent from `features-v1`:
+
+```text
+Raw Transaction -> features-v1 -------------------┐
+                                                  │
+Historical identity transactions -> GraphEngine  │
+                                  -> graph-v1     │
+                                  -> structural clusters
+                                                  │
+                           [future model boundary]
+```
+
+`GraphEngine` receives a temporally safe typed graph reconstructed from transactions strictly
+before the current event. Offline batches compute before observe; PostgreSQL recursively loads
+only components touched by current identities. Neither path reads final `EntityEdge` state.
+Merchants are excluded from connectivity to prevent popular merchants joining unrelated users.
+
+`graph-v1` produces structural metrics, named evidence signals, and a bounded structural score.
+The deterministic cluster detector requires corroborating customer, instrument, device, and
+relationship-expansion evidence; IP or address sharing alone is insufficient. Assessments are
+immutable by `(transaction_id, graph_version)`. See
+[GRAPH_INTELLIGENCE.md](GRAPH_INTELLIGENCE.md).
+
 ## Ground-truth separation
 
 Ground-truth label, scenario, and ring identifiers exist on synthetic transaction records for training and evaluation only. Public `RawPaymentEvent` facts cannot carry them. An internal trusted context attaches them during synthetic ingestion. The runtime-safe `NormalizedTransaction`, `ScoringTransaction`, `FeatureVector`, and prediction contracts contain no ground-truth fields. Future feature assembly must preserve that separation and enforce point-in-time correctness.
 
 ## Planned intelligence pipeline
 
-Later, and only after approval, the point-in-time features may feed a versioned model; relationship analysis may supply graph evidence; a deterministic policy layer may choose allowed actions; and an investigator may explain evidence already assembled by the system. None of those later components performs computation yet.
+Later, and only after approval, `features-v1` and `graph-v1` may feed a versioned model; a deterministic policy layer may choose allowed actions; and an investigator may explain evidence already assembled by the system. None of those later components performs computation yet.

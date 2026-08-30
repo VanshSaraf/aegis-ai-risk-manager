@@ -59,3 +59,11 @@ class ProcessingStatus(StrEnum):
     PROCESSING = "PROCESSING"
     PROCESSED = "PROCESSED"
     FAILED = "FAILED"
+
+
+class GraphEntityType(StrEnum):
+    CUSTOMER = "CUSTOMER"
+    PAYMENT_INSTRUMENT = "PAYMENT_INSTRUMENT"
+    DEVICE = "DEVICE"
+    IP = "IP"
+    ADDRESS = "ADDRESS"

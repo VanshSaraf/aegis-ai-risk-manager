@@ -1,5 +1,17 @@
 # Failure Log
 
+## Phase 4: evolving core infrastructure could change a cluster fingerprint
+
+- **Observed:** a cluster fingerprint anchored to the current primary qualifying device is stable
+  in normal growth, but another device could later qualify and sort earlier, producing a different
+  fingerprint for substantially the same structural cluster.
+- **Risk:** repeated discovery could create a second `AbuseCluster` instead of expanding the
+  existing record.
+- **Fix:** exact fingerprint matching remains the first choice; persistence now falls back to a
+  shared-device requirement plus at least 70% typed-member overlap. The original `clu_…` ID is
+  retained, new members are added, and existing membership evidence is refreshed. An integration
+  test forces a changed fingerprint and verifies one expanding cluster remains.
+
 ## Phase 3: optional context features could read future profile state
 
 - **Observed:** a late leakage review found that three proposed features read customer or merchant

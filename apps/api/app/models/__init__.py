@@ -11,6 +11,7 @@ from apps.api.app.models.graph import EntityEdge
 from apps.api.app.models.intelligence import (
     AbuseCluster,
     ClusterMember,
+    GraphAssessmentSnapshot,
     Investigation,
     PolicyDecision,
     RiskPrediction,
@@ -30,6 +31,7 @@ __all__ = [
     "Device",
     "EntityEdge",
     "FeatureVersion",
+    "GraphAssessmentSnapshot",
     "IPAddress",
     "Investigation",
     "Merchant",
