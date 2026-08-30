@@ -5,9 +5,12 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from apps.api.app.core.enums import PolicyAction, RiskSeverity
 from apps.api.app.db.session import database_is_ready, get_session
 from apps.api.app.models import EntityEdge
 from apps.api.app.schemas.api import (
+    DashboardSummary,
+    DashboardTransactionList,
     GraphEvidenceResponse,
     ModelScoreResponse,
     Neighbor,
@@ -16,9 +19,15 @@ from apps.api.app.schemas.api import (
     PolicyResponse,
     ReadinessResponse,
     RiskResponse,
+    TransactionGraphResponse,
     TransactionList,
 )
 from apps.api.app.schemas.contracts import NormalizedTransaction, RawPaymentEvent
+from apps.api.app.services.dashboard import (
+    dashboard_summary,
+    dashboard_transactions,
+    transaction_graph,
+)
 from apps.api.app.services.transactions import (
     DuplicateEventError,
     NormalizationError,
@@ -47,6 +56,22 @@ async def ready() -> ReadinessResponse | JSONResponse:
             content={"status": "not_ready", "database": "unavailable"},
         )
     return ReadinessResponse(status="ready", database="available")
+
+
+@router.get("/api/v1/dashboard/summary", response_model=DashboardSummary)
+async def dashboard_summary_route(session: Session) -> DashboardSummary:
+    return await dashboard_summary(session)
+
+
+@router.get("/api/v1/dashboard/transactions", response_model=DashboardTransactionList)
+async def dashboard_transactions_route(
+    session: Session,
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    action: PolicyAction | None = None,
+    severity: RiskSeverity | None = None,
+) -> DashboardTransactionList:
+    items = await dashboard_transactions(session, limit=limit, action=action, severity=severity)
+    return DashboardTransactionList(items=items, limit=limit)
 
 
 @router.post(
@@ -148,6 +173,24 @@ async def investigation(public_id: str, session: Session) -> InvestigationReport
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="transaction must be assessed before investigation",
+        ) from exc
+
+
+@router.get(
+    "/api/v1/transactions/{public_id}/graph",
+    response_model=TransactionGraphResponse,
+)
+async def graph(public_id: str, session: Session) -> TransactionGraphResponse:
+    try:
+        return await transaction_graph(session, public_id)
+    except LookupError as exc:
+        if str(exc) == "transaction not found":
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="transaction not found"
+            ) from exc
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="transaction must be assessed before graph inspection",
         ) from exc
 
 

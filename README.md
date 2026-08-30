@@ -7,7 +7,7 @@ payment world, Phase 3 point-in-time feature engineering, Phase 4 point-in-time 
 Phase 5 leakage-controlled LightGBM training and held-out synthetic evaluation, and Phase 6
 cost-aware bounded policy recommendations with an operational assessment API.
 
-**Calibrated probabilities, SHAP, a bundled network LLM provider, frontend, realtime streaming,
+**Calibrated probabilities, SHAP, a bundled network LLM provider, realtime streaming,
 and autonomous payment actions are not implemented.** `risk-lgbm-v2` produces an uncalibrated
 model score. `risk-policy-v2` produces bounded recommendations; it performs no payment action.
 AI-assisted investigation operates afterward on bounded deterministic evidence and cannot change
@@ -58,6 +58,28 @@ pip install -e '.[dev]'
 alembic upgrade head
 uvicorn apps.api.app.main:app --reload
 ```
+
+Run the dashboard in a second terminal:
+
+```bash
+cd apps/web
+cp .env.example .env.local
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`. The frontend uses `NEXT_PUBLIC_API_BASE_URL` (default
+`http://localhost:8000`); the API permits `http://localhost:3000` by default through the
+configurable `AEGIS_CORS_ALLOWED_ORIGINS` setting.
+
+## Risk operations dashboard
+
+The single-page dashboard shows truth-free operational counts, recent assessed and pending
+transactions, policy actions, uncalibrated model scores, bounded point-in-time identity graphs,
+and evidence-first investigations. Transaction selection updates the graph and investigation
+workspace without navigation. Manual refresh and explicit loading, empty, pending, and backend
+failure states are included. Live abuse injection and evaluation-result views are intentionally
+reserved for later phases.
 
 ## Quality checks
 
@@ -170,4 +192,7 @@ prose is supplementary, and provider failure degrades to the same deterministic 
 - `GET /api/v1/transactions/{public_id}`
 - `POST /api/v1/transactions/{public_id}/assess`
 - `GET /api/v1/transactions/{public_id}/investigation`
+- `GET /api/v1/transactions/{public_id}/graph`
+- `GET /api/v1/dashboard/summary`
+- `GET /api/v1/dashboard/transactions`
 - `GET /api/v1/entities/{entity_type}/{public_id}/neighbors`

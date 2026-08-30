@@ -14,6 +14,11 @@ class Settings(BaseSettings):
     investigator_provider: str = "disabled"
     investigator_max_narrative_chars: int = Field(default=2000, ge=100, le=5000)
     openai_api_key: str | None = None
+    cors_allowed_origins: str = "http://localhost:3000"
+
+    @property
+    def cors_origins(self) -> list[str]:
+        return [origin.strip() for origin in self.cors_allowed_origins.split(",") if origin.strip()]
 
 
 @lru_cache
