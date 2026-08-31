@@ -71,6 +71,7 @@ export function GraphPanel({
         ...edge,
         label: edge.type === "INVOLVES" ? undefined : edge.type.replaceAll("_", " ").toLowerCase(),
         markerEnd: { type: MarkerType.ArrowClosed, color: "#40516a" },
+        animated: edge.type !== "INVOLVES",
         style: { stroke: "#40516a", strokeWidth: edge.type === "INVOLVES" ? 1.5 : 1 },
         labelStyle: { fill: "#75849a", fontSize: 8 },
       })) ?? [],
@@ -103,6 +104,7 @@ export function GraphPanel({
         <>
           <div className="graph-canvas">
             <ReactFlow
+              key={graph.transaction_id}
               nodes={nodes}
               edges={edges}
               fitView

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import {
   Activity,
   AlertTriangle,
@@ -9,21 +10,29 @@ import {
   Clock3,
   Database,
   GitBranch,
+  FlaskConical,
+  Play,
   RefreshCw,
   SearchX,
   ShieldCheck,
   Sparkles,
+  Zap,
 } from "lucide-react";
 
 import { ActionBadge, SeverityBadge } from "@/components/action-badge";
 import { GraphPanel } from "@/components/graph-panel";
 import {
+  ApiError,
+  createDemoSession,
   getDashboardSummary,
   getInvestigation,
   getTransactionGraph,
   getTransactions,
+  stepDemoSession,
   type DashboardSummary,
   type DashboardTransaction,
+  type DemoSession,
+  type DemoStep,
   type InvestigationReport,
   type PolicyAction,
   type TransactionGraph,
@@ -146,7 +155,7 @@ function InvestigationPanel({
         <h3>Top evidence</h3>
         <div className="evidence-list">
           {report.evidence.slice(0, 5).map((item) => (
-            <article key={item.code}>
+            <article key={item.code} className={item.category === "GRAPH" ? "emerging-evidence" : undefined}>
               <span className={`evidence-category category-${item.category.toLowerCase()}`}>{item.category}</span>
               <div><strong>{item.title}</strong><p>{item.context}</p></div>
               <code>{String(item.observed_value)}</code>
@@ -202,21 +211,30 @@ export function Dashboard() {
   const [loadingSelection, setLoadingSelection] = useState(false);
   const [investigationError, setInvestigationError] = useState<string | null>(null);
   const [graphError, setGraphError] = useState<string | null>(null);
+  const [demoSession, setDemoSession] = useState<DemoSession | null>(null);
+  const [latestDemoStep, setLatestDemoStep] = useState<DemoStep | null>(null);
+  const [demoStatus, setDemoStatus] = useState("Ready for a deterministic showcase.");
+  const [demoError, setDemoError] = useState<string | null>(null);
+  const [demoRunning, setDemoRunning] = useState(false);
   const selectionRequestGeneration = useRef(0);
+  const demoRunGeneration = useRef(0);
 
   const selected = useMemo(
     () => transactions.find((transaction) => transaction.transaction_id === selectedId) ?? null,
     [selectedId, transactions],
   );
 
-  const loadDashboard = useCallback(async () => {
+  const loadDashboard = useCallback(async (
+    preferredSelectedId?: string,
+    filterOverride?: PolicyAction | null,
+  ) => {
     setSummaryLoading(true);
     setTransactionsLoading(true);
     setSummaryError(null);
     setTransactionsError(null);
     const [summaryResult, transactionsResult] = await Promise.allSettled([
       getDashboardSummary(),
-      getTransactions(filter),
+      getTransactions(filterOverride === undefined ? filter : filterOverride),
     ]);
     if (summaryResult.status === "fulfilled") {
       setSummary(summaryResult.value);
@@ -228,7 +246,9 @@ export function Dashboard() {
       const items = transactionsResult.value.items;
       setTransactions(items);
       setSelectedId((current) =>
-        items.some((item) => item.transaction_id === current)
+        preferredSelectedId && items.some((item) => item.transaction_id === preferredSelectedId)
+          ? preferredSelectedId
+          : items.some((item) => item.transaction_id === current)
           ? current
           : (items.find((item) => item.assessed)?.transaction_id ?? items[0]?.transaction_id ?? null),
       );
@@ -237,6 +257,69 @@ export function Dashboard() {
     }
     setTransactionsLoading(false);
   }, [filter]);
+
+  const runDemo = useCallback(async (activeSession: DemoSession, generation: number) => {
+    setDemoRunning(true);
+    setDemoError(null);
+    let expectedStep = activeSession.next_step;
+    try {
+      while (expectedStep < activeSession.total_steps) {
+        if (demoRunGeneration.current !== generation) return;
+        setDemoStatus(`Injecting coordinated activity · ${expectedStep} / ${activeSession.total_steps}`);
+        const result = await stepDemoSession(activeSession.session_id, expectedStep);
+        if (demoRunGeneration.current !== generation) return;
+        setLatestDemoStep(result);
+        expectedStep = result.step;
+        setDemoSession((current) => current ? { ...current, next_step: result.step } : current);
+        if (result.transaction) {
+          await loadDashboard(result.transaction.public_id, null);
+        }
+        if (result.complete) break;
+        await new Promise((resolve) => window.setTimeout(resolve, 650));
+      }
+      if (demoRunGeneration.current === generation) {
+        setDemoStatus("Scenario complete · latest investigation is open.");
+      }
+    } catch (reason) {
+      if (demoRunGeneration.current === generation) {
+        setDemoError(reason instanceof Error ? reason.message : "Demo step failed.");
+        setDemoStatus("Demo paused — retry step.");
+      }
+    } finally {
+      if (demoRunGeneration.current === generation) setDemoRunning(false);
+    }
+  }, [loadDashboard]);
+
+  const startDemo = useCallback(async () => {
+    if (demoRunning) return;
+    const generation = ++demoRunGeneration.current;
+    setFilter(null);
+    setDemoRunning(true);
+    setDemoError(null);
+    setLatestDemoStep(null);
+    setDemoStatus("Preparing baseline...");
+    try {
+      const started = await createDemoSession();
+      if (demoRunGeneration.current !== generation) return;
+      setDemoSession(started);
+      setDemoStatus(`Baseline established · ${started.baseline_transactions} transactions assessed.`);
+      await loadDashboard(undefined, null);
+      await new Promise((resolve) => window.setTimeout(resolve, 650));
+      await runDemo(started, generation);
+    } catch (reason) {
+      if (demoRunGeneration.current === generation) {
+        setDemoError(reason instanceof ApiError && reason.status === 404 ? "Demo mode is disabled. Set AEGIS_DEMO_MODE=true on the API." : reason instanceof Error ? reason.message : "Demo setup failed.");
+        setDemoStatus("Demo unavailable.");
+        setDemoRunning(false);
+      }
+    }
+  }, [demoRunning, loadDashboard, runDemo]);
+
+  const retryDemo = useCallback(() => {
+    if (!demoSession || demoRunning) return;
+    const generation = ++demoRunGeneration.current;
+    void runDemo(demoSession, generation);
+  }, [demoRunning, demoSession, runDemo]);
 
   const loadSelection = useCallback(async () => {
     const requestGeneration = ++selectionRequestGeneration.current;
@@ -280,6 +363,9 @@ export function Dashboard() {
       selectionRequestGeneration.current += 1;
     };
   }, [loadSelection]);
+  useEffect(() => () => {
+    demoRunGeneration.current += 1;
+  }, []);
 
   const flaggedCount = summary
     ? summary.verify_count + summary.hold_count + summary.escalate_count + summary.recommend_block_count
@@ -300,14 +386,31 @@ export function Dashboard() {
             <span className="brand-mark">A</span>
             <div><div className="eyebrow">Risk operations</div><h1>Aegis</h1><p>Graph-assisted payment risk intelligence</p></div>
           </div>
-          <div className="system-state">
-            <span className={`connection-dot ${connected ? "connected" : "unavailable"}`} />
-            <div><strong>{connected ? "Backend connected" : "Backend unavailable"}</strong><span>{summary?.model_version ?? "risk-lgbm-v2"} · {summary?.policy_version ?? "risk-policy-v2"}</span></div>
-            <button aria-label="Refresh dashboard" title="Refresh dashboard" onClick={() => void loadDashboard()}><RefreshCw size={15} className={dashboardLoading ? "spin" : ""} /></button>
+          <div className="topbar-actions">
+            <nav className="app-nav" aria-label="Primary navigation">
+              <Link href="/" className="active"><Activity size={13} /> Operations</Link>
+              <Link href="/evaluation"><FlaskConical size={13} /> Evaluation Lab</Link>
+            </nav>
+            <div className="system-state">
+              <span className={`connection-dot ${connected ? "connected" : "unavailable"}`} />
+              <div><strong>{connected ? "Backend connected" : "Backend unavailable"}</strong><span>{summary?.model_version ?? "risk-lgbm-v2"} · {summary?.policy_version ?? "risk-policy-v2"}</span></div>
+              <button aria-label="Refresh dashboard" title="Refresh dashboard" onClick={() => void loadDashboard()}><RefreshCw size={15} className={dashboardLoading ? "spin" : ""} /></button>
+            </div>
           </div>
         </header>
 
         {summaryError && <div className="section-error summary-error"><AlertTriangle size={16} /><span>{summaryError}</span><button onClick={() => void loadDashboard()}>Retry summary</button></div>}
+
+        <section className={`demo-console ${demoRunning ? "running" : ""}`} aria-label="Deterministic demo controls">
+          <div className="demo-intro"><div className="eyebrow"><Zap size={13} /> Demo mode · Deterministic demo scenario</div><h2>Watch coordinated identity reuse emerge</h2><p>Curated payment events; real features, graph, model, policy, and investigator outputs.</p></div>
+          <div className="demo-progress">
+            <div className="demo-progress-copy"><span>{demoStatus}</span><strong>{demoSession ? `${demoSession.next_step} / ${demoSession.total_steps}` : "Identity Rotation"}</strong></div>
+            <div className="demo-progress-track"><i style={{ width: `${demoSession ? (demoSession.next_step / demoSession.total_steps) * 100 : 0}%` }} /></div>
+            {latestDemoStep?.assessment && <div className="demo-latest"><div><span>Risk score</span><strong>{latestDemoStep.assessment.model_score.toFixed(3)}</strong><small>Uncalibrated ranking score</small></div><div><span>Latest action</span><ActionBadge action={latestDemoStep.assessment.action} /></div><div><span>Graph evidence</span><strong>{latestDemoStep.assessment.graph_signal_count}</strong><small>signals observed</small></div></div>}
+            {demoError && <div className="demo-error"><AlertTriangle size={14} /><span>{demoError}</span>{demoSession && <button onClick={retryDemo}>Retry step</button>}</div>}
+          </div>
+          <button className="inject-button" disabled={demoRunning} onClick={() => void startDemo()}><Play size={16} fill="currentColor" />{demoRunning ? "Injecting..." : demoSession && demoSession.next_step === demoSession.total_steps ? "New Demo" : "Inject Abuse Ring"}</button>
+        </section>
 
         <section className="metrics-grid" aria-label="Operational summary">
           <MetricCard label="Transactions monitored" value={summary?.transaction_count ?? null} detail={`${summary?.assessed_count ?? 0} assessed`} icon={<Database size={18} />} tone="tone-blue" loading={summaryLoading} />

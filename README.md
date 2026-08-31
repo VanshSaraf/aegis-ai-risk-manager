@@ -78,8 +78,22 @@ The single-page dashboard shows truth-free operational counts, recent assessed a
 transactions, policy actions, uncalibrated model scores, bounded point-in-time identity graphs,
 and evidence-first investigations. Transaction selection updates the graph and investigation
 workspace without navigation. Manual refresh and explicit loading, empty, pending, and backend
-failure states are included. Live abuse injection and evaluation-result views are intentionally
-reserved for later phases.
+failure states are included.
+
+## Demo
+
+The live showcase is a small deterministic demo scenario, not a held-out evaluation. It sends
+curated truth-free payment events through the real ingestion, features-v1, graph-v1,
+risk-lgbm-v2, risk-policy-v2, and investigator pipeline.
+
+1. Set `AEGIS_DEMO_MODE=true` in `.env` and start the API.
+2. Start the frontend and open `http://localhost:3000`.
+3. Click **Inject Abuse Ring** to establish a baseline and animate Identity Rotation events.
+4. Inspect the changing point-in-time graph and automatically selected investigation.
+5. Open **Evaluation Lab** for frozen held-out synthetic and external benchmark results.
+
+Demo mutation endpoints are hidden with a 404 unless demo mode is explicitly enabled. Sessions
+are bounded, ephemeral in-memory orchestration; PostgreSQL remains the transaction source of truth.
 
 ## Quality checks
 
@@ -195,4 +209,7 @@ prose is supplementary, and provider failure degrades to the same deterministic 
 - `GET /api/v1/transactions/{public_id}/graph`
 - `GET /api/v1/dashboard/summary`
 - `GET /api/v1/dashboard/transactions`
+- `POST /api/v1/demo/sessions` (demo mode only)
+- `POST /api/v1/demo/sessions/{session_id}/step` (demo mode only)
+- `GET /api/v1/evaluation/summary`
 - `GET /api/v1/entities/{entity_type}/{public_id}/neighbors`

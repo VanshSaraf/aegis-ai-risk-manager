@@ -5,12 +5,18 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from apps.api.app.core.config import get_settings
 from apps.api.app.core.enums import PolicyAction, RiskSeverity
 from apps.api.app.db.session import database_is_ready, get_session
 from apps.api.app.models import EntityEdge
 from apps.api.app.schemas.api import (
     DashboardSummary,
     DashboardTransactionList,
+    DemoScenarioRequest,
+    DemoSessionResponse,
+    DemoStepRequest,
+    DemoStepResponse,
+    EvaluationSummary,
     GraphEvidenceResponse,
     ModelScoreResponse,
     Neighbor,
@@ -28,6 +34,13 @@ from apps.api.app.services.dashboard import (
     dashboard_transactions,
     transaction_graph,
 )
+from apps.api.app.services.demo import (
+    DemoSessionNotFoundError,
+    DemoStepConflictError,
+    create_demo_session,
+    step_demo_session,
+)
+from apps.api.app.services.evaluation import load_evaluation_summary
 from apps.api.app.services.transactions import (
     DuplicateEventError,
     NormalizationError,
@@ -72,6 +85,38 @@ async def dashboard_transactions_route(
 ) -> DashboardTransactionList:
     items = await dashboard_transactions(session, limit=limit, action=action, severity=severity)
     return DashboardTransactionList(items=items, limit=limit)
+
+
+@router.get("/api/v1/evaluation/summary", response_model=EvaluationSummary)
+async def evaluation_summary_route() -> EvaluationSummary:
+    return load_evaluation_summary()
+
+
+def _require_demo_mode() -> None:
+    if not get_settings().demo_mode:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="not found")
+
+
+@router.post("/api/v1/demo/sessions", response_model=DemoSessionResponse)
+async def start_demo(request: DemoScenarioRequest, session: Session) -> DemoSessionResponse:
+    _require_demo_mode()
+    del request  # The registered canonical scenario is validated by the request schema.
+    return await create_demo_session(session)
+
+
+@router.post("/api/v1/demo/sessions/{session_id}/step", response_model=DemoStepResponse)
+async def demo_step(
+    session_id: str, request: DemoStepRequest, session: Session
+) -> DemoStepResponse:
+    _require_demo_mode()
+    try:
+        return await step_demo_session(session, session_id, request.expected_step)
+    except DemoSessionNotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="demo session not found"
+        ) from exc
+    except DemoStepConflictError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
 
 
 @router.post(
