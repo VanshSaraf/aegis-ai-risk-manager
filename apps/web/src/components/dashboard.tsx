@@ -402,7 +402,7 @@ export function Dashboard() {
         {summaryError && <div className="section-error summary-error"><AlertTriangle size={16} /><span>{summaryError}</span><button onClick={() => void loadDashboard()}>Retry summary</button></div>}
 
         <section className={`demo-console ${demoRunning ? "running" : ""}`} aria-label="Deterministic demo controls">
-          <div className="demo-intro"><div className="eyebrow"><Zap size={13} /> Demo mode · Deterministic demo scenario</div><h2>Watch coordinated identity reuse emerge</h2><p>Curated payment events; real features, graph, model, policy, and investigator outputs.</p></div>
+          <div className="demo-intro"><div className="eyebrow"><Zap size={13} /> Synthetic Traffic Simulation</div><h2>Watch coordinated identity relationships emerge</h2><p>Sends synthetic payment events through the same live Aegis ingestion and risk pipeline.</p></div>
           <div className="demo-progress">
             <div className="demo-progress-copy"><span>{demoStatus}</span><strong>{demoSession ? `${demoSession.next_step} / ${demoSession.total_steps}` : "Identity Rotation"}</strong></div>
             <div className="demo-progress-track"><i style={{ width: `${demoSession ? (demoSession.next_step / demoSession.total_steps) * 100 : 0}%` }} /></div>

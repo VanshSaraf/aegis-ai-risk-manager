@@ -84,7 +84,7 @@ export function EvaluationLab() {
               <article><span>Combined PR-AUC</span><strong>{combined ? metric(combined.pr_auc) : "—"}</strong><small>Best held-out ranking result</small></article>
               <article><span>Precision</span><strong>{combined ? metric(combined.precision) : "—"}</strong><small>At validation-selected threshold</small></article>
               <article><span>Recall</span><strong>{combined ? metric(combined.recall) : "—"}</strong><small>Frozen test partition</small></article>
-              <article><span>False positives</span><strong>{combined?.false_positive ?? "—"}</strong><small>Of {summary.benchmark.legitimate_count.toLocaleString("en-IN")} legitimate test events</small></article>
+              <article><span>False positives</span><strong>{combined?.false_positive ?? "—"}</strong><small>Frozen test partition</small></article>
             </section>
 
             <section className="evaluation-grid">

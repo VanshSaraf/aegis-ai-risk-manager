@@ -3,16 +3,16 @@
 ## Problem and current scope
 
 Aegis targets coordinated payment abuse: behavior that becomes meaningful across transactions and
-linked entities rather than from one payment in isolation. Phase 1 established durable ingestion
-and normalized entities. Phase 2 added a deterministic synthetic payment world. Phase 3 added
-point-in-time features, Phase 4 added graph intelligence, and Phase 5 adds offline
-leakage-controlled training and a portable score-only model boundary.
+linked entities rather than from one payment in isolation. The current prototype includes durable
+ingestion, a deterministic synthetic payment world, point-in-time features and graph intelligence,
+leakage-controlled LightGBM evaluation, bounded policy recommendations, evidence-first
+investigation, and an operator dashboard.
 
 ## Non-goals
 
-This phase does not implement final risk fusion, policy decisions, investigator prompts or LLM
-calls, a dashboard, realtime streaming, or production deployment claims. Kafka, Redis, Celery,
-Neo4j, and microservice boundaries are deliberately absent.
+Aegis does not implement realtime streaming, autonomous payment actions, production deployment
+claims, or a bundled live LLM provider. Kafka, Redis, Celery, Neo4j, and unnecessary microservice
+boundaries are deliberately absent.
 
 ## Synthetic-world data flow
 
@@ -50,7 +50,7 @@ No PAN, CVV, name, email, phone number, or street address is required. Inputs us
 
 ## Point-in-time feature boundary
 
-The future risk model will never query storage directly. The implemented feature path is:
+The runtime risk model never queries storage directly. The implemented feature path is:
 
 ```text
 Historical state -> HistoryProvider -> FeatureEngine -> FeatureVector
@@ -82,7 +82,7 @@ Historical identity transactions -> GraphEngine  │
                                   -> graph-v1     │
                                   -> structural clusters
                                                   │
-                           [future model boundary]
+                           [risk-lgbm-v2 boundary]
 ```
 
 `GraphEngine` receives a temporally safe typed graph reconstructed from transactions strictly
@@ -98,7 +98,7 @@ immutable by `(transaction_id, graph_version)`. See
 
 ## Ground-truth separation
 
-Ground-truth label, scenario, and ring identifiers exist on synthetic transaction records for training and evaluation only. Public `RawPaymentEvent` facts cannot carry them. An internal trusted context attaches them during synthetic ingestion. The runtime-safe `NormalizedTransaction`, `ScoringTransaction`, `FeatureVector`, and prediction contracts contain no ground-truth fields. Future feature assembly must preserve that separation and enforce point-in-time correctness.
+Ground-truth label, scenario, and ring identifiers exist on synthetic transaction records for training and evaluation only. Public `RawPaymentEvent` facts cannot carry them. An internal trusted context attaches them during synthetic ingestion. The runtime-safe `NormalizedTransaction`, `ScoringTransaction`, `FeatureVector`, and prediction contracts contain no ground-truth fields. Offline and runtime assembly preserve that separation and enforce point-in-time correctness.
 
 ## Offline model boundary
 

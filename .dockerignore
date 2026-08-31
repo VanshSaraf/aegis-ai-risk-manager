@@ -1,7 +1,14 @@
 .git
 .venv
 __pycache__
+**/__pycache__
 .pytest_cache
 .ruff_cache
 *.pyc
 .env
+**/.env
+**/.env.local
+apps/web/node_modules
+apps/web/.next
+apps/web/tsconfig.tsbuildinfo
+ml/datasets/generated

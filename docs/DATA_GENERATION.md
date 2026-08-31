@@ -61,16 +61,16 @@ No single obvious fact is intended to determine the label. Both classes contain 
 
 The validator checks counts, timestamps, truth consistency, prevalence, class overlap, topology, and obvious single-field leakage. These are synthetic sanity checks, not proof of realism.
 
-## Planned evaluation methodology
+## Evaluation methodology
 
-Later train/validation/test construction must be leakage-safe:
+Train/validation/test construction is leakage-safe:
 
 - Temporal partitions must respect event order.
 - Abuse rings must remain wholly within one partition.
 - Grouped splits should prevent linked identities or infrastructure from leaking across partitions where appropriate.
 - Dataset, generator, configuration, and feature versions must be recorded together.
 
-Phase 5 implements this split methodology for offline evaluation; generation itself still does not
+The offline pipeline implements this split methodology; generation itself still does not
 train a model or expose truth to runtime inputs.
 
 ## Usage

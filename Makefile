@@ -1,10 +1,18 @@
-.PHONY: up down migrate test lint format synthetic synthetic-smoke features graph ml-smoke train-model train-model-v2 policy-build policy-v2-freeze policy-v2-external
+.PHONY: up down smoke verify migrate test lint format synthetic synthetic-smoke features graph ml-smoke train-model train-model-v2 policy-build policy-v2-freeze policy-v2-external
 
 up:
-	docker compose up --build
+	AEGIS_DEMO_MODE=true docker compose up --build
 
 down:
 	docker compose down
+
+smoke:
+	python scripts/smoke_submission.py
+
+verify:
+	ruff check .
+	ruff format --check .
+	cd apps/web && npm run lint && npx tsc --noEmit && npm run build
 
 migrate:
 	alembic upgrade head
