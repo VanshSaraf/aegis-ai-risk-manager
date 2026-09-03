@@ -278,7 +278,7 @@ function InvestigationPanel({
             <ArrowRight size={16} />
             <article><span>Policy band</span><strong>{report.model.score < report.policy.verify_threshold ? "ALLOW" : report.model.score < report.policy.hold_threshold ? "VERIFY" : "HOLD"}</strong><small>Score eligibility</small></article>
             <ArrowRight size={16} />
-            <article><span>Graph evidence</span><strong>{report.policy.graph_corroborated ? "Corroborated" : `${report.graph.signals.length} signals`}</strong><small>Kept separate</small></article>
+            <article><span>Structural signals</span><strong>{report.graph.signals.length} observed</strong><small>Evaluated separately</small></article>
             <ArrowRight size={16} />
             <article className="anatomy-action"><span>Final action</span><ActionBadge action={report.policy.action} /><small>Frozen policy result</small></article>
           </div>
@@ -379,6 +379,7 @@ export function Dashboard() {
   const [demoStatus, setDemoStatus] = useState("Ready for a deterministic showcase.");
   const [demoError, setDemoError] = useState<string | null>(null);
   const [demoRunning, setDemoRunning] = useState(false);
+  const dashboardRequestGeneration = useRef(0);
   const selectionRequestGeneration = useRef(0);
   const selectedOverrideRef = useRef<DashboardTransaction | null>(null);
   const entityRequestGeneration = useRef(0);
@@ -396,6 +397,7 @@ export function Dashboard() {
     preferredSelectedId?: string,
     filterOverride?: PolicyAction | null,
   ) => {
+    const requestGeneration = ++dashboardRequestGeneration.current;
     setSummaryLoading(true);
     setTransactionsLoading(true);
     setSummaryError(null);
@@ -404,6 +406,7 @@ export function Dashboard() {
       getDashboardSummary(),
       getTransactions(filterOverride === undefined ? filter : filterOverride),
     ]);
+    if (requestGeneration !== dashboardRequestGeneration.current) return;
     if (summaryResult.status === "fulfilled") {
       setSummary(summaryResult.value);
     } else {
@@ -582,7 +585,10 @@ export function Dashboard() {
 
   useEffect(() => {
     const task = window.setTimeout(() => void loadDashboard(), 0);
-    return () => window.clearTimeout(task);
+    return () => {
+      window.clearTimeout(task);
+      dashboardRequestGeneration.current += 1;
+    };
   }, [loadDashboard]);
   useEffect(() => {
     const task = window.setTimeout(() => void loadSelection(), 0);

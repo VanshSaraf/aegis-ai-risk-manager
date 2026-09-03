@@ -156,12 +156,34 @@ def run(base_url: str) -> dict[str, Any]:
     final_graph = request_json(
         base_url, "GET", f"/api/v1/transactions/{final_transaction_id}/graph"
     )
+    entity_node = next(
+        (node for node in final_graph["nodes"] if node.get("type") not in {None, "TRANSACTION"}),
+        None,
+    )
+    if entity_node is None:
+        raise AssertionError("simulation graph did not expose an operational entity")
+    entity_intelligence = request_json(
+        base_url,
+        "GET",
+        f"/api/v1/entities/{entity_node['type']}/{entity_node['id']}",
+    )
+    entity_network = entity_intelligence.get("network")
+    if (
+        entity_intelligence.get("view_semantics") != "CURRENT_OBSERVED_HISTORY"
+        or not isinstance(entity_network, dict)
+        or entity_network.get("max_nodes") != 40
+        or entity_network.get("max_edges") != 60
+        or len(entity_network.get("nodes", [])) > entity_network["max_nodes"]
+        or len(entity_network.get("edges", [])) > entity_network["max_edges"]
+    ):
+        raise AssertionError("entity intelligence response is not safe and bounded")
     dashboard = request_json(base_url, "GET", "/api/v1/dashboard/transactions?limit=50")
     assert_truth_free(
         {
             "final_step": final_step,
             "investigation": final_investigation,
             "graph": final_graph,
+            "entity_intelligence": entity_intelligence,
             "dashboard": dashboard,
         },
         "simulation_operation",
@@ -183,6 +205,7 @@ def run(base_url: str) -> dict[str, Any]:
             "graph_signal_count": final_step["assessment"]["graph_signal_count"],
         },
         "truth_exclusion": "passed",
+        "entity_intelligence": "passed",
         "evaluation_model": evaluation["benchmark"]["model_version"],
     }
 

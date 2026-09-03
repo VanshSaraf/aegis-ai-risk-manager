@@ -20,6 +20,9 @@ claim.
 
 ![Aegis Risk Operations dashboard](docs/assets/risk-operations.jpg)
 
+Risk Operations brings the live payment queue, selected-payment context, and point-in-time
+relationship graph into one operator workspace.
+
 ## Why transaction-only risk can miss the pattern
 
 Each payment below can look plausible on its own. The shared infrastructure is suspicious only
@@ -164,20 +167,35 @@ The dashboard combines an assessed-payment queue, model/action context, an inter
 graph, named graph signals, and a selected-payment investigation. Loading, empty, pending, and
 disconnected states remain explicit rather than fabricating data.
 
-### Investigation
+### Decision Intelligence
 
-![Aegis evidence-first investigation](docs/assets/investigation.jpg)
+![Aegis Decision Intelligence investigation](docs/assets/decision-intelligence.jpg)
 
-The report keeps the uncalibrated model score, graph score, deterministic policy action, ranked
-evidence, recommended next step, and strictly-prior timeline distinct. Explanations describe why
-the frozen policy acted; they do not revise that action or expose synthetic truth.
+Decision Intelligence keeps the uncalibrated model risk score, structural coordination score,
+frozen Policy Action, ranked Evidence, and recommended next step distinct. Its policy-band view
+answers both **why this action** and **why not stronger**, while the provenance trace and
+strictly-prior timeline show exactly what was available at decision time.
+
+### Entity Intelligence
+
+![Aegis Entity Intelligence network explorer](docs/assets/entity-intelligence.jpg)
+
+Start from a payment and pivot into a customer, device, payment instrument, IP, or address. The
+bounded one-hop network supports further entity pivots and related-payment inspection, then returns
+the operator to normal historical Decision Intelligence for the selected payment.
+
+These views intentionally answer different questions: a transaction investigation is a historical
+point-in-time snapshot using `event_time < selected transaction`, while Entity Intelligence shows
+the entity's **current observed persisted history**. Current network counts are never presented as
+facts that were known at an older payment's decision time.
 
 ### Evaluation Lab
 
 ![Aegis Evaluation Lab](docs/assets/evaluation-lab.jpg)
 
 The Evaluation Lab presents committed artifact data: tabular versus graph versus combined models,
-external generalization, operating-policy constraints, provenance, and known limitations.
+external generalization, operating-policy constraints, provenance, and known limitations—without
+recomputing or improving the frozen results at runtime.
 
 ## Measured evaluation
 

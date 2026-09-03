@@ -244,6 +244,11 @@ async def graph(public_id: str, session: Session) -> TransactionGraphResponse:
 @router.get(
     "/api/v1/entities/{entity_type}/{public_id}",
     response_model=EntityIntelligenceResponse,
+    summary="Get entity intelligence",
+    description=(
+        "Return the bounded, current observed history for a safe public entity identifier. "
+        "Transaction investigations remain point-in-time views."
+    ),
 )
 async def entity_intelligence_route(
     entity_type: EntityIntelligenceType,
