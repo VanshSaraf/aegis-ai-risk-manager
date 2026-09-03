@@ -32,6 +32,14 @@ dev = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["apps", "packages", "ml"]
+exclude = [
+  "/apps/web",
+  "**/__pycache__",
+  "**/*.pyc",
+]
+
+[tool.hatch.build.targets.wheel.force-include]
+configs = "configs"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
