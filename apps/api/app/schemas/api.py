@@ -3,7 +3,13 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from apps.api.app.core.enums import PolicyAction, ProcessingStatus, RiskSeverity
+from apps.api.app.core.enums import (
+    EntityIntelligenceType,
+    PolicyAction,
+    ProcessingStatus,
+    RiskSeverity,
+    TransactionStatus,
+)
 from apps.api.app.schemas.contracts import NormalizedTransaction
 
 
@@ -146,6 +152,81 @@ class TransactionGraphResponse(BaseModel):
     has_prior_relationships: bool
     max_nodes: int
     max_edges: int
+
+
+class EntityProfile(BaseModel):
+    entity_type: EntityIntelligenceType
+    public_id: str
+    first_observed_at: datetime | None
+    last_observed_at: datetime | None
+    transaction_count: int = Field(ge=0)
+
+
+class EntityNetworkSummary(BaseModel):
+    visible_customers: int = Field(ge=0)
+    visible_devices: int = Field(ge=0)
+    visible_instruments: int = Field(ge=0)
+    visible_ips: int = Field(ge=0)
+    visible_addresses: int = Field(ge=0)
+    visible_relationships: int = Field(ge=0)
+
+
+class EntityNetworkNode(BaseModel):
+    id: str
+    type: EntityIntelligenceType
+    label: str
+    is_center: bool
+    connection_count: int = Field(ge=0)
+
+
+class EntityNetworkEdge(BaseModel):
+    id: str
+    source: str
+    target: str
+    type: str
+    first_seen_at: datetime
+    last_seen_at: datetime
+    observation_count: int = Field(ge=1)
+
+
+class EntityNetwork(BaseModel):
+    nodes: list[EntityNetworkNode]
+    edges: list[EntityNetworkEdge]
+    max_nodes: int = Field(gt=0)
+    max_edges: int = Field(gt=0)
+    truncated: bool
+
+
+class EntityObservedTransaction(DashboardTransaction):
+    status: TransactionStatus
+
+
+class EntityStructuralContext(BaseModel):
+    code: str
+    label: str
+
+
+class EntityRecentActionCounts(BaseModel):
+    allow: int = Field(ge=0)
+    verify: int = Field(ge=0)
+    hold: int = Field(ge=0)
+    escalate: int = Field(ge=0)
+    recommend_block: int = Field(ge=0)
+
+
+class EntityRiskContext(BaseModel):
+    highest_recent_transaction_score: float | None = Field(default=None, ge=0, le=1)
+    recent_action_counts: EntityRecentActionCounts
+
+
+class EntityIntelligenceResponse(BaseModel):
+    view_semantics: Literal["CURRENT_OBSERVED_HISTORY"]
+    entity: EntityProfile
+    summary: EntityNetworkSummary
+    network: EntityNetwork
+    recent_transactions: list[EntityObservedTransaction]
+    structural_context: list[EntityStructuralContext]
+    risk_context: EntityRiskContext
 
 
 class DemoScenarioRequest(BaseModel):

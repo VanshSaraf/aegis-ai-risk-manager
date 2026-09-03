@@ -10,9 +10,9 @@ import {
   type Edge,
   type Node,
 } from "@xyflow/react";
-import { Boxes, Focus, Maximize2, Network, X } from "lucide-react";
+import { ArrowRight, Boxes, Focus, Maximize2, Network, X } from "lucide-react";
 
-import type { TransactionGraph } from "@/lib/api";
+import type { EntityType, TransactionGraph } from "@/lib/api";
 import { humanizeNodeType, humanizeSignal, technicalSignalCode } from "@/lib/presentation";
 
 const nodeColors: Record<string, string> = {
@@ -90,11 +90,13 @@ export function GraphPanel({
   loading,
   error,
   onRetry,
+  onExploreEntity,
 }: {
   graph: TransactionGraph | null;
   loading: boolean;
   error: string | null;
   onRetry: () => void;
+  onExploreEntity?: (entityType: EntityType, publicId: string) => void;
 }) {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
@@ -240,6 +242,17 @@ export function GraphPanel({
               <code>{selectedNode.id}</code>
               <strong>{selectedNode.connection_count} visible connections</strong>
               <small>Direct neighbors are highlighted in the graph.</small>
+              {selectedNode.type !== "TRANSACTION" && onExploreEntity && (
+                <button
+                  className="explore-entity-button"
+                  onClick={() =>
+                    onExploreEntity(selectedNode.type as EntityType, selectedNode.id)
+                  }
+                  type="button"
+                >
+                  Explore entity <ArrowRight size={13} />
+                </button>
+              )}
               {selectedNodeId && <button aria-label="Close node details" onClick={() => setSelectedNodeId(null)}><X size={13} /></button>}
             </div>
           )}

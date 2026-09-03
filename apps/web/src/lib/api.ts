@@ -139,6 +139,65 @@ export interface TransactionGraph {
   max_edges: number;
 }
 
+export type EntityType =
+  | "CUSTOMER"
+  | "DEVICE"
+  | "PAYMENT_INSTRUMENT"
+  | "IP_ADDRESS"
+  | "ADDRESS";
+
+export interface EntityIntelligence {
+  view_semantics: "CURRENT_OBSERVED_HISTORY";
+  entity: {
+    entity_type: EntityType;
+    public_id: string;
+    first_observed_at: string | null;
+    last_observed_at: string | null;
+    transaction_count: number;
+  };
+  summary: {
+    visible_customers: number;
+    visible_devices: number;
+    visible_instruments: number;
+    visible_ips: number;
+    visible_addresses: number;
+    visible_relationships: number;
+  };
+  network: {
+    nodes: Array<{
+      id: string;
+      type: EntityType;
+      label: string;
+      is_center: boolean;
+      connection_count: number;
+    }>;
+    edges: Array<{
+      id: string;
+      source: string;
+      target: string;
+      type: string;
+      first_seen_at: string;
+      last_seen_at: string;
+      observation_count: number;
+    }>;
+    max_nodes: number;
+    max_edges: number;
+    truncated: boolean;
+  };
+  recent_transactions: Array<DashboardTransaction & { status: string }>;
+  structural_context: Array<{ code: string; label: string }>;
+  risk_context: {
+    highest_recent_transaction_score: number | null;
+    recent_action_counts: {
+      allow: number;
+      verify: number;
+      hold: number;
+      escalate: number;
+      recommend_block: number;
+    };
+  };
+}
+
 export interface DemoSession {
   session_id: string;
   scenario: {
@@ -281,6 +340,15 @@ export function getInvestigation(transactionId: string): Promise<InvestigationRe
 
 export function getTransactionGraph(transactionId: string): Promise<TransactionGraph> {
   return getJson(`/api/v1/transactions/${encodeURIComponent(transactionId)}/graph`);
+}
+
+export function getEntityIntelligence(
+  entityType: EntityType,
+  publicId: string,
+): Promise<EntityIntelligence> {
+  return getJson(
+    `/api/v1/entities/${entityType}/${encodeURIComponent(publicId)}`,
+  );
 }
 
 export function createDemoSession(): Promise<DemoSession> {

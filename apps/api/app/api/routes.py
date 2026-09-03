@@ -6,7 +6,7 @@ from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from apps.api.app.core.config import get_settings
-from apps.api.app.core.enums import PolicyAction, RiskSeverity
+from apps.api.app.core.enums import EntityIntelligenceType, PolicyAction, RiskSeverity
 from apps.api.app.db.session import database_is_ready, get_session
 from apps.api.app.models import EntityEdge
 from apps.api.app.schemas.api import (
@@ -16,6 +16,7 @@ from apps.api.app.schemas.api import (
     DemoSessionResponse,
     DemoStepRequest,
     DemoStepResponse,
+    EntityIntelligenceResponse,
     EvaluationSummary,
     GraphEvidenceResponse,
     ModelScoreResponse,
@@ -40,6 +41,7 @@ from apps.api.app.services.demo import (
     create_demo_session,
     step_demo_session,
 )
+from apps.api.app.services.entities import entity_intelligence
 from apps.api.app.services.evaluation import load_evaluation_summary
 from apps.api.app.services.transactions import (
     DuplicateEventError,
@@ -239,9 +241,30 @@ async def graph(public_id: str, session: Session) -> TransactionGraphResponse:
         ) from exc
 
 
+@router.get(
+    "/api/v1/entities/{entity_type}/{public_id}",
+    response_model=EntityIntelligenceResponse,
+)
+async def entity_intelligence_route(
+    entity_type: EntityIntelligenceType,
+    public_id: str,
+    session: Session,
+) -> EntityIntelligenceResponse:
+    try:
+        return await entity_intelligence(session, entity_type, public_id)
+    except LookupError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="entity not found"
+        ) from exc
+
+
 @router.get("/api/v1/entities/{entity_type}/{public_id}/neighbors", response_model=NeighborList)
-async def entity_neighbors(entity_type: str, public_id: str, session: Session) -> NeighborList:
-    normalized_type = entity_type.upper()
+async def entity_neighbors(
+    entity_type: EntityIntelligenceType,
+    public_id: str,
+    session: Session,
+) -> NeighborList:
+    normalized_type = entity_type.value
     edges = (
         await session.scalars(
             select(EntityEdge)
@@ -254,6 +277,7 @@ async def entity_neighbors(entity_type: str, public_id: str, session: Session) -
                 )
             )
             .order_by(EntityEdge.last_seen_at.desc())
+            .limit(100)
         )
     ).all()
     neighbors = []

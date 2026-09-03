@@ -67,3 +67,11 @@ class GraphEntityType(StrEnum):
     DEVICE = "DEVICE"
     IP = "IP"
     ADDRESS = "ADDRESS"
+
+
+class EntityIntelligenceType(StrEnum):
+    CUSTOMER = "CUSTOMER"
+    DEVICE = "DEVICE"
+    PAYMENT_INSTRUMENT = "PAYMENT_INSTRUMENT"
+    IP_ADDRESS = "IP_ADDRESS"
+    ADDRESS = "ADDRESS"

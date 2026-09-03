@@ -21,11 +21,16 @@ import {
 } from "lucide-react";
 
 import { ActionBadge, SeverityBadge } from "@/components/action-badge";
+import {
+  EntityExplorer,
+  type EntityReference,
+} from "@/components/entity-explorer";
 import { GraphPanel } from "@/components/graph-panel";
 import {
   ApiError,
   createDemoSession,
   getDashboardSummary,
+  getEntityIntelligence,
   getInvestigation,
   getTransactionGraph,
   getTransactions,
@@ -34,6 +39,7 @@ import {
   type DashboardTransaction,
   type DemoSession,
   type DemoStep,
+  type EntityIntelligence,
   type InvestigationReport,
   type PolicyAction,
   type TransactionGraph,
@@ -353,6 +359,7 @@ export function Dashboard() {
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [transactions, setTransactions] = useState<DashboardTransaction[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedOverride, setSelectedOverride] = useState<DashboardTransaction | null>(null);
   const [filter, setFilter] = useState<PolicyAction | null>(null);
   const [summaryLoading, setSummaryLoading] = useState(true);
   const [summaryError, setSummaryError] = useState<string | null>(null);
@@ -363,18 +370,27 @@ export function Dashboard() {
   const [loadingSelection, setLoadingSelection] = useState(false);
   const [investigationError, setInvestigationError] = useState<string | null>(null);
   const [graphError, setGraphError] = useState<string | null>(null);
+  const [entityPath, setEntityPath] = useState<EntityReference[]>([]);
+  const [entityData, setEntityData] = useState<EntityIntelligence | null>(null);
+  const [entityLoading, setEntityLoading] = useState(false);
+  const [entityError, setEntityError] = useState<string | null>(null);
   const [demoSession, setDemoSession] = useState<DemoSession | null>(null);
   const [latestDemoStep, setLatestDemoStep] = useState<DemoStep | null>(null);
   const [demoStatus, setDemoStatus] = useState("Ready for a deterministic showcase.");
   const [demoError, setDemoError] = useState<string | null>(null);
   const [demoRunning, setDemoRunning] = useState(false);
   const selectionRequestGeneration = useRef(0);
+  const selectedOverrideRef = useRef<DashboardTransaction | null>(null);
+  const entityRequestGeneration = useRef(0);
   const demoRunGeneration = useRef(0);
 
   const selected = useMemo(
-    () => transactions.find((transaction) => transaction.transaction_id === selectedId) ?? null,
-    [selectedId, transactions],
+    () =>
+      transactions.find((transaction) => transaction.transaction_id === selectedId) ??
+      (selectedOverride?.transaction_id === selectedId ? selectedOverride : null),
+    [selectedId, selectedOverride, transactions],
   );
+  const activeEntity = entityPath.at(-1) ?? null;
 
   const loadDashboard = useCallback(async (
     preferredSelectedId?: string,
@@ -401,6 +417,8 @@ export function Dashboard() {
         preferredSelectedId && items.some((item) => item.transaction_id === preferredSelectedId)
           ? preferredSelectedId
           : items.some((item) => item.transaction_id === current)
+          ? current
+          : selectedOverrideRef.current?.transaction_id === current
           ? current
           : (items.find((item) => item.assessed)?.transaction_id ?? items[0]?.transaction_id ?? null),
       );
@@ -504,6 +522,64 @@ export function Dashboard() {
     setLoadingSelection(false);
   }, [selected, selectedId]);
 
+  const loadEntity = useCallback(async () => {
+    const requestGeneration = ++entityRequestGeneration.current;
+    if (!activeEntity) {
+      setEntityData(null);
+      setEntityError(null);
+      setEntityLoading(false);
+      return;
+    }
+    setEntityLoading(true);
+    setEntityError(null);
+    try {
+      const result = await getEntityIntelligence(
+        activeEntity.entityType,
+        activeEntity.publicId,
+      );
+      if (requestGeneration === entityRequestGeneration.current) setEntityData(result);
+    } catch (reason) {
+      if (requestGeneration === entityRequestGeneration.current) {
+        setEntityData(null);
+        setEntityError(
+          reason instanceof Error ? reason.message : "Entity request failed.",
+        );
+      }
+    } finally {
+      if (requestGeneration === entityRequestGeneration.current) setEntityLoading(false);
+    }
+  }, [activeEntity]);
+
+  const exploreEntity = useCallback((reference: EntityReference) => {
+    setEntityPath((current) => [...current, reference].slice(-6));
+  }, []);
+
+  const closeEntity = useCallback(() => {
+    entityRequestGeneration.current += 1;
+    setEntityPath([]);
+    setEntityData(null);
+    setEntityError(null);
+  }, []);
+
+  const investigateEntityTransaction = useCallback(
+    (transaction: DashboardTransaction) => {
+      setFilter(null);
+      selectedOverrideRef.current = transaction;
+      setSelectedOverride(transaction);
+      setTransactions((current) => [
+        transaction,
+        ...current.filter((item) => item.transaction_id !== transaction.transaction_id),
+      ].slice(0, 50));
+      setSelectedId(transaction.transaction_id);
+      closeEntity();
+      window.setTimeout(
+        () => document.getElementById("selected-payment-workspace")?.scrollIntoView({ behavior: "smooth" }),
+        0,
+      );
+    },
+    [closeEntity],
+  );
+
   useEffect(() => {
     const task = window.setTimeout(() => void loadDashboard(), 0);
     return () => window.clearTimeout(task);
@@ -515,6 +591,13 @@ export function Dashboard() {
       selectionRequestGeneration.current += 1;
     };
   }, [loadSelection]);
+  useEffect(() => {
+    const task = window.setTimeout(() => void loadEntity(), 0);
+    return () => {
+      window.clearTimeout(task);
+      entityRequestGeneration.current += 1;
+    };
+  }, [loadEntity]);
   useEffect(() => () => {
     demoRunGeneration.current += 1;
   }, []);
@@ -561,6 +644,21 @@ export function Dashboard() {
           <MetricCard label="High-risk decisions" value={highRiskCount} detail="Hold or stronger" icon={<AlertTriangle size={18} />} tone="tone-red" loading={summaryLoading} />
         </section>
 
+        {activeEntity ? (
+          <EntityExplorer
+            path={entityPath}
+            data={entityData}
+            loading={entityLoading}
+            error={entityError}
+            onPivot={exploreEntity}
+            onBack={() => setEntityPath((current) => current.slice(0, -1))}
+            onBreadcrumb={(index) => setEntityPath((current) => current.slice(0, index + 1))}
+            onClose={closeEntity}
+            onRetry={() => void loadEntity()}
+            onInvestigate={investigateEntityTransaction}
+          />
+        ) : (
+          <>
         <div className="operations-layout">
           <aside className="operations-rail">
             <section className={`demo-console ${demoRunning ? "running" : ""}`} aria-label="Synthetic traffic simulation">
@@ -593,8 +691,18 @@ export function Dashboard() {
                         className={selectedId === transaction.transaction_id ? "selected" : ""}
                         tabIndex={0}
                         aria-selected={selectedId === transaction.transaction_id}
-                        onClick={() => setSelectedId(transaction.transaction_id)}
-                        onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") setSelectedId(transaction.transaction_id); }}
+                        onClick={() => {
+                          selectedOverrideRef.current = null;
+                          setSelectedOverride(null);
+                          setSelectedId(transaction.transaction_id);
+                        }}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            selectedOverrideRef.current = null;
+                            setSelectedOverride(null);
+                            setSelectedId(transaction.transaction_id);
+                          }
+                        }}
                       >
                         <td><div className="payment-cell"><code>{shortId(transaction.transaction_id)}</code><small>{shortId(transaction.customer_id)}</small></div></td>
                         <td className="amount">{formatAmount(transaction.amount_paise, transaction.currency)}</td>
@@ -611,7 +719,7 @@ export function Dashboard() {
             </section>
           </aside>
 
-          <section className="graph-workspace" aria-label="Selected payment workspace">
+          <section id="selected-payment-workspace" className="graph-workspace" aria-label="Selected payment workspace">
             {selected ? (
               <section className="selected-strip" aria-label="Selected transaction details">
                 <div className="selected-identity"><span>Investigating payment</span><strong>{formatAmount(selected.amount_paise, selected.currency)}</strong><code>{selected.transaction_id}</code></div>
@@ -626,11 +734,13 @@ export function Dashboard() {
             ) : (
               <section className="selected-strip selected-empty" aria-label="No selected transaction"><span>Select a payment from the queue to begin an investigation.</span></section>
             )}
-            <GraphPanel graph={graph} loading={loadingSelection} error={graphError} onRetry={() => void loadSelection()} />
+            <GraphPanel graph={graph} loading={loadingSelection} error={graphError} onRetry={() => void loadSelection()} onExploreEntity={(entityType, publicId) => exploreEntity({ entityType, publicId })} />
           </section>
         </div>
 
         <InvestigationPanel transaction={selected} report={investigation} graph={graph} loading={loadingSelection} error={investigationError} onRetry={() => void loadSelection()} />
+          </>
+        )}
         <footer><span>Aegis provides bounded risk recommendations for human review.</span><span>Model and graph evidence do not confirm fraud.</span></footer>
       </div>
     </main>
