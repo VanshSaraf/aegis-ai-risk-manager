@@ -24,12 +24,14 @@ import {
 } from "lucide-react";
 
 import { ActionBadge } from "@/components/action-badge";
+import { RelationshipPathCard } from "@/components/relationship-path-card";
 import type {
   DashboardTransaction,
   EntityIntelligence,
   EntityType,
 } from "@/lib/api";
 import { humanizeSignal, technicalSignalCode } from "@/lib/presentation";
+import { findRelationshipPath } from "@/lib/relationship-path";
 
 const nodeColors: Record<EntityType, string> = {
   CUSTOMER: "#60a5fa",
@@ -132,7 +134,32 @@ function EntityNetworkGraph({
   onPivot: (reference: EntityReference) => void;
 }) {
   const [selectedId, setSelectedId] = useState(data.entity.public_id);
+  const [pathStartId, setPathStartId] = useState<string | null>(null);
   const fitViewRef = useRef<(() => Promise<boolean>) | null>(null);
+  const activePath = useMemo(
+    () =>
+      pathStartId
+        ? findRelationshipPath(
+            data.network.nodes,
+            data.network.edges,
+            pathStartId,
+            data.entity.public_id,
+          )
+        : null,
+    [data, pathStartId],
+  );
+  const pathNodeIds = useMemo(() => {
+    const ids = new Set(activePath?.nodes.map((node) => node.id) ?? []);
+    if (pathStartId) {
+      ids.add(pathStartId);
+      ids.add(data.entity.public_id);
+    }
+    return ids;
+  }, [activePath, data.entity.public_id, pathStartId]);
+  const pathEdgeIds = useMemo(
+    () => new Set(activePath?.edges.map((edge) => edge.id) ?? []),
+    [activePath],
+  );
   const connectedIds = useMemo(() => {
     const values = new Set([selectedId]);
     data.network.edges.forEach((edge) => {
@@ -147,15 +174,23 @@ function EntityNetworkGraph({
         ...node,
         style: {
           ...node.style,
-          opacity: connectedIds.has(node.id) ? 1 : 0.2,
+          opacity: pathStartId
+            ? pathNodeIds.has(node.id)
+              ? 1
+              : 0.1
+            : connectedIds.has(node.id)
+              ? 1
+              : 0.2,
           boxShadow:
-            node.id === selectedId
+            pathNodeIds.has(node.id)
+              ? `0 0 0 3px ${nodeColors[(node.data.metadata as EntityIntelligence["network"]["nodes"][number]).type]}48, 0 18px 45px rgba(0,0,0,.42)`
+              : node.id === selectedId
               ? `0 0 0 3px ${nodeColors[(node.data.metadata as EntityIntelligence["network"]["nodes"][number]).type]}35, 0 16px 40px rgba(0,0,0,.38)`
               : node.style?.boxShadow,
           transition: "opacity 150ms ease, box-shadow 150ms ease",
         },
       })),
-    [connectedIds, data, selectedId],
+    [connectedIds, data, pathNodeIds, pathStartId, selectedId],
   );
   const edges = useMemo<Edge[]>(
     () =>
@@ -164,27 +199,49 @@ function EntityNetworkGraph({
         source: edge.source,
         target: edge.target,
         label: edge.type.replaceAll("_", " ").toLowerCase(),
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#42536a" },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: pathEdgeIds.has(edge.id) ? "#5eead4" : "#42536a",
+        },
         style: {
           stroke:
-            edge.source === selectedId || edge.target === selectedId ? "#9d8cff" : "#42536a",
-          strokeWidth: edge.source === selectedId || edge.target === selectedId ? 1.8 : 1,
+            pathEdgeIds.has(edge.id)
+              ? "#5eead4"
+              : edge.source === selectedId || edge.target === selectedId
+                ? "#9d8cff"
+                : "#42536a",
+          strokeWidth: pathEdgeIds.has(edge.id)
+            ? 3
+            : edge.source === selectedId || edge.target === selectedId
+              ? 1.8
+              : 1,
           opacity:
-            edge.source === selectedId || edge.target === selectedId ? 1 : 0.14,
+            pathStartId
+              ? pathEdgeIds.has(edge.id)
+                ? 1
+                : 0.07
+              : edge.source === selectedId || edge.target === selectedId
+                ? 1
+                : 0.14,
           transition: "opacity 150ms ease, stroke 150ms ease",
         },
-        labelStyle: { fill: "#8290a2", fontSize: 8 },
+        labelStyle: {
+          fill: pathEdgeIds.has(edge.id) ? "#a8eee5" : "#8290a2",
+          fontSize: 8,
+          opacity: pathStartId ? (pathEdgeIds.has(edge.id) ? 1 : 0.1) : 1,
+        },
         labelBgStyle: { fill: "#0a1017", fillOpacity: 0.95 },
         labelBgPadding: [4, 2],
         labelBgBorderRadius: 3,
       })),
-    [data.network.edges, selectedId],
+    [data.network.edges, pathEdgeIds, pathStartId, selectedId],
   );
   const selected = data.network.nodes.find((node) => node.id === selectedId) ?? null;
 
   return (
-    <div className="entity-network-canvas">
-      <ReactFlow
+    <>
+      <div className="entity-network-canvas">
+        <ReactFlow
         key={data.entity.public_id}
         nodes={nodes}
         edges={edges}
@@ -207,6 +264,7 @@ function EntityNetworkGraph({
             className="graph-reset"
             onClick={() => {
               setSelectedId(data.entity.public_id);
+              setPathStartId(null);
               void fitViewRef.current?.();
             }}
             type="button"
@@ -214,25 +272,43 @@ function EntityNetworkGraph({
             <Maximize2 size={13} /> Reset view
           </button>
         </Panel>
-      </ReactFlow>
-      {selected && (
-        <div className="entity-node-detail">
-          <span>{entityLabel(selected.type)}</span>
-          <code>{selected.id}</code>
-          <strong>{selected.connection_count} visible connections</strong>
-          {!selected.is_center && (
-            <button
-              onClick={() =>
-                onPivot({ entityType: selected.type, publicId: selected.id })
-              }
-              type="button"
-            >
-              Pivot to entity <ArrowRight size={13} />
-            </button>
-          )}
-        </div>
+        </ReactFlow>
+        {selected && (
+          <div className="entity-node-detail">
+            <span>{entityLabel(selected.type)}</span>
+            <code>{selected.id}</code>
+            <strong>{selected.connection_count} visible connections</strong>
+            {!selected.is_center && (
+              <>
+                <button onClick={() => setPathStartId(selected.id)} type="button">
+                  <GitBranch size={13} /> Explain connection
+                </button>
+                <button
+                  onClick={() =>
+                    onPivot({ entityType: selected.type, publicId: selected.id })
+                  }
+                  type="button"
+                >
+                  Pivot to entity <ArrowRight size={13} />
+                </button>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+      {pathStartId && (
+        <RelationshipPathCard
+          path={activePath}
+          context="CURRENT_OBSERVED_HISTORY"
+          onClear={() => setPathStartId(null)}
+          onEntityAction={(node) => {
+            onPivot({ entityType: node.type as EntityType, publicId: node.id });
+          }}
+          canEntityAction={(node) => node.id !== data.entity.public_id}
+          entityActionLabel="Pivot to entity"
+        />
       )}
-    </div>
+    </>
   );
 }
 

@@ -10,10 +10,12 @@ import {
   type Edge,
   type Node,
 } from "@xyflow/react";
-import { ArrowRight, Boxes, Focus, Maximize2, Network, X } from "lucide-react";
+import { ArrowRight, Boxes, Focus, GitBranch, Maximize2, Network, X } from "lucide-react";
 
+import { RelationshipPathCard } from "@/components/relationship-path-card";
 import type { EntityType, TransactionGraph } from "@/lib/api";
 import { humanizeNodeType, humanizeSignal, technicalSignalCode } from "@/lib/presentation";
+import { findRelationshipPath } from "@/lib/relationship-path";
 
 const nodeColors: Record<string, string> = {
   TRANSACTION: "#5eead4",
@@ -100,8 +102,41 @@ export function GraphPanel({
 }) {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
+  const [pathRequest, setPathRequest] = useState<{
+    transactionId: string;
+    startId: string;
+  } | null>(null);
   const fitViewRef = useRef<(() => Promise<boolean>) | null>(null);
   const focusedNodeId = selectedNodeId ?? hoveredNodeId;
+  const pathStartId =
+    graph && pathRequest?.transactionId === graph.transaction_id ? pathRequest.startId : null;
+  const pathTargetId = useMemo(() => {
+    if (!graph) return null;
+    return (
+      graph.nodes.find((node) => node.type === "CUSTOMER" && node.is_current)?.id ??
+      graph.nodes.find((node) => node.type === "TRANSACTION")?.id ??
+      null
+    );
+  }, [graph]);
+  const activePath = useMemo(
+    () =>
+      graph && pathStartId && pathTargetId
+        ? findRelationshipPath(graph.nodes, graph.edges, pathStartId, pathTargetId)
+        : null,
+    [graph, pathStartId, pathTargetId],
+  );
+  const pathNodeIds = useMemo(() => {
+    const ids = new Set(activePath?.nodes.map((node) => node.id) ?? []);
+    if (pathStartId) {
+      ids.add(pathStartId);
+      if (pathTargetId) ids.add(pathTargetId);
+    }
+    return ids;
+  }, [activePath, pathStartId, pathTargetId]);
+  const pathEdgeIds = useMemo(
+    () => new Set(activePath?.edges.map((edge) => edge.id) ?? []),
+    [activePath],
+  );
   const connectedNodeIds = useMemo(() => {
     if (!graph || !focusedNodeId) return new Set<string>();
     const ids = new Set<string>([focusedNodeId]);
@@ -118,17 +153,25 @@ export function GraphPanel({
             ...node,
             style: {
               ...node.style,
-              opacity: focusedNodeId && !connectedNodeIds.has(node.id) ? 0.18 : 1,
+              opacity: pathStartId
+                ? pathNodeIds.has(node.id)
+                  ? 1
+                  : 0.1
+                : focusedNodeId && !connectedNodeIds.has(node.id)
+                  ? 0.18
+                  : 1,
               boxShadow:
-                node.id === focusedNodeId
+                pathNodeIds.has(node.id)
+                  ? `0 0 0 3px ${nodeColors[String(node.data.metadata && (node.data.metadata as TransactionGraph["nodes"][number]).type)] ?? "#72ded0"}48, 0 15px 36px rgba(0,0,0,.4)`
+                  : node.id === focusedNodeId
                   ? `0 0 0 3px ${nodeColors[String(node.data.metadata && (node.data.metadata as TransactionGraph["nodes"][number]).type)] ?? "#72ded0"}30, 0 12px 30px rgba(0,0,0,.35)`
                   : node.style?.boxShadow,
               transition: "opacity 160ms ease, box-shadow 160ms ease",
             },
-            zIndex: node.id === focusedNodeId ? 3 : connectedNodeIds.has(node.id) ? 2 : 1,
+            zIndex: pathNodeIds.has(node.id) ? 4 : node.id === focusedNodeId ? 3 : connectedNodeIds.has(node.id) ? 2 : 1,
           }))
         : [],
-    [connectedNodeIds, focusedNodeId, graph],
+    [connectedNodeIds, focusedNodeId, graph, pathNodeIds, pathStartId],
   );
   const edges = useMemo<Edge[]>(
     () =>
@@ -136,39 +179,75 @@ export function GraphPanel({
         ...edge,
         type: "default",
         label: edge.type === "INVOLVES" ? undefined : edge.type.replaceAll("_", " ").toLowerCase(),
-        markerEnd: { type: MarkerType.ArrowClosed, color: "#40516a" },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: pathEdgeIds.has(edge.id) ? "#5eead4" : "#40516a",
+        },
         animated:
+          !pathStartId &&
           edge.type !== "INVOLVES" &&
           (!focusedNodeId || edge.source === focusedNodeId || edge.target === focusedNodeId),
         style: {
           stroke:
-            focusedNodeId && (edge.source === focusedNodeId || edge.target === focusedNodeId)
+            pathEdgeIds.has(edge.id)
+              ? "#5eead4"
+              : focusedNodeId && (edge.source === focusedNodeId || edge.target === focusedNodeId)
               ? "#9d8cff"
               : "#40516a",
           strokeWidth:
-            focusedNodeId && (edge.source === focusedNodeId || edge.target === focusedNodeId)
+            pathEdgeIds.has(edge.id)
+              ? 3
+              : focusedNodeId && (edge.source === focusedNodeId || edge.target === focusedNodeId)
               ? 2
               : edge.type === "INVOLVES"
                 ? 1.5
                 : 1,
           opacity:
-            focusedNodeId && edge.source !== focusedNodeId && edge.target !== focusedNodeId
+            pathStartId
+              ? pathEdgeIds.has(edge.id)
+                ? 1
+                : 0.07
+              : focusedNodeId && edge.source !== focusedNodeId && edge.target !== focusedNodeId
               ? 0.12
               : 1,
           transition: "opacity 160ms ease, stroke 160ms ease",
         },
-        labelStyle: { fill: "#8c9aad", fontSize: 8 },
+        labelStyle: {
+          fill: pathEdgeIds.has(edge.id) ? "#a8eee5" : "#8c9aad",
+          fontSize: 8,
+          opacity: pathStartId ? (pathEdgeIds.has(edge.id) ? 1 : 0.1) : 1,
+        },
         labelBgStyle: { fill: "#0b1119", fillOpacity: 0.94 },
         labelBgPadding: [4, 2],
         labelBgBorderRadius: 3,
       })) ?? [],
-    [focusedNodeId, graph],
+    [focusedNodeId, graph, pathEdgeIds, pathStartId],
   );
   const selectedNode = graph?.nodes.find((node) => node.id === focusedNodeId) ?? null;
+  const pathSignalNote = useMemo(() => {
+    if (!graph || !activePath) return null;
+    const currentDevice = graph.nodes.find((node) => node.type === "DEVICE" && node.is_current);
+    if (!currentDevice || !pathNodeIds.has(currentDevice.id)) return null;
+    const preferredCode =
+      activePath.nodes[0]?.type === "PAYMENT_INSTRUMENT"
+        ? "DEVICE_MULTI_INSTRUMENT_CONCENTRATION"
+        : "DEVICE_MULTI_CUSTOMER_CONCENTRATION";
+    const supportedSignal =
+      graph.signals.find((signal) => signal.code === preferredCode) ??
+      graph.signals.find((signal) =>
+        ["DEVICE_MULTI_CUSTOMER_CONCENTRATION", "DEVICE_MULTI_INSTRUMENT_CONCENTRATION"].includes(
+          signal.code,
+        ),
+      );
+    return supportedSignal
+      ? `This visible relationship includes the current device associated with the active ${humanizeSignal(supportedSignal.code, supportedSignal.label)} signal.`
+      : null;
+  }, [activePath, graph, pathNodeIds]);
 
   const resetView = () => {
     setSelectedNodeId(null);
     setHoveredNodeId(null);
+    setPathRequest(null);
     void fitViewRef.current?.();
   };
 
@@ -242,6 +321,22 @@ export function GraphPanel({
               <code>{selectedNode.id}</code>
               <strong>{selectedNode.connection_count} visible connections</strong>
               <small>Direct neighbors are highlighted in the graph.</small>
+              {pathTargetId &&
+                selectedNode.type !== "TRANSACTION" &&
+                selectedNode.id !== pathTargetId && (
+                <button
+                  className="explain-connection-button"
+                  onClick={() =>
+                    setPathRequest({
+                      transactionId: graph.transaction_id,
+                      startId: selectedNode.id,
+                    })
+                  }
+                  type="button"
+                >
+                  <GitBranch size={13} /> Show path to payment context
+                </button>
+              )}
               {selectedNode.type !== "TRANSACTION" && onExploreEntity && (
                 <button
                   className="explore-entity-button"
@@ -255,6 +350,20 @@ export function GraphPanel({
               )}
               {selectedNodeId && <button aria-label="Close node details" onClick={() => setSelectedNodeId(null)}><X size={13} /></button>}
             </div>
+          )}
+          {pathStartId && (
+            <RelationshipPathCard
+              path={activePath}
+              context="POINT_IN_TIME"
+              onClear={() => setPathRequest(null)}
+              onEntityAction={
+                onExploreEntity
+                  ? (node) => onExploreEntity(node.type as EntityType, node.id)
+                  : undefined
+              }
+              entityActionLabel="Explore entity"
+              signalNote={pathSignalNote}
+            />
           )}
           {graph.signals.length > 0 && (
             <div className="signal-strip">
