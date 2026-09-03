@@ -6,6 +6,7 @@ from pydantic import ValidationError
 from apps.api.app.core.enums import PolicyAction, RiskSeverity
 from packages.investigator import deterministic
 from packages.investigator.domain import (
+    DecisionProvenance,
     EntityReferences,
     EvidenceBundle,
     EvidenceCategory,
@@ -55,6 +56,17 @@ def _bundle(action: PolicyAction = PolicyAction.HOLD) -> EvidenceBundle:
             severity=severity,
             requires_human_review=action in {PolicyAction.ESCALATE, PolicyAction.RECOMMEND_BLOCK},
             reason_codes=("MODEL_SCORE_HOLD_BAND",),
+            verify_threshold=0.1,
+            hold_threshold=0.9,
+            graph_corroborated=action
+            in {
+                PolicyAction.ESCALATE,
+                PolicyAction.RECOMMEND_BLOCK,
+            },
+            strong_signal_codes=("DEVICE_MULTI_CUSTOMER_CONCENTRATION",),
+            escalation_minimum_strong_signals=2,
+            recommend_block_minimum_strong_signals=3,
+            recommend_block_requires_active_cluster=True,
         ),
         graph=GraphSummary(
             version="graph-v1",
@@ -83,6 +95,15 @@ def _bundle(action: PolicyAction = PolicyAction.HOLD) -> EvidenceBundle:
             graph_version="graph-v1",
             model_version="risk-lgbm-v2",
             policy_version="risk-policy-v2",
+        ),
+        provenance=DecisionProvenance(
+            event_received_at=datetime(2026, 8, 30, tzinfo=UTC),
+            feature_computed_at=datetime(2026, 8, 30, tzinfo=UTC),
+            feature_max_source_event_time=None,
+            graph_computed_at=datetime(2026, 8, 30, tzinfo=UTC),
+            graph_max_source_event_time=None,
+            prediction_created_at=datetime(2026, 8, 30, tzinfo=UTC),
+            decision_created_at=datetime(2026, 8, 30, tzinfo=UTC),
         ),
     )
 
@@ -175,6 +196,24 @@ def test_graph_narrative_is_corroborative_and_never_proof() -> None:
     assert "did not independently create" in explanation
     assert "do not prove fraud" in graph
     assert "fraud probability" in _bundle().model.semantics
+
+
+@pytest.mark.parametrize(
+    ("action", "expected"),
+    (
+        (PolicyAction.ALLOW, "VERIFY boundary"),
+        (PolicyAction.VERIFY, "HOLD boundary"),
+        (PolicyAction.HOLD, "escalation rule"),
+        (PolicyAction.ESCALATE, "RECOMMEND_BLOCK"),
+        (PolicyAction.RECOMMEND_BLOCK, "strongest bounded"),
+    ),
+)
+def test_why_not_stronger_is_deterministic_and_policy_bounded(
+    action: PolicyAction, expected: str
+) -> None:
+    explanation = deterministic.why_not_stronger(_bundle(action))
+    assert expected in explanation
+    assert "fraud probability" not in explanation
 
 
 @pytest.mark.asyncio

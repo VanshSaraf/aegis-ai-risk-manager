@@ -61,6 +61,7 @@ class InvestigatorService:
             llm_status=llm_status,
             summary=deterministic.summary(bundle),
             decision_explanation=deterministic.decision_explanation(bundle),
+            why_not_stronger=deterministic.why_not_stronger(bundle),
             graph_narrative=deterministic.graph_narrative(bundle),
             narrative=narrative,
             evidence=bundle.evidence_items,
@@ -73,5 +74,6 @@ class InvestigatorService:
             policy=bundle.policy,
             graph=bundle.graph,
             versions=bundle.versions,
+            provenance=bundle.provenance,
             generated_at=datetime.now(UTC),
         )

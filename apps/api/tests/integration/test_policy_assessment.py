@@ -67,6 +67,17 @@ async def test_operational_assessment_is_idempotent_truth_free_and_audited(clien
     assert investigation_body["policy"]["version"] == "risk-policy-v2"
     assert investigation_body["model"]["version"] == "risk-lgbm-v2"
     assert investigation_body["graph"]["version"] == "graph-v1"
+    policy = load_policy_config()
+    assert investigation_body["policy"]["verify_threshold"] == policy.verify_threshold
+    assert investigation_body["policy"]["hold_threshold"] == policy.hold_threshold
+    assert investigation_body["policy"]["strong_signal_codes"] == list(
+        policy.graph_corroboration.strong_signal_codes
+    )
+    assert investigation_body["why_not_stronger"]
+    assert investigation_body["provenance"]["feature_computed_at"]
+    assert investigation_body["provenance"]["graph_computed_at"]
+    assert investigation_body["provenance"]["prediction_created_at"]
+    assert investigation_body["provenance"]["decision_created_at"]
     assert "not a fraud probability" in investigation_body["model"]["semantics"]
     serialized_investigation = str(investigation_body).lower()
     for forbidden in (

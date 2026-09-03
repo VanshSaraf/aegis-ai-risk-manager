@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   Activity,
   AlertTriangle,
+  ArrowDown,
   ArrowRight,
   CheckCircle2,
   Clock3,
@@ -123,22 +124,96 @@ function EvidenceCard({ item }: { item: InvestigationReport["evidence"][number] 
         <p>{item.context}</p>
       </div>
       <div className="evidence-card-source">
-        <code>{technicalCode}</code>
+        <code>{technicalCode} · {item.source_version}</code>
         <span className="evidence-weight"><i style={{ width: `${Math.min(100, Math.max(0, item.importance))}%` }} /></span>
       </div>
     </article>
   );
 }
 
+function PolicyBand({ report }: { report: InvestigationReport }) {
+  const score = report.model.score;
+  const verify = report.policy.verify_threshold;
+  const hold = report.policy.hold_threshold;
+  return (
+    <div className="policy-band" aria-label="Frozen model-score policy bands">
+      <div className="policy-band-labels">
+        <span>Allow</span><span>Verify</span><span>Hold</span>
+      </div>
+      <div className="policy-band-track">
+        <i className="band-allow" style={{ width: `${verify * 100}%` }} />
+        <i className="band-verify" style={{ left: `${verify * 100}%`, width: `${(hold - verify) * 100}%` }} />
+        <i className="band-hold" style={{ left: `${hold * 100}%`, width: `${(1 - hold) * 100}%` }} />
+        <b className="policy-score-marker" style={{ left: `${score * 100}%` }}><span>{score.toFixed(3)}</span></b>
+      </div>
+      <div className="policy-band-thresholds">
+        <span>VERIFY {verify.toFixed(4)}</span><span>HOLD {hold.toFixed(4)}</span>
+      </div>
+      <p>Escalation is evaluated separately from score bands and requires graph corroboration.</p>
+    </div>
+  );
+}
+
+function RelationshipSummary({ graph }: { graph: TransactionGraph | null }) {
+  if (!graph) return null;
+  const types = ["CUSTOMER", "DEVICE", "PAYMENT_INSTRUMENT", "IP_ADDRESS", "ADDRESS"];
+  const counts = Object.fromEntries(
+    types.map((type) => [type, graph.nodes.filter((node) => node.type === type).length]),
+  );
+  const nodeTypes = new Map(graph.nodes.map((node) => [node.id, node.type]));
+  const meaningful = graph.edges
+    .filter((edge) => edge.type !== "INVOLVES")
+    .sort((a, b) => {
+      const rank = (edge: typeof a) => edge.type === "SEEN_ON" ? 0 : nodeTypes.get(edge.source) === "DEVICE" || nodeTypes.get(edge.target) === "DEVICE" ? 1 : 2;
+      return rank(a) - rank(b);
+    })
+    .slice(0, 4);
+  return (
+    <div className="relationship-summary">
+      <div className="relationship-scope">
+        <span>Visible customers<strong>{counts.CUSTOMER}</strong></span>
+        <span>Devices<strong>{counts.DEVICE}</strong></span>
+        <span>Instruments<strong>{counts.PAYMENT_INSTRUMENT}</strong></span>
+        <span>IPs<strong>{counts.IP_ADDRESS}</strong></span>
+        <span>Addresses<strong>{counts.ADDRESS}</strong></span>
+        <span>Relationships<strong>{graph.edges.length}</strong></span>
+      </div>
+      <p className="scope-note">Visible point-in-time neighborhood · bounded to {graph.max_nodes} nodes and {graph.max_edges} edges</p>
+      {meaningful.length > 0 && <div className="important-relationships">
+        {meaningful.map((edge) => <div key={edge.id}><code>{shortId(edge.source)}</code><span>{edge.type.replaceAll("_", " ").toLowerCase()}</span><code>{shortId(edge.target)}</code></div>)}
+      </div>}
+    </div>
+  );
+}
+
+function DecisionProvenance({ report }: { report: InvestigationReport }) {
+  const stages = [
+    ["Event ingested", "accepted", report.provenance.event_received_at],
+    ["Feature snapshot", report.versions.feature_version, report.provenance.feature_computed_at],
+    ["Graph assessment", report.versions.graph_version, report.provenance.graph_computed_at],
+    ["Model prediction", report.versions.model_version, report.provenance.prediction_created_at],
+    ["Policy decision", report.versions.policy_version, report.provenance.decision_created_at],
+    ["Evidence built", report.generated_by.toLowerCase(), report.generated_at],
+  ];
+  return <div className="provenance-trace">{stages.map(([label, version, timestamp], index) => (
+    <div className="provenance-stage" key={label}>
+      <span>{label}</span><strong>{version}</strong><time>{formatTime(timestamp)}</time>
+      {index < stages.length - 1 && <ArrowDown size={12} />}
+    </div>
+  ))}</div>;
+}
+
 function InvestigationPanel({
   transaction,
   report,
+  graph,
   loading,
   error,
   onRetry,
 }: {
   transaction: DashboardTransaction | null;
   report: InvestigationReport | null;
+  graph: TransactionGraph | null;
   loading: boolean;
   error: string | null;
   onRetry: () => void;
@@ -161,6 +236,9 @@ function InvestigationPanel({
 
   const keyEvidence = report.evidence.filter((item) => item.category !== "GRAPH");
   const relationshipEvidence = report.evidence.filter((item) => item.category === "GRAPH");
+  const activeObservation = graph?.signals[0]
+    ? humanizeSignal(graph.signals[0].code, graph.signals[0].label)
+    : "No named structural signal was present in the frozen assessment.";
 
   return (
     <section className="panel investigation-panel" aria-labelledby="investigation-title">
@@ -181,13 +259,45 @@ function InvestigationPanel({
         <p className="investigation-summary">{report.summary}</p>
         <div className="score-grid" aria-label="Decision summary">
           <div><span>Model risk score</span><strong>{report.model.score.toFixed(3)}</strong><RiskBar score={report.model.score} /><small>Uncalibrated ranking score</small></div>
-          <div><span>Graph score</span><strong>{report.graph.structural_score.toFixed(3)}</strong><RiskBar score={report.graph.structural_score} /><small>Structural evidence</small></div>
+          <div><span>Structural coordination score</span><strong>{report.graph.structural_score.toFixed(3)}</strong><RiskBar score={report.graph.structural_score} /><small>Relationship structure · not probability</small></div>
           <div><span>Policy action</span><ActionBadge action={report.policy.action} /><SeverityBadge severity={report.policy.severity} /><small>{report.policy.requires_human_review ? "Human review required" : "Bounded policy action"}</small></div>
+        </div>
+      </div>
+
+      <div className="decision-intelligence">
+        <div className="decision-anatomy">
+          <div className="section-kicker">Decision anatomy</div>
+          <div className="anatomy-flow">
+            <article><span>Behavioral model</span><strong>{report.model.score.toFixed(3)}</strong><small>{report.model.version}</small></article>
+            <ArrowRight size={16} />
+            <article><span>Policy band</span><strong>{report.model.score < report.policy.verify_threshold ? "ALLOW" : report.model.score < report.policy.hold_threshold ? "VERIFY" : "HOLD"}</strong><small>Score eligibility</small></article>
+            <ArrowRight size={16} />
+            <article><span>Graph evidence</span><strong>{report.policy.graph_corroborated ? "Corroborated" : `${report.graph.signals.length} signals`}</strong><small>Kept separate</small></article>
+            <ArrowRight size={16} />
+            <article className="anatomy-action"><span>Final action</span><ActionBadge action={report.policy.action} /><small>Frozen policy result</small></article>
+          </div>
+          <PolicyBand report={report} />
+        </div>
+        <div className="decision-questions">
+          <article><span>Why this action?</span><p>{report.decision_explanation}</p></article>
+          <article><span>Why not stronger?</span><p>{report.why_not_stronger}</p></article>
         </div>
       </div>
 
       <div className="investigation-body">
         <div className="investigation-column">
+          <div className="investigation-section">
+            <h3>Relationship summary</h3>
+            <RelationshipSummary graph={graph} />
+          </div>
+
+          <div className="investigation-section reasoning-layers">
+            <h3>Observation → interpretation → action</h3>
+            <div><span>Observation</span><p>{activeObservation}</p></div>
+            <div><span>Interpretation</span><p>{report.graph_narrative}</p></div>
+            <div><span>Action</span><p>{report.recommended_next_step}</p></div>
+          </div>
+
           <div className="investigation-section">
             <h3>Key decision evidence</h3>
             <div className="evidence-list">
@@ -204,9 +314,8 @@ function InvestigationPanel({
         </div>
         <aside className="investigation-aside">
           <div className="investigation-section narrative-block">
-            <h3>Decision rationale</h3>
-            <p>{report.decision_explanation}</p>
-            <p>{report.graph_narrative}</p>
+            <h3>Decision provenance</h3>
+            <DecisionProvenance report={report} />
           </div>
 
           <div className="next-step">
@@ -216,7 +325,8 @@ function InvestigationPanel({
 
           <div className="investigation-section timeline-section">
             <h3>Known before this payment</h3>
-            <p className="timeline-trust">Only events with an earlier event time are shown.</p>
+            <div className="current-payment-time"><span>Current payment</span><time>{formatTime(transaction.event_time)}</time><code>{shortId(transaction.transaction_id)}</code></div>
+            <p className="timeline-trust"><strong>Investigation cutoff &lt; {formatTime(transaction.event_time)}</strong>Only information available before this payment is included · {report.timeline.length} prior events shown.</p>
             {report.timeline.length === 0 ? (
               <p className="muted-copy">No strictly-prior related transactions were found.</p>
             ) : (
@@ -232,7 +342,7 @@ function InvestigationPanel({
             <div className="cluster-context"><GitBranch size={16} /><div><span>Structural investigation cluster</span><code>{report.cluster.cluster_id}</code></div></div>
           )}
 
-          <details className="limitations"><summary>Limitations and context</summary><ul>{report.limitations.map((item) => <li key={item}>{item}</li>)}</ul></details>
+          <details className="limitations" open><summary>Current boundaries</summary><ul>{report.limitations.slice(0, 3).map((item) => <li key={item}>{item}</li>)}</ul></details>
         </aside>
       </div>
     </section>
@@ -520,7 +630,7 @@ export function Dashboard() {
           </section>
         </div>
 
-        <InvestigationPanel transaction={selected} report={investigation} loading={loadingSelection} error={investigationError} onRetry={() => void loadSelection()} />
+        <InvestigationPanel transaction={selected} report={investigation} graph={graph} loading={loadingSelection} error={investigationError} onRetry={() => void loadSelection()} />
         <footer><span>Aegis provides bounded risk recommendations for human review.</span><span>Model and graph evidence do not confirm fraud.</span></footer>
       </div>
     </main>

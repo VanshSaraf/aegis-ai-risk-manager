@@ -53,6 +53,13 @@ class PolicySummary(InvestigatorModel):
     severity: RiskSeverity
     requires_human_review: bool
     reason_codes: tuple[str, ...]
+    verify_threshold: float = Field(ge=0, le=1)
+    hold_threshold: float = Field(ge=0, le=1)
+    graph_corroborated: bool
+    strong_signal_codes: tuple[str, ...]
+    escalation_minimum_strong_signals: int = Field(ge=1)
+    recommend_block_minimum_strong_signals: int = Field(ge=1)
+    recommend_block_requires_active_cluster: bool
 
 
 class GraphSummary(InvestigatorModel):
@@ -100,6 +107,16 @@ class VersionMetadata(InvestigatorModel):
     policy_version: str
 
 
+class DecisionProvenance(InvestigatorModel):
+    event_received_at: datetime
+    feature_computed_at: datetime
+    feature_max_source_event_time: datetime | None
+    graph_computed_at: datetime
+    graph_max_source_event_time: datetime | None
+    prediction_created_at: datetime
+    decision_created_at: datetime
+
+
 class EvidenceBundle(InvestigatorModel):
     transaction: TransactionSummary
     model: ModelSummary
@@ -111,6 +128,7 @@ class EvidenceBundle(InvestigatorModel):
     timeline: tuple[TimelineEntry, ...]
     limitations: tuple[str, ...]
     versions: VersionMetadata
+    provenance: DecisionProvenance
 
 
 class GeneratedBy(StrEnum):
@@ -131,6 +149,7 @@ class InvestigationReport(InvestigatorModel):
     llm_status: LLMStatus
     summary: str
     decision_explanation: str
+    why_not_stronger: str
     graph_narrative: str
     narrative: str | None = None
     evidence: tuple[EvidenceItem, ...]
@@ -143,4 +162,5 @@ class InvestigationReport(InvestigatorModel):
     policy: PolicySummary
     graph: GraphSummary
     versions: VersionMetadata
+    provenance: DecisionProvenance
     generated_at: datetime

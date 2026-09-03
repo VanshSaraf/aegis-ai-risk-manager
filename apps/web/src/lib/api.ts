@@ -71,6 +71,7 @@ export interface InvestigationReport {
   llm_status: "DISABLED" | "AVAILABLE" | "UNAVAILABLE" | "INVALID_RESPONSE";
   summary: string;
   decision_explanation: string;
+  why_not_stronger: string;
   graph_narrative: string;
   narrative: string | null;
   evidence: EvidenceItem[];
@@ -84,6 +85,13 @@ export interface InvestigationReport {
     severity: RiskSeverity;
     requires_human_review: boolean;
     reason_codes: string[];
+    verify_threshold: number;
+    hold_threshold: number;
+    graph_corroborated: boolean;
+    strong_signal_codes: string[];
+    escalation_minimum_strong_signals: number;
+    recommend_block_minimum_strong_signals: number;
+    recommend_block_requires_active_cluster: boolean;
   };
   graph: {
     version: string;
@@ -96,6 +104,21 @@ export interface InvestigationReport {
     context: string;
     point_in_time_counts_available: boolean;
   } | null;
+  versions: {
+    feature_version: string;
+    graph_version: string;
+    model_version: string;
+    policy_version: string;
+  };
+  provenance: {
+    event_received_at: string;
+    feature_computed_at: string;
+    feature_max_source_event_time: string | null;
+    graph_computed_at: string;
+    graph_max_source_event_time: string | null;
+    prediction_created_at: string;
+    decision_created_at: string;
+  };
   generated_at: string;
 }
 

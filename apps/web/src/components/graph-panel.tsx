@@ -24,6 +24,37 @@ const nodeColors: Record<string, string> = {
   ADDRESS: "#34d399",
 };
 
+function signalContext(graph: TransactionGraph, code: string): string {
+  const currentDevice = graph.nodes.find((node) => node.type === "DEVICE" && node.is_current);
+  const connectedCount = (type: string) => {
+    if (!currentDevice) return 0;
+    const ids = new Set(
+      graph.edges.flatMap((edge) => {
+        if (edge.source === currentDevice.id) return [edge.target];
+        if (edge.target === currentDevice.id) return [edge.source];
+        return [];
+      }),
+    );
+    return graph.nodes.filter((node) => ids.has(node.id) && node.type === type).length;
+  };
+  if (code === "DEVICE_MULTI_CUSTOMER_CONCENTRATION") {
+    return `${connectedCount("CUSTOMER")} customer nodes connect to the current device in this visible neighborhood.`;
+  }
+  if (code === "DEVICE_MULTI_INSTRUMENT_CONCENTRATION") {
+    return `${connectedCount("PAYMENT_INSTRUMENT")} instrument nodes connect to the current device in this visible neighborhood.`;
+  }
+  if (code === "RAPID_RELATIONSHIP_EXPANSION") {
+    return "The point-in-time identity neighborhood expanded unusually quickly relative to prior activity.";
+  }
+  if (code === "MULTI_COMPONENT_BRIDGE") {
+    return "This payment connects identity structures that were historically separate.";
+  }
+  if (code === "DENSE_MULTI_ENTITY_STRUCTURE") {
+    return "Multiple entity types form dense, overlapping infrastructure in the historical graph.";
+  }
+  return "A named structural signal was present in the immutable graph assessment.";
+}
+
 function positions(graph: TransactionGraph): Node[] {
   const current = graph.nodes.filter((node) => node.is_current);
   const historical = graph.nodes.filter((node) => !node.is_current);
@@ -217,6 +248,7 @@ export function GraphPanel({
               {graph.signals.map((signal) => (
                 <article key={signal.code}>
                   <strong>{humanizeSignal(signal.code, signal.label)}</strong>
+                  <p>{signalContext(graph, signal.code)}</p>
                   <code>{technicalSignalCode(signal.code)}</code>
                 </article>
               ))}

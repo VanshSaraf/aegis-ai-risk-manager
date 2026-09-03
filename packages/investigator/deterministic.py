@@ -41,6 +41,46 @@ def decision_explanation(bundle: EvidenceBundle) -> str:
     )
 
 
+def why_not_stronger(bundle: EvidenceBundle) -> str:
+    action = bundle.policy.action
+    policy = bundle.policy
+    score = bundle.model.score
+    if action == PolicyAction.ALLOW:
+        return (
+            f"The model score {score:.4f} remains below the frozen VERIFY boundary "
+            f"{policy.verify_threshold:.4f}."
+        )
+    if action == PolicyAction.VERIFY:
+        return (
+            f"The model score {score:.4f} remains below the frozen HOLD boundary "
+            f"{policy.hold_threshold:.4f}. Graph evidence cannot create a HOLD on its own."
+        )
+    if action == PolicyAction.HOLD:
+        strong_count = len(set(bundle.graph.signals) & set(policy.strong_signal_codes))
+        return (
+            f"The frozen escalation rule requires at least "
+            f"{policy.escalation_minimum_strong_signals} strong structural signals. "
+            f"This assessment contains {strong_count}; graph-supported escalation was not met."
+        )
+    if action == PolicyAction.ESCALATE:
+        strong_count = len(set(bundle.graph.signals) & set(policy.strong_signal_codes))
+        missing = []
+        if strong_count < policy.recommend_block_minimum_strong_signals:
+            missing.append(
+                f"{policy.recommend_block_minimum_strong_signals} strong signals "
+                f"(current: {strong_count})"
+            )
+        if policy.recommend_block_requires_active_cluster and bundle.cluster is None:
+            missing.append("an active Aegis cluster")
+        if missing:
+            return "RECOMMEND_BLOCK additionally requires " + " and ".join(missing) + "."
+        return "The persisted policy reasons do not support a stronger recommendation."
+    return (
+        "RECOMMEND_BLOCK is the strongest bounded Aegis recommendation. A human reviewer must "
+        "decide whether any external action is appropriate."
+    )
+
+
 def graph_narrative(bundle: EvidenceBundle) -> str:
     if not bundle.graph.signals:
         return (

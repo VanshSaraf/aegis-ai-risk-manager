@@ -14,6 +14,7 @@ from apps.api.app.models import (
 )
 from packages.investigator.domain import (
     ClusterContext,
+    DecisionProvenance,
     EntityReferences,
     EvidenceBundle,
     EvidenceCategory,
@@ -26,7 +27,7 @@ from packages.investigator.domain import (
     TransactionSummary,
     VersionMetadata,
 )
-from packages.policy_engine.config import POLICY_VERSION
+from packages.policy_engine.config import POLICY_VERSION, load_policy_config
 from packages.risk_engine.features.postgres import transaction_history_query
 
 MAX_EVIDENCE_ITEMS = 8
@@ -207,6 +208,7 @@ class EvidenceBuilder:
         reason_codes = tuple(str(code) for code in reason.get("reason_codes", ()))
         severity = RiskSeverity(str(reason["severity"]))
         action = PolicyAction(_enum_value(decision.action))
+        policy_config = load_policy_config(version=decision.policy_version)
         signal_codes = tuple(
             sorted(
                 {
@@ -265,6 +267,19 @@ class EvidenceBuilder:
                 severity=severity,
                 requires_human_review=decision.requires_human_review,
                 reason_codes=reason_codes,
+                verify_threshold=policy_config.verify_threshold,
+                hold_threshold=policy_config.hold_threshold,
+                graph_corroborated=bool(reason.get("graph_corroborated", False)),
+                strong_signal_codes=policy_config.graph_corroboration.strong_signal_codes,
+                escalation_minimum_strong_signals=(
+                    policy_config.graph_corroboration.minimum_strong_signals
+                ),
+                recommend_block_minimum_strong_signals=(
+                    policy_config.graph_corroboration.recommend_block_minimum_strong_signals
+                ),
+                recommend_block_requires_active_cluster=(
+                    policy_config.graph_corroboration.recommend_block_requires_active_cluster
+                ),
             ),
             graph=GraphSummary(
                 version=prediction.graph_version,
@@ -289,6 +304,15 @@ class EvidenceBuilder:
                 graph_version=graph.graph_version,
                 model_version=prediction.model_version,
                 policy_version=decision.policy_version,
+            ),
+            provenance=DecisionProvenance(
+                event_received_at=transaction.received_at,
+                feature_computed_at=feature.computed_at,
+                feature_max_source_event_time=feature.max_source_event_time,
+                graph_computed_at=graph.computed_at,
+                graph_max_source_event_time=graph.max_source_event_time,
+                prediction_created_at=prediction.created_at,
+                decision_created_at=decision.created_at,
             ),
         )
 
