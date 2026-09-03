@@ -1,17 +1,19 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   Background,
   Controls,
   MarkerType,
+  Panel,
   ReactFlow,
   type Edge,
   type Node,
 } from "@xyflow/react";
-import { Boxes, Focus, Network } from "lucide-react";
+import { Boxes, Focus, Maximize2, Network, X } from "lucide-react";
 
 import type { TransactionGraph } from "@/lib/api";
+import { humanizeNodeType, humanizeSignal, technicalSignalCode } from "@/lib/presentation";
 
 const nodeColors: Record<string, string> = {
   TRANSACTION: "#5eead4",
@@ -64,20 +66,78 @@ export function GraphPanel({
   onRetry: () => void;
 }) {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
-  const nodes = useMemo(() => (graph ? positions(graph) : []), [graph]);
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
+  const fitViewRef = useRef<(() => Promise<boolean>) | null>(null);
+  const focusedNodeId = selectedNodeId ?? hoveredNodeId;
+  const connectedNodeIds = useMemo(() => {
+    if (!graph || !focusedNodeId) return new Set<string>();
+    const ids = new Set<string>([focusedNodeId]);
+    graph.edges.forEach((edge) => {
+      if (edge.source === focusedNodeId) ids.add(edge.target);
+      if (edge.target === focusedNodeId) ids.add(edge.source);
+    });
+    return ids;
+  }, [focusedNodeId, graph]);
+  const nodes = useMemo(
+    () =>
+      graph
+        ? positions(graph).map((node) => ({
+            ...node,
+            style: {
+              ...node.style,
+              opacity: focusedNodeId && !connectedNodeIds.has(node.id) ? 0.18 : 1,
+              boxShadow:
+                node.id === focusedNodeId
+                  ? `0 0 0 3px ${nodeColors[String(node.data.metadata && (node.data.metadata as TransactionGraph["nodes"][number]).type)] ?? "#72ded0"}30, 0 12px 30px rgba(0,0,0,.35)`
+                  : node.style?.boxShadow,
+              transition: "opacity 160ms ease, box-shadow 160ms ease",
+            },
+            zIndex: node.id === focusedNodeId ? 3 : connectedNodeIds.has(node.id) ? 2 : 1,
+          }))
+        : [],
+    [connectedNodeIds, focusedNodeId, graph],
+  );
   const edges = useMemo<Edge[]>(
     () =>
       graph?.edges.map((edge) => ({
         ...edge,
+        type: "default",
         label: edge.type === "INVOLVES" ? undefined : edge.type.replaceAll("_", " ").toLowerCase(),
         markerEnd: { type: MarkerType.ArrowClosed, color: "#40516a" },
-        animated: edge.type !== "INVOLVES",
-        style: { stroke: "#40516a", strokeWidth: edge.type === "INVOLVES" ? 1.5 : 1 },
-        labelStyle: { fill: "#75849a", fontSize: 8 },
+        animated:
+          edge.type !== "INVOLVES" &&
+          (!focusedNodeId || edge.source === focusedNodeId || edge.target === focusedNodeId),
+        style: {
+          stroke:
+            focusedNodeId && (edge.source === focusedNodeId || edge.target === focusedNodeId)
+              ? "#9d8cff"
+              : "#40516a",
+          strokeWidth:
+            focusedNodeId && (edge.source === focusedNodeId || edge.target === focusedNodeId)
+              ? 2
+              : edge.type === "INVOLVES"
+                ? 1.5
+                : 1,
+          opacity:
+            focusedNodeId && edge.source !== focusedNodeId && edge.target !== focusedNodeId
+              ? 0.12
+              : 1,
+          transition: "opacity 160ms ease, stroke 160ms ease",
+        },
+        labelStyle: { fill: "#8c9aad", fontSize: 8 },
+        labelBgStyle: { fill: "#0b1119", fillOpacity: 0.94 },
+        labelBgPadding: [4, 2],
+        labelBgBorderRadius: 3,
       })) ?? [],
-    [graph],
+    [focusedNodeId, graph],
   );
-  const selectedNode = graph?.nodes.find((node) => node.id === selectedNodeId) ?? null;
+  const selectedNode = graph?.nodes.find((node) => node.id === focusedNodeId) ?? null;
+
+  const resetView = () => {
+    setSelectedNodeId(null);
+    setHoveredNodeId(null);
+    void fitViewRef.current?.();
+  };
 
   return (
     <section className="panel graph-panel" aria-labelledby="graph-title">
@@ -111,14 +171,25 @@ export function GraphPanel({
               fitViewOptions={{ padding: 0.18 }}
               minZoom={0.25}
               maxZoom={1.6}
+              zoomOnScroll={false}
               nodesDraggable
               nodesConnectable={false}
               elementsSelectable
+              onInit={(instance) => {
+                fitViewRef.current = () => instance.fitView({ padding: 0.18, duration: 260 });
+              }}
               onNodeClick={(_, node) => setSelectedNodeId(node.id)}
-              proOptions={{ hideAttribution: true }}
+              onNodeMouseEnter={(_, node) => setHoveredNodeId(node.id)}
+              onNodeMouseLeave={() => setHoveredNodeId(null)}
+              onPaneClick={() => setSelectedNodeId(null)}
             >
               <Background color="#1f2a38" gap={22} size={1} />
               <Controls showInteractive={false} position="bottom-right" />
+              <Panel position="top-right">
+                <button className="graph-reset" onClick={resetView} type="button">
+                  <Maximize2 size={13} /> Reset view
+                </button>
+              </Panel>
             </ReactFlow>
           </div>
           <div className="graph-footer">
@@ -134,15 +205,21 @@ export function GraphPanel({
           )}
           {selectedNode && (
             <div className="node-detail">
-              <span>{selectedNode.type.replaceAll("_", " ")}</span>
+              <span>{humanizeNodeType(selectedNode.type)}</span>
               <code>{selectedNode.id}</code>
               <strong>{selectedNode.connection_count} visible connections</strong>
-              <button aria-label="Close node details" onClick={() => setSelectedNodeId(null)}>×</button>
+              <small>Direct neighbors are highlighted in the graph.</small>
+              {selectedNodeId && <button aria-label="Close node details" onClick={() => setSelectedNodeId(null)}><X size={13} /></button>}
             </div>
           )}
           {graph.signals.length > 0 && (
             <div className="signal-strip">
-              {graph.signals.map((signal) => <span key={signal.code}>{signal.label}</span>)}
+              {graph.signals.map((signal) => (
+                <article key={signal.code}>
+                  <strong>{humanizeSignal(signal.code, signal.label)}</strong>
+                  <code>{technicalSignalCode(signal.code)}</code>
+                </article>
+              ))}
             </div>
           )}
         </>

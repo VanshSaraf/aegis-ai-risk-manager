@@ -46,6 +46,8 @@ export function EvaluationLab() {
   }, []);
 
   const combined = summary?.models.find((item) => item.code === "COMBINED")?.metrics;
+  const tabular = summary?.models.find((item) => item.code === "TABULAR")?.metrics;
+  const graph = summary?.models.find((item) => item.code === "GRAPH")?.metrics;
 
   return (
     <main className="dashboard-shell evaluation-shell">
@@ -69,8 +71,8 @@ export function EvaluationLab() {
             <section className="evaluation-hero">
               <div>
                 <div className="benchmark-badge"><ShieldCheck size={13} /> Held-out synthetic evaluation</div>
-                <h2>Relationship evidence changes the risk picture.</h2>
-                <p>Metrics are measured on frozen synthetic benchmarks and are not production or Razorpay performance claims.</p>
+                <h2>Does graph intelligence help?</h2>
+                <p>Yes—on the frozen synthetic benchmark, relationship structure sharply reduced legitimate payments flagged by mistake. These are evaluation results, not production or Razorpay performance claims.</p>
               </div>
               <dl className="benchmark-meta">
                 <div><dt>Dataset</dt><dd>{summary.benchmark.dataset_version}</dd></div>
@@ -80,11 +82,27 @@ export function EvaluationLab() {
               </dl>
             </section>
 
-            <section className="evaluation-metrics" aria-label="Combined model metrics">
-              <article><span>Combined PR-AUC</span><strong>{combined ? metric(combined.pr_auc) : "—"}</strong><small>Best held-out ranking result</small></article>
-              <article><span>Precision</span><strong>{combined ? metric(combined.precision) : "—"}</strong><small>At validation-selected threshold</small></article>
-              <article><span>Recall</span><strong>{combined ? metric(combined.recall) : "—"}</strong><small>Frozen test partition</small></article>
-              <article><span>False positives</span><strong>{combined?.false_positive ?? "—"}</strong><small>Frozen test partition</small></article>
+            <section className="false-positive-story" aria-labelledby="false-positive-title">
+              <div className="false-positive-intro">
+                <div className="eyebrow"><BarChart3 size={13} /> Operational impact</div>
+                <h2 id="false-positive-title">False positives</h2>
+                <p>A false positive is a legitimate payment incorrectly flagged for intervention.</p>
+              </div>
+              <div className="false-positive-steps">
+                {[
+                  { label: "Tabular", value: tabular?.false_positive, tone: "fp-tabular" },
+                  { label: "Graph", value: graph?.false_positive, tone: "fp-graph" },
+                  { label: "Combined", value: combined?.false_positive, tone: "fp-combined" },
+                ].map((item, index) => (
+                  <article key={item.label} className={item.tone}>
+                    <span>{item.label}</span>
+                    <strong>{item.value ?? "—"}</strong>
+                    <div className="fp-track"><i style={{ width: `${tabular && item.value !== undefined ? Math.max(5, (item.value / tabular.false_positive) * 100) : 0}%` }} /></div>
+                    {index < 2 && <b aria-hidden="true">→</b>}
+                  </article>
+                ))}
+              </div>
+              <div className="combined-result"><span>Combined PR-AUC</span><strong>{combined ? metric(combined.pr_auc) : "—"}</strong><small>Highest held-out ranking result</small></div>
             </section>
 
             <section className="evaluation-grid">

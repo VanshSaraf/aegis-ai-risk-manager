@@ -37,6 +37,7 @@ import {
   type PolicyAction,
   type TransactionGraph,
 } from "@/lib/api";
+import { humanizeSignal, technicalSignalCode } from "@/lib/presentation";
 
 const filters: Array<{ label: string; value: PolicyAction | null }> = [
   { label: "All", value: null },
@@ -99,6 +100,36 @@ function MetricCard({
   );
 }
 
+function RiskBar({ score }: { score: number }) {
+  return (
+    <span className="risk-bar" aria-hidden="true">
+      <i style={{ width: `${Math.max(2, Math.min(100, score * 100))}%` }} />
+    </span>
+  );
+}
+
+function EvidenceCard({ item }: { item: InvestigationReport["evidence"][number] }) {
+  const technicalCode = technicalSignalCode(item.code);
+  const title = item.category === "GRAPH" ? humanizeSignal(item.code, item.title) : item.title;
+
+  return (
+    <article className={item.category === "GRAPH" ? "emerging-evidence" : undefined}>
+      <div className="evidence-card-topline">
+        <span className={`evidence-category category-${item.category.toLowerCase()}`}>{item.category}</span>
+        <span className="evidence-importance">Evidence weight {item.importance}</span>
+      </div>
+      <div className="evidence-card-copy">
+        <strong>{title}</strong>
+        <p>{item.context}</p>
+      </div>
+      <div className="evidence-card-source">
+        <code>{technicalCode}</code>
+        <span className="evidence-weight"><i style={{ width: `${Math.min(100, Math.max(0, item.importance))}%` }} /></span>
+      </div>
+    </article>
+  );
+}
+
 function InvestigationPanel({
   transaction,
   report,
@@ -113,7 +144,7 @@ function InvestigationPanel({
   onRetry: () => void;
 }) {
   if (!transaction) {
-    return <section className="panel investigation-panel"><div className="panel-state tall"><SearchX size={25} /><span>Select a transaction to review its evidence.</span></div></section>;
+    return <section className="panel investigation-panel"><div className="panel-state tall"><SearchX size={25} /><strong>No investigation selected</strong><span>Select an assessed payment from the queue to review its decision, evidence, and strictly-prior history.</span></div></section>;
   }
   if (!transaction.assessed) {
     return (
@@ -128,12 +159,15 @@ function InvestigationPanel({
     return <section className="panel investigation-panel"><div className="panel-state tall"><AlertTriangle size={25} /><strong>Investigation unavailable</strong><span>{error ?? "No report was returned."}</span><button onClick={onRetry}>Retry investigation</button></div></section>;
   }
 
+  const keyEvidence = report.evidence.filter((item) => item.category !== "GRAPH");
+  const relationshipEvidence = report.evidence.filter((item) => item.category === "GRAPH");
+
   return (
     <section className="panel investigation-panel" aria-labelledby="investigation-title">
       <div className="panel-heading">
         <div>
-          <div className="eyebrow"><ShieldCheck size={13} /> Why Aegis flagged this</div>
-          <h2 id="investigation-title">Decision investigation</h2>
+          <div className="eyebrow"><ShieldCheck size={13} /> Investigator workspace</div>
+          <h2 id="investigation-title">Why this payment needs attention</h2>
         </div>
         <ActionBadge action={report.policy.action} />
       </div>
@@ -143,56 +177,64 @@ function InvestigationPanel({
         {report.generated_by === "DETERMINISTIC" ? "Deterministic evidence explanation" : "AI-assisted narrative"}
       </div>
 
-      <p className="investigation-summary">{report.summary}</p>
-
-      <div className="score-grid">
-        <div><span>Model score</span><strong>{report.model.score.toFixed(3)}</strong><small>Uncalibrated risk score</small></div>
-        <div><span>Graph score</span><strong>{report.graph.structural_score.toFixed(3)}</strong><small>Structural evidence</small></div>
-        <div><span>Severity</span><SeverityBadge severity={report.policy.severity} /><small>{report.policy.requires_human_review ? "Human review required" : "Bounded policy action"}</small></div>
-      </div>
-
-      <div className="investigation-section">
-        <h3>Top evidence</h3>
-        <div className="evidence-list">
-          {report.evidence.slice(0, 5).map((item) => (
-            <article key={item.code} className={item.category === "GRAPH" ? "emerging-evidence" : undefined}>
-              <span className={`evidence-category category-${item.category.toLowerCase()}`}>{item.category}</span>
-              <div><strong>{item.title}</strong><p>{item.context}</p></div>
-              <code>{String(item.observed_value)}</code>
-            </article>
-          ))}
+      <div className="investigation-lead">
+        <p className="investigation-summary">{report.summary}</p>
+        <div className="score-grid" aria-label="Decision summary">
+          <div><span>Model risk score</span><strong>{report.model.score.toFixed(3)}</strong><RiskBar score={report.model.score} /><small>Uncalibrated ranking score</small></div>
+          <div><span>Graph score</span><strong>{report.graph.structural_score.toFixed(3)}</strong><RiskBar score={report.graph.structural_score} /><small>Structural evidence</small></div>
+          <div><span>Policy action</span><ActionBadge action={report.policy.action} /><SeverityBadge severity={report.policy.severity} /><small>{report.policy.requires_human_review ? "Human review required" : "Bounded policy action"}</small></div>
         </div>
       </div>
 
-      <div className="investigation-section narrative-block">
-        <h3>Policy explanation</h3>
-        <p>{report.decision_explanation}</p>
-        <p>{report.graph_narrative}</p>
+      <div className="investigation-body">
+        <div className="investigation-column">
+          <div className="investigation-section">
+            <h3>Key decision evidence</h3>
+            <div className="evidence-list">
+              {keyEvidence.map((item) => <EvidenceCard key={item.code} item={item} />)}
+            </div>
+          </div>
+
+          <div className="investigation-section relationship-section">
+            <h3>Relationship evidence</h3>
+            <div className="evidence-list evidence-grid">
+              {relationshipEvidence.map((item) => <EvidenceCard key={item.code} item={item} />)}
+            </div>
+          </div>
+        </div>
+        <aside className="investigation-aside">
+          <div className="investigation-section narrative-block">
+            <h3>Decision rationale</h3>
+            <p>{report.decision_explanation}</p>
+            <p>{report.graph_narrative}</p>
+          </div>
+
+          <div className="next-step">
+            <div><span>Recommended next step</span><strong>{report.recommended_next_step}</strong></div>
+            <ArrowRight size={18} />
+          </div>
+
+          <div className="investigation-section timeline-section">
+            <h3>Known before this payment</h3>
+            <p className="timeline-trust">Only events with an earlier event time are shown.</p>
+            {report.timeline.length === 0 ? (
+              <p className="muted-copy">No strictly-prior related transactions were found.</p>
+            ) : (
+              <ol className="timeline">
+                {report.timeline.map((item) => (
+                  <li key={item.transaction_id}><i /><div><time>{formatTime(item.event_time)}</time><p>{item.summary}</p><code>{shortId(item.transaction_id)}</code></div></li>
+                ))}
+              </ol>
+            )}
+          </div>
+
+          {report.cluster && (
+            <div className="cluster-context"><GitBranch size={16} /><div><span>Structural investigation cluster</span><code>{report.cluster.cluster_id}</code></div></div>
+          )}
+
+          <details className="limitations"><summary>Limitations and context</summary><ul>{report.limitations.map((item) => <li key={item}>{item}</li>)}</ul></details>
+        </aside>
       </div>
-
-      <div className="next-step">
-        <div><span>Recommended next step</span><strong>{report.recommended_next_step}</strong></div>
-        <ArrowRight size={18} />
-      </div>
-
-      <div className="investigation-section">
-        <h3>Recent related activity</h3>
-        {report.timeline.length === 0 ? (
-          <p className="muted-copy">No strictly-prior related transactions were found.</p>
-        ) : (
-          <ol className="timeline">
-            {report.timeline.map((item) => (
-              <li key={item.transaction_id}><i /><div><time>{formatTime(item.event_time)}</time><p>{item.summary}</p><code>{shortId(item.transaction_id)}</code></div></li>
-            ))}
-          </ol>
-        )}
-      </div>
-
-      {report.cluster && (
-        <div className="cluster-context"><GitBranch size={16} /><div><span>Structural investigation cluster</span><code>{report.cluster.cluster_id}</code></div></div>
-      )}
-
-      <details className="limitations"><summary>Evidence limitations</summary><ul>{report.limitations.map((item) => <li key={item}>{item}</li>)}</ul></details>
     </section>
   );
 }
@@ -373,6 +415,7 @@ export function Dashboard() {
   const highRiskCount = summary
     ? summary.hold_count + summary.escalate_count + summary.recommend_block_count
     : null;
+  const activeSignalCount = new Set(transactions.flatMap((transaction) => transaction.graph_signals)).size;
   const connected =
     !(summaryError && transactionsError) &&
     (summary !== null || (!transactionsLoading && transactionsError === null));
@@ -384,7 +427,7 @@ export function Dashboard() {
         <header className="topbar">
           <div className="brand-lockup">
             <span className="brand-mark">A</span>
-            <div><div className="eyebrow">Risk operations</div><h1>Aegis</h1><p>Graph-assisted payment risk intelligence</p></div>
+            <div><div className="eyebrow">Payment risk intelligence</div><h1>Aegis</h1><p>Risk Operations</p></div>
           </div>
           <div className="topbar-actions">
             <nav className="app-nav" aria-label="Primary navigation">
@@ -401,77 +444,83 @@ export function Dashboard() {
 
         {summaryError && <div className="section-error summary-error"><AlertTriangle size={16} /><span>{summaryError}</span><button onClick={() => void loadDashboard()}>Retry summary</button></div>}
 
-        <section className={`demo-console ${demoRunning ? "running" : ""}`} aria-label="Deterministic demo controls">
-          <div className="demo-intro"><div className="eyebrow"><Zap size={13} /> Synthetic Traffic Simulation</div><h2>Watch coordinated identity relationships emerge</h2><p>Sends synthetic payment events through the same live Aegis ingestion and risk pipeline.</p></div>
-          <div className="demo-progress">
-            <div className="demo-progress-copy"><span>{demoStatus}</span><strong>{demoSession ? `${demoSession.next_step} / ${demoSession.total_steps}` : "Identity Rotation"}</strong></div>
-            <div className="demo-progress-track"><i style={{ width: `${demoSession ? (demoSession.next_step / demoSession.total_steps) * 100 : 0}%` }} /></div>
-            {latestDemoStep?.assessment && <div className="demo-latest"><div><span>Risk score</span><strong>{latestDemoStep.assessment.model_score.toFixed(3)}</strong><small>Uncalibrated ranking score</small></div><div><span>Latest action</span><ActionBadge action={latestDemoStep.assessment.action} /></div><div><span>Graph evidence</span><strong>{latestDemoStep.assessment.graph_signal_count}</strong><small>signals observed</small></div></div>}
-            {demoError && <div className="demo-error"><AlertTriangle size={14} /><span>{demoError}</span>{demoSession && <button onClick={retryDemo}>Retry step</button>}</div>}
-          </div>
-          <button className="inject-button" disabled={demoRunning} onClick={() => void startDemo()}><Play size={16} fill="currentColor" />{demoRunning ? "Injecting..." : demoSession && demoSession.next_step === demoSession.total_steps ? "New Demo" : "Inject Abuse Ring"}</button>
-        </section>
-
         <section className="metrics-grid" aria-label="Operational summary">
           <MetricCard label="Transactions monitored" value={summary?.transaction_count ?? null} detail={`${summary?.assessed_count ?? 0} assessed`} icon={<Database size={18} />} tone="tone-blue" loading={summaryLoading} />
-          <MetricCard label="Flagged for review" value={flaggedCount} detail="Verify or stronger" icon={<Activity size={18} />} tone="tone-amber" loading={summaryLoading} />
+          <MetricCard label="Interventions" value={flaggedCount} detail="Verify or stronger" icon={<Activity size={18} />} tone="tone-amber" loading={summaryLoading} />
+          <MetricCard label="Active structural signals" value={activeSignalCount} detail="Across the loaded queue" icon={<GitBranch size={18} />} tone="tone-purple" loading={transactionsLoading} />
           <MetricCard label="High-risk decisions" value={highRiskCount} detail="Hold or stronger" icon={<AlertTriangle size={18} />} tone="tone-red" loading={summaryLoading} />
-          <MetricCard label="Structural clusters" value={summary?.active_cluster_count ?? null} detail="Open or under review" icon={<GitBranch size={18} />} tone="tone-purple" loading={summaryLoading} />
         </section>
 
-        <section className="panel transaction-panel" aria-labelledby="transactions-title">
-          <div className="panel-heading transaction-heading">
-            <div><div className="eyebrow"><Activity size={13} /> Monitoring queue</div><h2 id="transactions-title">Recent transactions</h2></div>
-            <div className="filters" aria-label="Filter transactions by action">
-              {filters.map((item) => <button key={item.label} className={filter === item.value ? "active" : ""} onClick={() => setFilter(item.value)}>{item.label}</button>)}
-            </div>
-          </div>
-          <div className="table-wrap">
-            {transactionsError && <div className="section-error transaction-error"><AlertTriangle size={16} /><span>{transactionsError}</span><button onClick={() => void loadDashboard()}>Retry queue</button></div>}
-            <table>
-              <thead><tr><th>Time</th><th>Transaction</th><th>Amount</th><th>Customer</th><th>Model score</th><th>Action</th><th>Severity</th><th>Graph</th></tr></thead>
-              <tbody>
-                {transactionsLoading && transactions.length === 0 ? Array.from({ length: 4 }, (_, index) => <tr key={index} className="table-loading"><td colSpan={8}><div className="skeleton" /></td></tr>) : transactions.map((transaction) => (
-                  <tr
-                    key={transaction.transaction_id}
-                    className={selectedId === transaction.transaction_id ? "selected" : ""}
-                    tabIndex={0}
-                    onClick={() => setSelectedId(transaction.transaction_id)}
-                    onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") setSelectedId(transaction.transaction_id); }}
-                  >
-                    <td><time>{formatTime(transaction.event_time)}</time></td>
-                    <td><code>{shortId(transaction.transaction_id)}</code></td>
-                    <td className="amount">{formatAmount(transaction.amount_paise, transaction.currency)}</td>
-                    <td><code>{shortId(transaction.customer_id)}</code></td>
-                    <td>{transaction.model_score === null ? <span className="pending-copy">Pending</span> : <div className="score-cell"><strong>{transaction.model_score.toFixed(3)}</strong><span>uncalibrated</span></div>}</td>
-                    <td><ActionBadge action={transaction.action} /></td>
-                    <td><SeverityBadge severity={transaction.severity} /></td>
-                    <td>{transaction.graph_signals.length ? <span className="graph-indicator"><GitBranch size={12} />{transaction.graph_signals.length} signal{transaction.graph_signals.length > 1 ? "s" : ""}</span> : <span className="muted-copy">—</span>}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {!transactionsLoading && !transactionsError && transactions.length === 0 && <div className="empty-table"><Database size={25} /><strong>No transactions found</strong><span>{filter ? "No recent transactions match this action filter." : "Ingest transactions to populate the monitoring queue."}</span></div>}
-          </div>
-        </section>
+        <div className="operations-layout">
+          <aside className="operations-rail">
+            <section className={`demo-console ${demoRunning ? "running" : ""}`} aria-label="Synthetic traffic simulation">
+              <div className="demo-intro"><div className="eyebrow"><Zap size={13} /> Synthetic traffic simulation</div><h2>Inject a coordinated abuse ring</h2><p>Sends synthetic payment events through the same Aegis ingestion and risk pipeline.</p></div>
+              <div className="demo-progress">
+                <div className="demo-progress-copy"><span>{demoStatus}</span><strong>{demoSession ? `${demoSession.next_step} / ${demoSession.total_steps}` : "Identity rotation"}</strong></div>
+                <div className="demo-progress-track"><i style={{ width: `${demoSession ? (demoSession.next_step / demoSession.total_steps) * 100 : 0}%` }} /></div>
+                {latestDemoStep?.assessment && <div className="demo-latest"><div><span>Model risk score</span><strong>{latestDemoStep.assessment.model_score.toFixed(3)}</strong><small>Uncalibrated</small></div><div><span>Policy action</span><ActionBadge action={latestDemoStep.assessment.action} /></div><div><span>Signals</span><strong>{latestDemoStep.assessment.graph_signal_count}</strong><small>Structural</small></div></div>}
+                {demoError && <div className="demo-error"><AlertTriangle size={14} /><span>{demoError}</span>{demoSession && <button onClick={retryDemo}>Retry step</button>}</div>}
+              </div>
+              <button className="inject-button" disabled={demoRunning} onClick={() => void startDemo()}><Play size={16} fill="currentColor" />{demoRunning ? "Injecting traffic…" : demoSession && demoSession.next_step === demoSession.total_steps ? "Run new simulation" : "Inject abuse ring"}</button>
+            </section>
 
-        {selected && (
-          <section className="selected-strip" aria-label="Selected transaction details">
-            <div><span>Selected transaction</span><code>{selected.transaction_id}</code></div>
-            <dl>
-              <div><dt>Customer</dt><dd>{shortId(selected.customer_id)}</dd></div>
-              <div><dt>Device</dt><dd>{shortId(selected.device_id)}</dd></div>
-              <div><dt>Instrument</dt><dd>{shortId(selected.instrument_id)}</dd></div>
-              <div><dt>IP</dt><dd>{shortId(selected.ip_id)}</dd></div>
-              <div><dt>Address</dt><dd>{shortId(selected.address_id)}</dd></div>
-            </dl>
+            <section className="panel transaction-panel" aria-labelledby="transactions-title">
+              <div className="panel-heading transaction-heading">
+                <div><div className="eyebrow"><Activity size={13} /> Monitoring queue</div><h2 id="transactions-title">Recent payments</h2></div>
+                <span className="queue-count">{transactions.length} loaded</span>
+              </div>
+              <div className="filters" aria-label="Filter transactions by action">
+                {filters.map((item) => <button key={item.label} className={filter === item.value ? "active" : ""} onClick={() => setFilter(item.value)}>{item.label}</button>)}
+              </div>
+              <div className="table-wrap queue-scroll">
+                {transactionsError && <div className="section-error transaction-error"><AlertTriangle size={16} /><span>{transactionsError}</span><button onClick={() => void loadDashboard()}>Retry queue</button></div>}
+                <table className="transaction-table">
+                  <thead><tr><th>Payment</th><th>Amount</th><th>Risk</th><th>Decision</th><th>Context</th><th>Time</th></tr></thead>
+                  <tbody>
+                    {transactionsLoading && transactions.length === 0 ? Array.from({ length: 6 }, (_, index) => <tr key={index} className="table-loading"><td colSpan={6}><div className="skeleton" /></td></tr>) : transactions.map((transaction) => (
+                      <tr
+                        key={transaction.transaction_id}
+                        className={selectedId === transaction.transaction_id ? "selected" : ""}
+                        tabIndex={0}
+                        aria-selected={selectedId === transaction.transaction_id}
+                        onClick={() => setSelectedId(transaction.transaction_id)}
+                        onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") setSelectedId(transaction.transaction_id); }}
+                      >
+                        <td><div className="payment-cell"><code>{shortId(transaction.transaction_id)}</code><small>{shortId(transaction.customer_id)}</small></div></td>
+                        <td className="amount">{formatAmount(transaction.amount_paise, transaction.currency)}</td>
+                        <td>{transaction.model_score === null ? <span className="pending-copy">Pending</span> : <div className="score-cell"><strong>{transaction.model_score.toFixed(3)}</strong><RiskBar score={transaction.model_score} /></div>}</td>
+                        <td><div className="decision-cell"><ActionBadge action={transaction.action} /><SeverityBadge severity={transaction.severity} /></div></td>
+                        <td>{transaction.graph_signals.length ? <span className="graph-indicator"><GitBranch size={12} />{transaction.graph_signals.length} signal{transaction.graph_signals.length > 1 ? "s" : ""}</span> : <span className="muted-copy">No signals</span>}</td>
+                        <td><time>{formatTime(transaction.event_time)}</time></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {!transactionsLoading && !transactionsError && transactions.length === 0 && <div className="empty-table"><Database size={25} /><strong>No transactions yet</strong><span>{filter ? "No recent payments match this action filter." : "Send a payment event or run the synthetic traffic simulation."}</span></div>}
+              </div>
+            </section>
+          </aside>
+
+          <section className="graph-workspace" aria-label="Selected payment workspace">
+            {selected ? (
+              <section className="selected-strip" aria-label="Selected transaction details">
+                <div className="selected-identity"><span>Investigating payment</span><strong>{formatAmount(selected.amount_paise, selected.currency)}</strong><code>{selected.transaction_id}</code></div>
+                <div className="selected-risk"><span>Model risk score</span><strong>{selected.model_score?.toFixed(3) ?? "Pending"}</strong>{selected.model_score !== null && <RiskBar score={selected.model_score} />}</div>
+                <ActionBadge action={selected.action} />
+                <dl>
+                  <div><dt>Customer</dt><dd>{shortId(selected.customer_id)}</dd></div>
+                  <div><dt>Merchant</dt><dd>{shortId(selected.merchant_id)}</dd></div>
+                  <div><dt>Time</dt><dd>{formatTime(selected.event_time)}</dd></div>
+                </dl>
+              </section>
+            ) : (
+              <section className="selected-strip selected-empty" aria-label="No selected transaction"><span>Select a payment from the queue to begin an investigation.</span></section>
+            )}
+            <GraphPanel graph={graph} loading={loadingSelection} error={graphError} onRetry={() => void loadSelection()} />
           </section>
-        )}
-
-        <div className="workspace-grid">
-          <GraphPanel graph={graph} loading={loadingSelection} error={graphError} onRetry={() => void loadSelection()} />
-          <InvestigationPanel transaction={selected} report={investigation} loading={loadingSelection} error={investigationError} onRetry={() => void loadSelection()} />
         </div>
+
+        <InvestigationPanel transaction={selected} report={investigation} loading={loadingSelection} error={investigationError} onRetry={() => void loadSelection()} />
         <footer><span>Aegis provides bounded risk recommendations for human review.</span><span>Model and graph evidence do not confirm fraud.</span></footer>
       </div>
     </main>
