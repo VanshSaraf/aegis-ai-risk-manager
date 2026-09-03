@@ -19,12 +19,7 @@
 - [ ] Verify README tables, links, and the Mermaid architecture diagram render on GitHub.
 - [ ] Perform one final clean-clone test on a local machine using the documented commands.
 
-## Submission and recording
+## Submission
 
-- [ ] Enable simulation mode for recording (`make up` does this explicitly).
-- [ ] Reset to a fresh database before the recorded run if repeatability matters.
-- [ ] Record the 4:30–4:50 walkthrough using `docs/DEMO_SCRIPT.md`.
-- [ ] Upload the video and confirm its public link works without authentication.
-- [ ] Add the final repository and video links to the submission form.
 - [ ] Remove or disable any local secrets before sharing logs or screenshots.
 - [ ] Submit before the deadline and verify the submission confirmation.

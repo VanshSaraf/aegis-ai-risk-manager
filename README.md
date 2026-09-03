@@ -1,107 +1,273 @@
 # Aegis
 
-> Individual payments can look legitimate. Aegis detects the network behind them.
+A graph-assisted payment-risk system that detects coordinated abuse across seemingly unrelated
+accounts and explains the evidence behind every intervention.
 
-Aegis is a graph-assisted AI risk system that detects coordinated payment abuse across seemingly
-unrelated accounts and explains the evidence behind every intervention. It is a working
-end-to-end prototype for Razorpay AI Buildathon Track 2: **AI Risk Manager**.
+**Individual payments can look legitimate.<br>
+Aegis detects the network behind them.**
 
-## The problem
+Traditional transaction-level scoring sees a payment in isolation. Aegis also models
+relationships between customers, devices, payment instruments, IPs, and addresses to surface
+coordinated infrastructure reuse.
 
-Card-testing rings, account farms, identity rotation, and collusive payment groups rarely reveal
-their full structure in one transaction. Multiple customers can reuse devices, instruments, IPs,
-and addresses while each payment remains individually plausible. Aegis combines point-in-time
-behavior with relationship structure to expose that coordinated activity without leaking future
-information into the decision.
+Aegis is a working end-to-end prototype: durable FastAPI ingestion, PostgreSQL persistence,
+point-in-time features and graph intelligence, a frozen LightGBM risk ranker, deterministic
+bounded policy, evidence-first investigation, and a Next.js risk-operations interface. Its
+reported evaluation uses frozen, held-out **synthetic** data and is not a production-performance
+claim.
 
-## What Aegis does
+`52 behavioral features` · `25 graph metrics` · `77 model inputs` · `strict historical cutoff`
 
-- Accepts ordinary payment events through a validated FastAPI ingestion contract.
-- Computes 52 strictly historical behavioral and velocity features (`features-v1`).
-- Builds 25 point-in-time graph metrics and named structural signals (`graph-v1`).
-- Ranks risk with the frozen 77-input LightGBM model (`risk-lgbm-v2`).
-- Converts the uncalibrated score into bounded, human-review-aware recommendations
-  (`risk-policy-v2`).
-- Produces a truth-free EvidenceBundle and deterministic investigation after the decision.
-- Presents operations, an evolving identity graph, investigations, a live synthetic traffic
-  simulation, and frozen evaluation results in a Next.js dashboard.
+![Aegis Risk Operations dashboard](docs/assets/risk-operations.jpg)
 
-## 60-second architecture
+## Why transaction-only risk can miss the pattern
+
+Each payment below can look plausible on its own. The shared infrastructure is suspicious only
+when the relationships are considered together.
 
 ```mermaid
 flowchart LR
-    S[Synthetic Traffic Simulation] --> A[Payment Event]
-    X[External Payment Source] --> A
-    A --> B[FastAPI Ingestion]
-    B --> C[Point-in-Time Features]
-    C --> D[Graph Intelligence]
-    D --> E[risk-lgbm-v2]
-    E --> F[risk-policy-v2]
-    F --> G[EvidenceBuilder]
-    G --> H[Risk Operations Dashboard]
-    B --> P[(PostgreSQL)]
-    C --> P
-    D --> P
-    F --> P
+    A[Customer A] --> D[Shared device]
+    B[Customer B] --> D
+    C[Customer C] --> D
+    I1[Instrument 1] --> D
+    I2[Instrument 2] --> D
+    I3[Instrument 3] --> D
 ```
 
-The simulation is only a traffic source. It uses the same ingestion and assessment services as an
-external payment event and cannot provide a model score, graph signal, cluster, or policy action.
+Aegis targets coordinated payment-abuse rings rather than a single transaction pattern. The
+synthetic evaluation includes `CARD_TESTING`, `ACCOUNT_FARM`, `IDENTITY_ROTATION`, and
+`COLLUSIVE_RING`, with ground truth separated as `LEGITIMATE` versus `COORDINATED_ABUSE`.
+Ground-truth fields remain outside runtime scoring, policy, API, and investigation contracts. See
+the [threat model](docs/THREAT_MODEL.md) for the defensive boundary.
 
-## Why graph intelligence
+## What Aegis does
 
-Aegis represents customers, payment instruments, devices, IP addresses, and addresses as typed
-entities. Relationships are reconstructed only from transactions strictly earlier than the
-payment being scored. This makes shared infrastructure and rapid identity expansion visible while
-keeping graph evidence point-in-time and auditable.
+1. **Receive a payment event.** FastAPI validates a tokenized `RawPaymentEvent` contract; no PAN
+   or CVV is required.
+2. **Persist the source event.** The original payload is durably recorded before normalized work,
+   preserving receipt and processing status for audit and recovery.
+3. **Compute point-in-time behavior.** `features-v1` derives 52 velocity, history, novelty, and
+   amount-context features using a strict `[history, current)` cutoff.
+4. **Reconstruct relationship evidence.** `graph-v1` builds a typed historical graph and derives
+   25 structural metrics without reading future edge state.
+5. **Rank behavioral risk.** `risk-lgbm-v2` consumes the 77 registered inputs and emits an
+   uncalibrated ranking score—not a fraud probability.
+6. **Apply bounded policy.** `risk-policy-v2` maps the score to an allowed intervention and permits
+   graph evidence to corroborate only an already-existing `HOLD`.
+7. **Build an investigation.** A truth-free EvidenceBundle explains the persisted decision,
+   structural evidence, limitations, and strictly prior history for an operator.
 
-## Live simulation
+## Architecture
 
-The **Synthetic Traffic Simulation** establishes 12 legitimate-looking baseline transactions and
-then injects 18 Identity Rotation events through the live pipeline. Customers rotate across six
-instruments while reusing device and network infrastructure. Click **Inject Abuse Ring** to watch
-relationships emerge, the uncalibrated model score change, graph signals activate, and the real
-policy respond.
+```mermaid
+flowchart LR
+    EXT[External payment event] --> API[FastAPI ingestion]
+    SIM[Synthetic traffic simulator] --> API
+    API --> DB[(PostgreSQL)]
+    API --> F[Point-in-time features]
+    F --> G[Graph intelligence]
+    G --> M[LightGBM risk ranking]
+    M --> P[Bounded policy]
+    P --> E[Evidence builder]
+    E --> UI[Risk Operations UI]
+    F --> DB
+    G --> DB
+    P --> DB
+```
 
-The retained frozen scenario ends at `VERIFY` with an observed score of approximately `0.95252`.
-That is intentional: the simulator generates traffic but cannot command the model or policy.
-Simulation mutation routes remain hidden unless `AEGIS_DEMO_MODE=true`.
+The simulator is another event source, not a privileged scoring path. External and synthetic
+payments use the same ingestion, feature, graph, model, policy, persistence, and investigation
+services.
 
-## Evaluation
+PostgreSQL is the system of record. Raw events and audit records are append-only by application
+policy; normalized writes are transactional; failed normalization retains the raw event without
+partial normalized state. Alembic owns schema evolution, while versioned snapshots allow future
+feature, graph, model, and policy versions to coexist.
 
-Frozen `synthetic-v2` held-out test results (seed 88421, 7,500 test transactions):
+## Graph intelligence
 
-| Model family | Inputs | PR-AUC | Precision | Recall | F1 | FP | FN |
+The graph engine asks one operational question:
+
+> Does this payment sit inside a coordinated relationship pattern?
+
+It reconstructs typed `CUSTOMER`, `DEVICE`, `PAYMENT_INSTRUMENT`, `IP`, and `ADDRESS` nodes from
+historical transactions. Merchants are deliberately excluded from graph connectivity so a popular
+merchant cannot join unrelated customers into one component.
+
+The 25 point-in-time metrics measure degree, component composition and density, new relationships,
+component bridging, two-hop reach, and rapid expansion. The operator sees human-readable signals
+such as:
+
+- One device shared across multiple customers (`DEVICE_MULTI_CUSTOMER_CONCENTRATION`)
+- One device shared across multiple instruments (`DEVICE_MULTI_INSTRUMENT_CONCENTRATION`)
+- Relationships expanding rapidly (`RAPID_RELATIONSHIP_EXPANSION`)
+- Dense shared infrastructure (`DENSE_MULTI_ENTITY_STRUCTURE`)
+
+Structural signals are evidence, not proof of abuse. Cluster identifiers are Aegis-generated
+investigation handles, never synthetic truth-ring IDs.
+
+## Point-in-time safety
+
+For a payment at time **T**, Aegis uses only information with `event_time < T`:
+
+```text
+past events ✓  ──────────>  current payment T  ──────────>  future events ✕
+                  usable                         unavailable
+```
+
+The online PostgreSQL provider enforces the cutoff in queries. Offline generation computes each
+timestamp batch before observing it, so equal-time transactions cannot see one another. Historical
+features and investigation evidence avoid mutable entity-profile fields that later ingestion could
+rewrite. Future activity therefore cannot change an earlier decision snapshot or historical
+evidence, apart from the report's new `generated_at` timestamp.
+
+This boundary prevents look-ahead leakage: training and runtime decisions cannot benefit from
+information that would not have existed when the payment arrived.
+
+## Risk score is not the decision
+
+LightGBM produces an **uncalibrated risk ranking score**. The graph engine separately describes
+relationship structure. A deterministic, versioned policy decides the permitted intervention:
+
+| Action | Meaning |
+|---|---|
+| `ALLOW` | Permit without additional intervention |
+| `VERIFY` | Request bounded step-up verification |
+| `HOLD` | Hold for additional review |
+| `ESCALATE` | Escalate an existing HOLD with corroborating graph evidence |
+| `RECOMMEND_BLOCK` | Recommend human review of an existing HOLD with stronger corroboration |
+
+Graph evidence cannot independently promote an `ALLOW` or `VERIFY` into a severe action.
+`RECOMMEND_BLOCK` is a recommendation to a human reviewer; Aegis has no payment-action adapter and
+does not autonomously apply a permanent block.
+
+## Where AI judgment stops
+
+| Component | Job |
+|---|---|
+| LightGBM | Rank behavioral and structural risk |
+| Graph engine | Describe coordinated relationship structure |
+| Deterministic policy | Enforce the bounded intervention decision |
+| Investigator | Turn persisted evidence into an operator-readable report |
+
+**Language does not decide the payment.** The primary investigator is deterministic and runs after
+the policy decision. An optional read-only provider boundary can supplement wording, but no live
+provider is bundled, no API key is required, provider failure falls back deterministically, and
+the investigator cannot mutate a prediction or policy decision.
+
+## Product experience
+
+### Risk Operations
+
+The dashboard combines an assessed-payment queue, model/action context, an interactive identity
+graph, named graph signals, and a selected-payment investigation. Loading, empty, pending, and
+disconnected states remain explicit rather than fabricating data.
+
+### Investigation
+
+![Aegis evidence-first investigation](docs/assets/investigation.jpg)
+
+The report keeps the uncalibrated model score, graph score, deterministic policy action, ranked
+evidence, recommended next step, and strictly-prior timeline distinct. Explanations describe why
+the frozen policy acted; they do not revise that action or expose synthetic truth.
+
+### Evaluation Lab
+
+![Aegis Evaluation Lab](docs/assets/evaluation-lab.jpg)
+
+The Evaluation Lab presents committed artifact data: tabular versus graph versus combined models,
+external generalization, operating-policy constraints, provenance, and known limitations.
+
+## Measured evaluation
+
+**Frozen `synthetic-v2` held-out test** — seed 88421, 7,500 test transactions. Thresholds were
+selected on validation data before test evaluation.
+
+| Model | Inputs | PR-AUC | Precision | Recall | F1 | FP | FN |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Tabular LightGBM | 52 | 0.974894 | 0.849638 | 0.967010 | 0.904532 | 83 | 16 |
-| Graph LightGBM | 25 | 0.996506 | 0.973896 | 1.000000 | 0.986775 | 13 | 0 |
+| Graph LightGBM | 25 | 0.996506 | 0.973896 | **1.000000** | **0.986775** | 13 | **0** |
 | Combined `risk-lgbm-v2` | 77 | **0.998365** | **0.991525** | 0.964948 | 0.978056 | **4** | 17 |
 
-Graph-only was extremely strong at its independently selected threshold; combined achieved the
-best ranking PR-AUC and reduced false positives from **83 → 13 → 4** across the comparison. A fresh
-post-freeze external synthetic seed (91573) was weaker: PR-AUC `0.985832`, precision `0.680086`,
-recall `0.989429`, F1 `0.806099`, FP `1,629`, and FN `37`. Aegis retained that result without
-retuning.
+Combined achieved the highest ranking PR-AUC. Graph-only achieved perfect thresholded recall and
+the highest F1 at its independently selected threshold. Combined had the fewest false positives;
+it did not beat graph-only on every thresholded metric.
 
-Policy-v2 also missed its 5% validation legitimate-intervention budget on the external world
-(11.17%), although severe legitimate interventions remained 0%. These are designed synthetic
-results, not production or Razorpay performance claims. Open **Evaluation Lab** at `/evaluation`
-for artifact-backed methodology, operating-policy results, and limitations.
+### False-positive reduction
 
-## AI judgment: where AI is and is not used
+A false positive is a legitimate payment incorrectly flagged at the selected model threshold.
 
-| Boundary | Implementation |
+**Tabular 83 → Graph 13 → Combined 4**
+
+This is a reduction in held-out synthetic false positives, not a claim of fraud reduction or
+production accuracy.
+
+### Fresh synthetic-world evaluation
+
+After model and policy freeze, the combined model was evaluated without retuning on a new
+50,000-transaction `synthetic-v2` world, seed **91573**:
+
+| PR-AUC | Precision | Recall | F1 | FP | FN |
+|---:|---:|---:|---:|---:|---:|
+| 0.985832 | 0.680086 | 0.989429 | 0.806099 | 1,629 | 37 |
+
+The fresh world measures behavior outside the original frozen test seed. Ranking remained strong,
+but thresholded precision weakened materially—a result retained as evidence of synthetic-world
+distribution shift.
+
+### Policy generalization did not fully hold
+
+The frozen policy allowed at most **5% legitimate intervention** during validation. On seed 91573,
+the legitimate-intervention rate reached **11.17%**. Severe legitimate intervention remained 0%,
+but the aggregate friction budget did not generalize.
+
+**The result was retained without retuning.** It shows that a strong ranking model does not
+guarantee that a fixed operating policy will preserve its customer-friction target under a changed
+distribution.
+
+## Why we did not keep the “perfect” benchmark
+
+The original `synthetic-v1` world was too separable. A leakage audit found no direct label field or
+exact truth alias, but legitimate behavior lacked enough high-velocity, retry, and shared-
+infrastructure cases. Advertising the effectively perfect result would have overstated what the
+benchmark demonstrated.
+
+`synthetic-v2` introduced legitimate hard negatives, retry and failure bursts, household,
+corporate, and campus infrastructure sharing, stealthier abuse strategies, and greater topology
+diversity. Its generator, configuration, schemas, split method, and model configuration were
+frozen before the final seed was opened. Details are recorded in
+[Data Generation](docs/DATA_GENERATION.md) and the [Failure Log](docs/FAILURE_LOG.md).
+
+## Failures that improved the system
+
+1. **The benchmark was too easy.** The team hardened the synthetic world instead of presenting
+   perfect-looking scores as evidence of realism.
+2. **Cost-only policy optimization created excessive friction.** A bounded policy search added
+   abuse-capture, legitimate-friction, severe-action, review-capacity, and cohort constraints.
+3. **Mutable metadata could alter historical evidence.** Mutable profile fields were removed from
+   point-in-time feature and explanation paths, with temporal invariance covered by regression
+   tests.
+
+The [Failure Log](docs/FAILURE_LOG.md) preserves these and other failed-closed corrections.
+
+## Frozen system boundary
+
+| Boundary | Version |
 |---|---|
-| Transaction and behavioral patterns | LightGBM risk ranking |
-| Relationship structure | Deterministic temporal graph engine plus graph features |
-| Business intervention | Versioned deterministic policy with human-review safeguards |
-| Human-readable investigation | Evidence-first deterministic investigator; optional read-only provider boundary |
+| Synthetic generator | `synthetic-v2` |
+| Behavioral features | `features-v1` — 52 features |
+| Graph intelligence | `graph-v1` — 25 metrics |
+| Combined model | `risk-lgbm-v2` — 77 inputs |
+| Operating policy | `risk-policy-v2` |
 
-An LLM is never used for payment decisions, threshold selection, or policy execution. No API key
-or network AI service is required. The model emits an **uncalibrated risk ranking score, not a
-fraud probability**, and the policy makes recommendations rather than executing payment actions.
+Application startup never generates the 50,000-event benchmark, trains a model, reconstructs an
+offline graph benchmark, or optimizes policy. Required small model, schema, policy, freeze, and
+evaluation artifacts are committed under `ml/artifacts/`; large generated datasets are ignored.
 
-## Quick start — easiest evaluator path
+## Run Aegis
+
+### Docker — shortest path
 
 Requirements: Docker with Compose.
 
@@ -110,26 +276,31 @@ cp .env.example .env
 make up
 ```
 
-`make up` explicitly enables the simulation for the local showcase, builds PostgreSQL, API, and
-web services, waits for database readiness, and applies all Alembic migrations. Then open:
+`make up` enables the local synthetic traffic control, builds PostgreSQL, API, and web services,
+waits for database readiness, and applies the Alembic migrations. Open:
 
-- Dashboard: <http://localhost:3000>
+- Risk Operations: <http://localhost:3000>
 - Evaluation Lab: <http://localhost:3000/evaluation>
 - Interactive API docs: <http://localhost:8000/docs>
 
-In another terminal, verify the running stack with `make smoke`. Stop it with `make down`.
-To use Compose directly, run `AEGIS_DEMO_MODE=true docker compose up --build`.
+Optionally verify the running stack with `make smoke`. Stop it with:
 
-## Local development — without Docker
+```bash
+make down
+```
 
-Requirements: Python 3.12+, PostgreSQL 16, and Node.js 20.19+ (Node 22 recommended).
+The equivalent direct Compose command is
+`AEGIS_DEMO_MODE=true docker compose up --build`.
 
-Create an empty PostgreSQL database and set `AEGIS_DATABASE_URL` in `.env` to its asyncpg URL.
-Then start the API:
+### Local development — without Docker
+
+Requirements: Python 3.12+, PostgreSQL 16, and Node.js 20.19+; Node.js 22 is recommended.
+
+Create an empty PostgreSQL database, copy `.env.example` to `.env`, and set
+`AEGIS_DATABASE_URL` to its asyncpg connection URL. Then start the API:
 
 ```bash
 cp .env.example .env
-# Set AEGIS_DEMO_MODE=true in .env for the simulation controls.
 python3.12 -m venv .venv
 . .venv/bin/activate
 pip install -e '.[dev]'
@@ -137,7 +308,7 @@ alembic upgrade head
 uvicorn apps.api.app.main:app --reload
 ```
 
-In a second terminal:
+In another terminal, start the frontend:
 
 ```bash
 cd apps/web
@@ -146,12 +317,13 @@ npm ci
 npm run dev
 ```
 
-Open <http://localhost:3000>. Run `make smoke` from the repository root while the API is running.
+Set `AEGIS_DEMO_MODE=true` in the root `.env` only if you want the synthetic traffic controls.
+The rest of the application does not depend on demo mode.
 
-## Operational API workflow
+## A real API workflow
 
-The application works independently of the simulator. This example uses the actual ingestion
-contract (use a unique `event_id` when repeating it):
+The simulator is optional. This shortened example uses the actual ingestion contract; use a
+unique `event_id` when repeating it:
 
 ```bash
 curl -sS http://localhost:8000/api/v1/transactions \
@@ -186,70 +358,79 @@ curl -sS http://localhost:8000/api/v1/transactions \
   }'
 ```
 
-Copy the returned `transaction_public_id`, then run the real assessment and investigation:
+Copy the returned `transaction_public_id`, then assess and investigate it:
 
 ```bash
 curl -sS -X POST http://localhost:8000/api/v1/transactions/txn_.../assess
 curl -sS http://localhost:8000/api/v1/transactions/txn_.../investigation
-curl -sS http://localhost:8000/api/v1/transactions/txn_.../graph
 ```
 
-## Using Aegis
+The assessment response separates `model`, `graph`, `risk`, `policy`, and stage latency. The
+investigation route returns the persisted policy-consistent explanation; a missing transaction is
+`404`, while an ingested but unassessed transaction is `409`.
 
-- **Operations dashboard:** truth-free counts, policy filters, assessed/pending queue, and explicit
-  loading, empty, and disconnected states.
-- **Synthetic Traffic Simulation:** sequential events, live score/action/signal count, graph
-  evolution, and retry-safe steps.
-- **Identity graph:** bounded point-in-time entity relationships and named structural signals.
-- **Investigation:** policy-consistent summary, ranked evidence, strictly-prior timeline,
-  recommended next step, and limitations.
-- **Evaluation Lab:** frozen held-out model comparison, external generalization, operating-policy
-  evaluation, methodology, provenance, and limitations.
+## Simulation boundary
 
-## Reproducibility
+The canonical Identity Rotation simulation establishes legitimate-looking baseline history, then
+sends later synthetic events sequentially through the operational API. It **does not** set a model
+score, select a policy action, inject graph signals, or specify cluster output. Those results emerge
+from the same versioned pipeline used for any other payment event. The retained canonical run ends
+at `VERIFY`; that outcome is produced by the frozen model and policy, not requested by the
+simulator.
 
-The submission boundary is versioned and frozen: `synthetic-v2`, `features-v1`, `graph-v1`,
-`risk-lgbm-v2`, and `risk-policy-v2`. Application startup does not generate 50,000 transactions,
-train a model, rebuild graph benchmarks, or optimize policy. Required small model, schema, policy,
-and evaluation artifacts are committed under `ml/artifacts/`; large generated datasets are ignored.
+## Verification
 
-Quality commands:
+The latest release verification covered the complete Python test suite, a fresh Alembic migration
+and schema-drift check, Ruff lint and formatting, frontend ESLint and TypeScript, a production
+Next.js build, and the submission smoke path. Run the relevant checks locally with:
 
 ```bash
-make verify       # Ruff plus frontend lint, TypeScript, and production build
-make test         # complete Python test suite; DB tests require AEGIS_TEST_DATABASE_URL
-make smoke        # running-stack submission smoke
+make verify       # Ruff, formatting, ESLint, TypeScript, and production build
+make test         # Python tests; DB tests require AEGIS_TEST_DATABASE_URL
+make smoke        # health/readiness and route checks against the running stack
 ```
+
+This documentation pass does not rerun or regenerate the frozen ML benchmark.
 
 ## Known limitations
 
-- Training and evaluation use synthetic data only; no real Razorpay data is included.
-- The score is uncalibrated, and production calibration, fairness, drift, governance, and capacity
-  evaluation remain future work.
-- Graph cluster discovery can fragment coordinated groups; clusters remain corroborative only.
-- External policy intervention drift is retained rather than hidden or retuned away.
-- Economics are illustrative synthetic assumptions, not claimed savings.
-- Aegis never autonomously applies a permanent block.
-- The deterministic investigator is the primary implementation; no live LLM dependency is bundled.
+- Training, threshold selection, and evaluation use synthetic payment traffic only; Aegis has not
+  been validated on Razorpay or other production data.
+- The model score is an uncalibrated ranking score, not a fraud probability.
+- The graph cluster detector can fragment truth rings and clusters remain corroborative evidence.
+- The external operating policy exceeded its 5% validation legitimate-intervention budget,
+  reaching 11.17% without retuning.
+- Economic values use illustrative synthetic assumptions and are not claimed savings.
+- Production calibration, fairness, drift, governance, latency-at-scale, and review-capacity
+  validation remain future work.
+- The deterministic investigator is the primary implementation; no live LLM dependency is
+  bundled or required.
+- Aegis provides bounded recommendations and never autonomously applies a permanent block.
 
 ## Technology
 
-- Frontend: Next.js, React, TypeScript, Tailwind CSS, `@xyflow/react`
-- Backend: FastAPI, Pydantic, SQLAlchemy 2.x async, Alembic
-- Data: PostgreSQL
-- ML: LightGBM, NumPy, scikit-learn
+- **Frontend:** Next.js 16, React 19, TypeScript, Tailwind CSS, `@xyflow/react`
+- **Backend:** Python 3.12+, FastAPI, Pydantic, SQLAlchemy 2.x async, Alembic
+- **Persistence:** PostgreSQL 16
+- **ML:** LightGBM, NumPy, scikit-learn
 
 ## Repository structure
 
 ```text
-apps/api/          FastAPI routes, persistence, services, and tests
-apps/web/          Next.js operations dashboard and Evaluation Lab
-packages/          Synthetic, features, graph, policy, and investigator boundaries
-ml/artifacts/      Frozen schemas, model, policy, and evaluation artifacts
-configs/           Versioned scenario, ML, cost, and policy configuration
-alembic/           Ordered PostgreSQL migrations
-scripts/           Reproducibility utilities and submission smoke
-docs/              Architecture, evaluation, threat model, and submission material
+apps/
+├── api/                 FastAPI routes, persistence, and operational services
+└── web/                 Risk Operations and Evaluation Lab
+packages/
+├── synthetic/           Deterministic payment-world generation
+├── graph_engine/        Point-in-time graph metrics and clusters
+├── risk_engine/         Feature and inference boundaries
+├── policy_engine/       Versioned bounded decisions
+└── investigator/        Truth-free evidence and explanations
+ml/                      Training, evaluation, and frozen artifacts
+configs/                 Scenario, model, cost, and policy configuration
+alembic/                 Ordered PostgreSQL migrations
+scripts/                 Reproducibility and submission-smoke utilities
+docs/                    Architecture, evaluation, safety, and failure records
 ```
 
 ## Documentation
@@ -259,5 +440,4 @@ docs/              Architecture, evaluation, threat model, and submission materi
 - [Feature semantics](docs/FEATURES.md) and [graph intelligence](docs/GRAPH_INTELLIGENCE.md)
 - [Policy engine](docs/POLICY_ENGINE.md) and [investigator](docs/INVESTIGATOR.md)
 - [Threat model](docs/THREAT_MODEL.md) and [data generation](docs/DATA_GENERATION.md)
-- [Submission narrative](docs/SUBMISSION.md), [demo script](docs/DEMO_SCRIPT.md), and
-  [release checklist](docs/RELEASE_CHECKLIST.md)
+- [Failure log](docs/FAILURE_LOG.md)
