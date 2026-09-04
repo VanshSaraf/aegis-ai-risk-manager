@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import {
+  applyNodeChanges,
   Background,
   Controls,
   MarkerType,
@@ -146,32 +147,38 @@ export function GraphPanel({
     });
     return ids;
   }, [focusedNodeId, graph]);
+  const layoutNodes = useMemo(() => (graph ? positions(graph) : []), [graph]);
+  const [nodeState, setNodeState] = useState<{
+    graph: TransactionGraph | null;
+    nodes: Node[];
+  } | null>(null);
+  // Retain measured dimensions (and user positions) when hover changes styles.
+  // Otherwise React Flow hides the new controlled nodes to measure them again.
+  const positionedNodes = nodeState?.graph === graph ? nodeState.nodes : layoutNodes;
   const nodes = useMemo(
     () =>
-      graph
-        ? positions(graph).map((node) => ({
-            ...node,
-            style: {
-              ...node.style,
-              opacity: pathStartId
-                ? pathNodeIds.has(node.id)
-                  ? 1
-                  : 0.1
-                : focusedNodeId && !connectedNodeIds.has(node.id)
-                  ? 0.18
-                  : 1,
-              boxShadow:
-                pathNodeIds.has(node.id)
-                  ? `0 0 0 3px ${nodeColors[String(node.data.metadata && (node.data.metadata as TransactionGraph["nodes"][number]).type)] ?? "#72ded0"}48, 0 15px 36px rgba(0,0,0,.4)`
-                  : node.id === focusedNodeId
-                  ? `0 0 0 3px ${nodeColors[String(node.data.metadata && (node.data.metadata as TransactionGraph["nodes"][number]).type)] ?? "#72ded0"}30, 0 12px 30px rgba(0,0,0,.35)`
-                  : node.style?.boxShadow,
-              transition: "opacity 160ms ease, box-shadow 160ms ease",
-            },
-            zIndex: pathNodeIds.has(node.id) ? 4 : node.id === focusedNodeId ? 3 : connectedNodeIds.has(node.id) ? 2 : 1,
-          }))
-        : [],
-    [connectedNodeIds, focusedNodeId, graph, pathNodeIds, pathStartId],
+      positionedNodes.map((node) => ({
+        ...node,
+        style: {
+          ...node.style,
+          opacity: pathStartId
+            ? pathNodeIds.has(node.id)
+              ? 1
+              : 0.1
+            : focusedNodeId && !connectedNodeIds.has(node.id)
+              ? 0.18
+              : 1,
+          boxShadow:
+            pathNodeIds.has(node.id)
+              ? `0 0 0 3px ${nodeColors[String(node.data.metadata && (node.data.metadata as TransactionGraph["nodes"][number]).type)] ?? "#72ded0"}48, 0 15px 36px rgba(0,0,0,.4)`
+              : node.id === focusedNodeId
+              ? `0 0 0 3px ${nodeColors[String(node.data.metadata && (node.data.metadata as TransactionGraph["nodes"][number]).type)] ?? "#72ded0"}30, 0 12px 30px rgba(0,0,0,.35)`
+              : node.style?.boxShadow,
+          transition: "opacity 160ms ease, box-shadow 160ms ease",
+        },
+        zIndex: pathNodeIds.has(node.id) ? 4 : node.id === focusedNodeId ? 3 : connectedNodeIds.has(node.id) ? 2 : 1,
+      })),
+    [connectedNodeIds, focusedNodeId, positionedNodes, pathNodeIds, pathStartId],
   );
   const edges = useMemo<Edge[]>(
     () =>
@@ -183,10 +190,7 @@ export function GraphPanel({
           type: MarkerType.ArrowClosed,
           color: pathEdgeIds.has(edge.id) ? "#5eead4" : "#40516a",
         },
-        animated:
-          !pathStartId &&
-          edge.type !== "INVOLVES" &&
-          (!focusedNodeId || edge.source === focusedNodeId || edge.target === focusedNodeId),
+        animated: !pathStartId && edge.type !== "INVOLVES",
         style: {
           stroke:
             pathEdgeIds.has(edge.id)
@@ -278,6 +282,19 @@ export function GraphPanel({
             <ReactFlow
               key={graph.transaction_id}
               nodes={nodes}
+              onNodesChange={(changes) => {
+                const layoutChanges = changes.filter(
+                  (change) => change.type === "dimensions" || change.type === "position",
+                );
+                if (!layoutChanges.length) return;
+                setNodeState((current) => ({
+                  graph,
+                  nodes: applyNodeChanges(
+                    layoutChanges,
+                    current?.graph === graph ? current.nodes : layoutNodes,
+                  ),
+                }));
+              }}
               edges={edges}
               fitView
               fitViewOptions={{ padding: 0.18 }}
@@ -316,7 +333,11 @@ export function GraphPanel({
             <div className="graph-empty">No prior identity relationships were available at this transaction&apos;s scoring time.</div>
           )}
           {selectedNode && (
-            <div className="node-detail">
+            <div
+              className="node-detail"
+              // Hover previews must not cover the node's pointer hitbox.
+              style={{ pointerEvents: selectedNodeId ? "auto" : "none" }}
+            >
               <span>{humanizeNodeType(selectedNode.type)}</span>
               <code>{selectedNode.id}</code>
               <strong>{selectedNode.connection_count} visible connections</strong>
