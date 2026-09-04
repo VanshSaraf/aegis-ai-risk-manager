@@ -6,6 +6,12 @@ accounts and explains the evidence behind every intervention.
 **Individual payments can look legitimate.<br>
 Aegis detects the network behind them.**
 
+[Live Demo](https://aegis-ai-risk-manager.vercel.app) ·
+[5-min Product Demo](https://youtu.be/xhJJ--O_HHU)
+
+> **Demo note:** The public backend runs on Render's free tier and may cold-start after
+> inactivity. The first request can take a short while; subsequent interactions are normal.
+
 Traditional transaction-level scoring sees a payment in isolation. Aegis also models
 relationships between customers, devices, payment instruments, IPs, and addresses to surface
 coordinated infrastructure reuse.
@@ -62,6 +68,9 @@ the [threat model](docs/THREAT_MODEL.md) for the defensive boundary.
    structural evidence, limitations, and strictly prior history for an operator.
 
 ## Architecture
+
+The public deployment runs **Next.js on Vercel** (frontend), **FastAPI on Render** (backend),
+and **PostgreSQL on Neon** (database).
 
 ```mermaid
 flowchart LR
